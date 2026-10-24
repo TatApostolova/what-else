@@ -1,0 +1,16 @@
+# Personal learning context
+/devpost/learner-profile.md
+/devpost/private/
+
+# Local credentials
+.env
+.env.*
+!.env.example
+
+# Private app data: real database, logs, agent prompt/response dumps
+/data/
+*.db
+*.db-journal
+*.sqlite
+/logs/
+*.log
