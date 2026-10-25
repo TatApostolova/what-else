@@ -72,23 +72,25 @@ Build mode: learn
 ## Hands-on Checkpoints
 
 - [x] Early usable behavior explored — after slice 1 (judged the raw agent ideas; led to the three-round, 10-idea pattern) and again after slice 4 (learning loop confirmed good)
-- [ ] Final kick-the-tires exploration and feedback completed
+- [x] Final kick-the-tires exploration and feedback completed — learner tried each slice in the running app (real challenge, real agents); last pass covered the challenge lifecycle and delete
 
 ## Final Review
 
-- [ ] Final review complete — feedback resolved and learner confirms ready to ship
+- [x] Final review complete — feedback resolved and learner confirms ready to ship
+
+Findings and outcome: feedback during the build was folded in as it came (three-round 10-idea pattern, "too much work" tag, learning loop moved earlier, own ideas, delete challenge, stale-copy launcher fix, single-prompt comparison and demo mode cut). At the end the learner said "As an MVP this is great. I will use it and rework as needed in real use" — no further revisions requested. Verified: `pytest` 54 passed; app started via `What Else.cmd` on the latest code and `/` returned 200.
 
 ## Code Tour and App Map
 
-- [ ] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
-- [ ] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
-- [ ] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
+- [x] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
+- [x] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
+- [x] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
 
-Activity and evidence:
-Route and stops:
-Edit outcome:
-Reflection:
-Activity mode:
+Activity and evidence: Prior practice connected, not repeated. In slice 1 the learner judged the agent output and the build measured it: only 1/5 agents built on seeds, and replaying one logged call showed thinking effort drove latency (low ~20s / medium ~106s / default ~123s). The redesigned three-round pattern was then measured at 10/10 drafts fusing two or more techniques (Revisions; `fused_two_techniques` in `patterns/collaborative.py`; summary line in `try.py`). This ties to the desired outcome: multi-agent collaboration on a subscription.
+Route and stops: Reference-only route in the map (not toured): `web.py` `generate` → `orchestrator.py` `run_generate` → `patterns/collaborative.py` `run` (round1/round2/round3, `_assign_pushes`).
+Edit outcome: Not applicable (no extra exercise; the learner made product changes throughout the build).
+Reflection: Transfer question offered at hand-off.
+Activity mode: Prior practice plus brief recap; app map generated from commit ebfa097 and checked against source (all paths and symbols verified).
 
 ## Revisions
 

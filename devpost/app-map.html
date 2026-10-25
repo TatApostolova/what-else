@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Else? App Map</title>
+<style>
+  :root {
+    --bg: #f7f7f5; --card: #fff; --border: #e7e5e4; --text: #1c1917; --muted: #6b6560;
+    --accent: #0f766e; --accent-soft: #ccfbf1; --code-bg: #f1f0ee;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1a1817; --card: #24211f; --border: #3a3633; --text: #f2efec; --muted: #a8a29e;
+      --accent: #2dd4bf; --accent-soft: #134e4a; --code-bg: #2e2a27;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1a1817; --card: #24211f; --border: #3a3633; --text: #f2efec; --muted: #a8a29e;
+    --accent: #2dd4bf; --accent-soft: #134e4a; --code-bg: #2e2a27;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 780px; margin: 0 auto; padding: 2rem 16px 4rem; }
+  h1 { font-size: 1.7rem; margin: 0 0 0.25rem; }
+  h2 { font-size: 1.15rem; margin: 2.2rem 0 0.6rem; }
+  p { margin: 0.5rem 0; }
+  .muted { color: var(--muted); }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; }
+  code { background: var(--code-bg); padding: 0.05rem 0.35rem; border-radius: 4px; font-size: 0.88em; word-break: break-word; }
+  ul, ol { padding-left: 1.3rem; }
+  li { margin: 0.35rem 0; }
+  .pieces { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.75rem; }
+  .pieces .card h3 { margin: 0 0 0.25rem; font-size: 0.95rem; }
+  .pieces .card p { margin: 0; font-size: 0.9rem; color: var(--muted); }
+  svg { width: 100%; height: auto; display: block; }
+  svg .box { fill: var(--card); stroke: var(--border); }
+  svg .hl { fill: var(--accent-soft); stroke: var(--accent); }
+  svg text { fill: var(--text); font: 13px system-ui, sans-serif; }
+  svg .small { fill: var(--muted); font-size: 11px; }
+  svg .line { stroke: var(--accent); stroke-width: 1.6; fill: none; }
+  .stop { display: grid; grid-template-columns: 2rem 1fr; gap: 0.5rem; margin: 0.9rem 0; }
+  .num { width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--accent); color: #fff;
+         display: grid; place-items: center; font-weight: 700; font-size: 0.9rem; }
+  details { margin-top: 0.5rem; }
+  summary { cursor: pointer; color: var(--accent); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+  td { border-top: 1px solid var(--border); padding: 0.45rem 0.4rem; vertical-align: top; }
+  td:first-child { width: 42%; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>What Else? App Map</h1>
+  <p class="muted">A snapshot of how the app fits together, taken from commit <code>ebfa097</code> on 25 Oct 2026. The code can drift from this page after later changes.</p>
+
+  <h2>What it is</h2>
+  <p>A local web app. You describe a challenge, and five creative agents (Reverse Thinking, Random Associations, Analogies, SCAMPER, Challenging Assumptions) build on each other's ideas to produce about 10 possibilities. Your reactions are stored and fed into the next round, along with your own ideas, experiments and their outcomes. Everything runs on your computer, and the agents run through Claude Code on your existing subscription, with no API key.</p>
+
+  <div class="pieces">
+    <div class="card"><h3>Web pages</h3><p><code>web.py</code> plus <code>templates/</code>. FastAPI routes return HTML, and HTMX swaps in just the part of the page that changed.</p></div>
+    <div class="card"><h3>Rules and history</h3><p><code>service.py</code> makes every change: one event plus the status update, saved together. Stored in <code>models.py</code> (SQLite).</p></div>
+    <div class="card"><h3>Learning boundary</h3><p><code>context.py</code> decides what history the agents see: what you tried, liked, rejected and reworked.</p></div>
+    <div class="card"><h3>Agents</h3><p><code>orchestrator.py</code> runs <code>patterns/collaborative.py</code>. Prompts are in <code>prompts/</code> and techniques in <code>techniques/</code>. <code>llm.py</code> is the only file that calls Claude.</p></div>
+  </div>
+
+  <h2>One action, end to end: clicking Generate</h2>
+  <svg viewBox="0 0 760 250" role="img" aria-labelledby="flow-title flow-desc">
+    <title id="flow-title">Flow of a Generate click</title>
+    <desc id="flow-desc">The browser posts to web.py, which calls run_generate in orchestrator.py. That reads history from context.py, runs three rounds in collaborative.py, and each call goes through llm.py to claude -p. The ideas are saved to SQLite and the new cards are returned to the browser.</desc>
+    <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" style="color: var(--accent)"/></marker></defs>
+    <rect class="box" x="10" y="20" width="150" height="56" rx="8"/>
+    <text x="85" y="45" text-anchor="middle">Generate button</text>
+    <text class="small" x="85" y="63" text-anchor="middle">_explore.html (HTMX)</text>
+    <rect class="hl" x="200" y="20" width="160" height="56" rx="8"/>
+    <text x="280" y="45" text-anchor="middle">① web.py</text>
+    <text class="small" x="280" y="63" text-anchor="middle">def generate</text>
+    <rect class="hl" x="400" y="20" width="170" height="56" rx="8"/>
+    <text x="485" y="45" text-anchor="middle">② orchestrator.py</text>
+    <text class="small" x="485" y="63" text-anchor="middle">def run_generate</text>
+    <rect class="box" x="610" y="20" width="140" height="56" rx="8"/>
+    <text x="680" y="45" text-anchor="middle">context.py</text>
+    <text class="small" x="680" y="63" text-anchor="middle">build_context (history)</text>
+    <rect class="hl" x="400" y="120" width="170" height="56" rx="8"/>
+    <text x="485" y="145" text-anchor="middle">③ collaborative.py</text>
+    <text class="small" x="485" y="163" text-anchor="middle">diverge → fuse → push</text>
+    <rect class="box" x="610" y="120" width="140" height="56" rx="8"/>
+    <text x="680" y="145" text-anchor="middle">llm.py</text>
+    <text class="small" x="680" y="163" text-anchor="middle">claude -p × 15</text>
+    <rect class="box" x="200" y="120" width="160" height="56" rx="8"/>
+    <text x="280" y="145" text-anchor="middle">SQLite</text>
+    <text class="small" x="280" y="163" text-anchor="middle">Idea + Event rows</text>
+    <rect class="box" x="10" y="120" width="150" height="56" rx="8"/>
+    <text x="85" y="145" text-anchor="middle">10 new cards</text>
+    <text class="small" x="85" y="163" text-anchor="middle">_tabs.html returned</text>
+    <path class="line" d="M160 48 H198" marker-end="url(#arrow)"/>
+    <path class="line" d="M360 48 H398" marker-end="url(#arrow)"/>
+    <path class="line" d="M570 48 H608" marker-end="url(#arrow)"/>
+    <path class="line" d="M485 76 V118" marker-end="url(#arrow)"/>
+    <path class="line" d="M570 148 H608" marker-end="url(#arrow)"/>
+    <path class="line" d="M400 148 H362" marker-end="url(#arrow)"/>
+    <path class="line" d="M200 148 H162" marker-end="url(#arrow)"/>
+    <text class="small" x="380" y="215" text-anchor="middle">The database is closed while the agents work, so a 2-minute Generate never locks it. If any build-round call fails, no ideas are saved.</text>
+  </svg>
+
+  <h2>Reference route: three stops</h2>
+  <p class="muted">A reference route for later. It wasn't walked through as a tour; search your editor for the names shown.</p>
+  <div class="stop"><div class="num">1</div><div>
+    <strong><code>src/whatelse/web.py</code>, <code>def generate</code></strong>
+    <p>The route the Generate button posts to. It calls the agents, turns any failure into a friendly message ("The agents couldn't finish…", or "already working" if you click twice), and returns the refreshed tabs.</p>
+  </div></div>
+  <div class="stop"><div class="num">2</div><div>
+    <strong><code>src/whatelse/orchestrator.py</code>, <code>def run_generate</code></strong>
+    <p>Refuses if a run is already going or the challenge is paused or closed, records a <code>GenerationRun</code>, asks <code>context.build_context</code> for your history, runs the pattern, then saves all ideas plus their <code>idea_created</code> events together.</p>
+  </div></div>
+  <div class="stop"><div class="num">3</div><div>
+    <strong><code>src/whatelse/patterns/collaborative.py</code>, <code>def run</code></strong>
+    <p>The core of the app. <em>Round 1</em> (<code>def round1</code>): each agent names the obvious moves, which become the banned list, and proposes 3 wild seeds. <em>Round 2</em> (<code>def round2</code>): each agent makes 2 ideas, each fusing seeds from at least two other techniques. <em>Round 3</em> (<code>def round3</code>, <code>_assign_pushes</code>): each idea is pushed further by a different agent. The code, not the model, works out which techniques get credit.</p>
+  </div></div>
+
+  <h2>To change this, start here</h2>
+  <table>
+    <tr><td>How an agent thinks</td><td><code>src/whatelse/techniques/&lt;name&gt;.md</code>. Plain text, no code.</td></tr>
+    <tr><td>Wording of the rounds, history or rework instructions</td><td><code>src/whatelse/prompts/collab_round1.md</code>, <code>collab_round2.md</code>, <code>collab_round3.md</code>, <code>history.md</code>, <code>rework.md</code></td></tr>
+    <tr><td>Reason chips, seeds and ideas per agent, effort, timeout</td><td><code>src/whatelse/config.toml</code></td></tr>
+    <tr><td>What history the agents receive</td><td><code>src/whatelse/context.py</code>, <code>def build_context</code> (cap: <code>HISTORY_CAP</code>)</td></tr>
+    <tr><td>Which actions are allowed when (idea and challenge life cycle)</td><td><code>src/whatelse/service.py</code>, <code>IDEA_ACTIONS</code> and <code>CHALLENGE_ACTIONS</code></td></tr>
+    <tr><td>Look and feel</td><td><code>src/whatelse/static/style.css</code> (colours are CSS variables at the top)</td></tr>
+    <tr><td>Calling Claude differently (another model, an API key later)</td><td><code>src/whatelse/llm.py</code>, <code>class ClaudeCLI</code>. The only file that knows how agents are called.</td></tr>
+  </table>
+
+  <h2>A practice to reuse: measure the agents, then change them</h2>
+  <div class="card">
+    <p><strong>What happened.</strong> The first two-round version worked, but felt "not super creative". Instead of tweaking prompts blind, the build measured it. The run data showed only 1 of 5 agents had actually built on another agent's seed, and replaying one logged call showed that thinking effort, not the number of calls, caused the slowness (low about 20s, medium about 106s, default about 123s).</p>
+    <p><strong>Evidence.</strong> <code>devpost/checklist.md</code> → Revisions. The pattern now records <code>fused_two_techniques</code> per draft, and <code>python -m whatelse.try</code> prints "Drafts fusing two or more other techniques: N/10". The redesigned pattern scored 10/10 on a sample run, at about 125s with effort set in <code>config.toml</code>.</p>
+    <p><strong>Reuse it.</strong> When a multi-agent system disappoints, make the collaboration observable first: log every call, store intermediate outputs (seeds, drafts, who built on what), and put one number on the behaviour you want. Then change one thing and compare against that number. The terminal <code>try</code> command and the JSONL call log are the cheap tools that made this possible.</p>
+  </div>
+
+  <h2>Running it again</h2>
+  <ul>
+    <li><strong>Everyday use:</strong> double-click <code>What Else.cmd</code> (or the desktop shortcut). If the app is already running, it just opens the browser. If an older copy is running, it replaces it.</li>
+    <li><strong>From a terminal:</strong> <code>.venv\Scripts\python -m whatelse</code>, then open <code>http://127.0.0.1:8000</code>.</li>
+    <li><strong>Agents only, no web app:</strong> <code>.venv\Scripts\python -m whatelse.try "your challenge" --context "optional"</code></li>
+    <li><strong>Tests</strong> (they use a fake agent and never call Claude): <code>.venv\Scripts\python -m pytest</code></li>
+    <li><strong>Your data</strong> lives outside the project in <code>%LOCALAPPDATA%\WhatElse\</code> (<code>whatelse.db</code> and <code>logs/agent-calls.jsonl</code>), so it can't be committed.</li>
+  </ul>
+</main>
+</body>
+</html>
