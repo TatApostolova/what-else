@@ -69,16 +69,6 @@ Build mode: learn
   Learner check: Create a second challenge, switch between the two, close one as Achieved and read its summary, then reopen it.
   Commit: `Add dashboard, challenge outcomes and closing summary`
 
-- [ ] **7. Demo mode and the double-click launcher**
-  Becomes usable: `python -m whatelse --demo` opens a separate `demo.db` seeded with a fictional persona, with a "Demo" badge. `--reset-demo` re-seeds it. Double-clicking `What Else.cmd` starts the app minimised, or just opens the browser if the app is already running.
-  Why now: This is build stage 5. It's needed for the demo video in `6-ship`, and it's safest last, once the real flow is stable.
-  PRD ref: `prd.md > Demo Mode`
-  Spec ref: `spec.md > Components > Demo Seed`, `spec.md > Where It Runs and How Someone Tries It`
-  Build: `demo/seed.json` (fictional and neutral), mode handling in `__main__.py`/`config.py`/`db.py`, the badge, separate demo logs, `What Else.cmd`, and the check for an already-running app.
-  Verify (mechanical): `pytest` (demo and real modes use different DB files; seeding happens once; reset touches only `demo.db`). Start both modes and confirm each shows only its own challenges.
-  Learner check: Start demo mode and run through the one-minute demo flow from `scope.md > What "Working" Looks Like`. Then double-click `What Else.cmd` and confirm your real challenges open.
-  Commit: `Add demo mode and Windows launcher`
-
 ## Hands-on Checkpoints
 
 - [x] Early usable behavior explored — after slice 1 (judged the raw agent ideas; led to the three-round, 10-idea pattern) and again after slice 4 (learning loop confirmed good)
@@ -105,6 +95,7 @@ Activity mode:
 - Prompts go to `claude -p` on stdin instead of as an argument — long prompts (history, pasted CVs) would hit the Windows command-line length limit; stdin was tested and works.
 - Added an `effort` setting (`--effort`, default `low`; `WHATELSE_EFFORT` / `--effort` overrides) and raised the per-call timeout to 180s — real calls on the CLI default model ran far slower than the 10s measured in planning (round 2: 56–120s, one 120s timeout). Replaying one round-2 call: low ~20s, medium ~106s, default ~123s. A full collaborative Generate at low effort took 82s.
 - Collaborative pattern rebuilt as three rounds producing 10 ideas (diverge with a shared banned list of obvious moves → cross-pollinate, 2 ideas per agent each fusing seeds from two or more other techniques → push, where another agent makes each draft bolder and more specific), and `idea_count` = 10 for the single-prompt baseline — the learner judged the two-round, 5-idea output "not super creative", and only 1 of 5 agents had built on others' seeds. Sample run: 10/10 drafts fused two or more techniques, all 10 pushed, 125s, 15 calls. Updated `prd.md` (about 10 ideas) and `spec.md > Creative Agents and Orchestrator`.
+- Cut demo mode (was slice 7: seeded fictional persona, `--demo`/`--reset-demo`) — learner decision; the launcher half of that slice was already built in slice 4. The existing `WHATELSE_MODE=demo` setting still selects a separate, empty `demo.db` with a "Demo" badge, and `WHATELSE_DATA_DIR` can point at any separate folder.
 - Added "Delete challenge" to slice 6 — learner request, reversing the PRD non-goal for whole challenges (ideas still can't be deleted). Confirmation prompt; removes all rows for the challenge and purges agent-log lines whose prompt contains any of its statements; refused while a run is in progress.
 - The launcher now replaces a stale running copy: the server exposes a code fingerprint (`/_version`) and a token-protected `/_shutdown`, and `python -m whatelse` stops an out-of-date copy before starting — after an update, the old process kept serving new templates with old code and threw an Internal Server Error.
 - Added "Add your own idea" to slice 5 (Library form → saved idea labelled YOUR IDEA, visible to the agents as the person's own) — learner request, so all ideas, theirs and the agents', live in one place. No schema change: each own idea gets a `manual` GenerationRun and `techniques=["own"]`. Assumption: own ideas start in the Library, not Explore.

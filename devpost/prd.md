@@ -148,6 +148,8 @@ Source: `scope.md > Built to Finish, Not to Keep You`, `scope.md > The Core Loop
   - [ ] Reopening makes Generate and reactions available again, and nothing is lost.
 
 ### Demo Mode
+*Cut during the build (learner decision): no seeded persona or demo flags. `WHATELSE_MODE=demo` still opens a separate, empty demo database with a "Demo" badge.*
+
 Source: `scope.md > The POC Boundary` (Demo mode; Privacy by default).
 
 - A setting starts the app on a separate demo database seeded with a fictional persona's challenge. The real database is never touched.

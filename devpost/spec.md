@@ -168,6 +168,8 @@ PRD ref: `prd.md > Generating Ideas`, `prd.md > States and Boundaries` (generati
 PRD ref: `prd.md > Challenge Outcomes`.
 
 ### Demo Seed
+*Cut in build (learner decision). `WHATELSE_MODE=demo` still selects `demo.db` and shows the badge; there is no seed file and no `--demo` / `--reset-demo` flags.*
+
 `demo/seed.json` holds a fictional persona's challenge (statement + context) and, optionally, a few pre-made events so the Library isn't empty in screenshots. It's loaded into `demo.db` on first demo start. It contains no real data and is committed to the repo.
 PRD ref: `prd.md > Demo Mode`.
 
