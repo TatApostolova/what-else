@@ -42,4 +42,10 @@ This opens http://127.0.0.1:8000. On Windows you can also double-click `What Els
 
 Planned and built with Claude Code, using the hackathon's skills in order: `1-start` → `2-scope` → `3-prd` → `4-spec` → `5-build`. The planning documents are in [`devpost/`](devpost/): [scope](devpost/scope.md), [PRD](devpost/prd.md), [spec](devpost/spec.md) and an [app map](devpost/app-map.html).
 
+## Design notes
+
 A few deliberate design choices: a single reading column so each idea gets full attention, the technique labels in the corner of every card so you can see which ways of thinking produced it, and one teal accent on a warm off-white page.
+
+## License
+
+[MIT](LICENSE). The hackathon's planning and build skills in `.claude/`, `.agents/` and `agent/` come from the Build With AI: Basics hackathon and aren't covered by this license.
