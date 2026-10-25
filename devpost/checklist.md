@@ -49,7 +49,7 @@ Build mode: learn
   Learner check: Discard an idea as "already tried", rework another with a note, then Generate again. Is the rework reshaped around your note, and do the new ideas avoid the rejected one?
   Commit: `Add learning context and Rework`
 
-- [ ] **5. Develop saved ideas: Library actions and Experiments**
+- [x] **5. Develop saved ideas: Library actions and Experiments**
   Becomes usable: In the Library you can Move to Action, Add feedback, Rework or Discard an idea, and expand its history. The Experiments tab lets you log dated progress and finish with a verdict (Worked / Partly / Didn't work / Dropped).
   Why now: This is build stage 3. Experiment outcomes are the strongest learning signal, and `context.py` already reads them.
   PRD ref: `prd.md > Idea Library`, `prd.md > Experiments`
@@ -105,6 +105,7 @@ Activity mode:
 - Prompts go to `claude -p` on stdin instead of as an argument — long prompts (history, pasted CVs) would hit the Windows command-line length limit; stdin was tested and works.
 - Added an `effort` setting (`--effort`, default `low`; `WHATELSE_EFFORT` / `--effort` overrides) and raised the per-call timeout to 180s — real calls on the CLI default model ran far slower than the 10s measured in planning (round 2: 56–120s, one 120s timeout). Replaying one round-2 call: low ~20s, medium ~106s, default ~123s. A full collaborative Generate at low effort took 82s.
 - Collaborative pattern rebuilt as three rounds producing 10 ideas (diverge with a shared banned list of obvious moves → cross-pollinate, 2 ideas per agent each fusing seeds from two or more other techniques → push, where another agent makes each draft bolder and more specific), and `idea_count` = 10 for the single-prompt baseline — the learner judged the two-round, 5-idea output "not super creative", and only 1 of 5 agents had built on others' seeds. Sample run: 10/10 drafts fused two or more techniques, all 10 pushed, 125s, 15 calls. Updated `prd.md` (about 10 ideas) and `spec.md > Creative Agents and Orchestrator`.
+- Added "Add your own idea" to slice 5 (Library form → saved idea labelled YOUR IDEA, visible to the agents as the person's own) — learner request, so all ideas, theirs and the agents', live in one place. No schema change: each own idea gets a `manual` GenerationRun and `techniques=["own"]`. Assumption: own ideas start in the Library, not Explore.
 - Cut the single-prompt baseline / blind comparison slice (was slice 5; later slices renumbered 5–7) — the learner had already compared the collaborative agents with a single prompt informally and judged the single prompt clearly worse, so the formal experiment adds nothing. Patterns stay pluggable.
 - `What Else.cmd`, the already-running check and a desktop shortcut were pulled forward from slice 8 into slice 4 — the learner asked for a desktop shortcut for daily use; slice 8 now only needs demo mode.
 - Rework takes a required note only, no reason tags (assumption) — the note is the instruction, and neither tag list fits "change this"; it can be added if it's missed. A rework is refused while a Generate is running on the same challenge.

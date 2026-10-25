@@ -1,7 +1,21 @@
 <section class="tab-body">
+  {% if challenge.status == "active" %}
+  <details class="card add-idea" {% if error %}open{% endif %}>
+    <summary>+ Add your own idea</summary>
+    <form class="form" hx-post="/challenges/{{ challenge.id }}/ideas" hx-target="#tabs" hx-swap="outerHTML">
+      <label for="own-title">Title</label>
+      <input type="text" id="own-title" name="title" required maxlength="200" autocomplete="off"
+             placeholder="A short name for your idea">
+      <label for="own-text">Description <span class="muted">(optional)</span></label>
+      <textarea id="own-text" name="text" rows="3" placeholder="What would you do, and why might it work?"></textarea>
+      {% if error %}<p class="form-error">{{ error }}</p>{% endif %}
+      <button class="btn btn-primary" type="submit">Add to Library</button>
+    </form>
+  </details>
+  {% endif %}
   {% for idea in library %}
     {% include "_idea_card.html" %}
   {% else %}
-    <p class="empty">Save an idea in Explore to keep it here.</p>
+    <p class="empty">Save an idea in Explore, or add your own, to keep it here.</p>
   {% endfor %}
 </section>

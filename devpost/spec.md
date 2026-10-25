@@ -109,6 +109,7 @@ PRD ref: `prd.md > Demo Mode`, `prd.md > States and Boundaries` (Privacy, Persis
 | `POST /challenges/{id}/edit` | update statement/context (`context_edited` event) |
 | `POST /challenges/{id}/generate` | run the collaborative pattern; returns new cards (pattern selector cut in build) |
 | `POST /challenges/{id}/status` | pause / achieve / abandon / reopen (+ note) |
+| `POST /challenges/{id}/ideas` | add the person's own idea (added in build): a `manual` run, an `Idea` with `techniques=["own"]`, status `saved` |
 | `POST /ideas/{id}/save` · `/discard` · `/rework` · `/feedback` · `/action` · `/progress` · `/complete` | idea reactions |
 
 PRD ref: `prd.md > Screens and Layout`, `prd.md > Challenges`, `prd.md > Reacting to Ideas (Explore)`, `prd.md > Idea Library`, `prd.md > Experiments`, `prd.md > Challenge Outcomes`.

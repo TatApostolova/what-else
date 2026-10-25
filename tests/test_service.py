@@ -79,3 +79,52 @@ def test_saved_idea_can_later_be_discarded(session, settings):
     react(session, settings, idea.id, "save")
     react(session, settings, idea.id, "discard", ["not_practical"], "changed my mind")
     assert [e.to_status for e in events_for(session, idea)] == ["saved", "discarded"]
+
+
+def test_full_lifecycle_saved_to_completed(session, settings):
+    idea = make_idea(session)
+    react(session, settings, idea.id, "save", ["practical"])
+    react(session, settings, idea.id, "feedback", note="still like it")
+    assert idea.status == "saved"
+    react(session, settings, idea.id, "action")
+    react(session, settings, idea.id, "progress", note="sent two emails")
+    react(session, settings, idea.id, "progress", note="one reply")
+    react(session, settings, idea.id, "complete", note="got a call", verdict="worked")
+    assert (idea.status, idea.verdict) == ("completed", "worked")
+    evs = events_for(session, idea)
+    assert [e.type for e in evs] == ["saved", "feedback", "actioned", "progress", "progress", "completed"]
+    assert evs[-1].data == {"verdict": "worked"} and evs[-1].note == "got a call"
+
+
+def test_progress_and_feedback_need_a_note(session, settings):
+    idea = make_idea(session)
+    react(session, settings, idea.id, "save")
+    with pytest.raises(ServiceError):
+        react(session, settings, idea.id, "feedback", note="  ")
+    react(session, settings, idea.id, "action")
+    with pytest.raises(ServiceError):
+        react(session, settings, idea.id, "progress")
+
+
+def test_finish_needs_a_valid_verdict(session, settings):
+    idea = make_idea(session)
+    react(session, settings, idea.id, "save")
+    react(session, settings, idea.id, "action")
+    for bad in (None, "", "great"):
+        with pytest.raises(ServiceError):
+            react(session, settings, idea.id, "complete", verdict=bad)
+    react(session, settings, idea.id, "complete", verdict="dropped")
+    assert idea.status == "completed"  # dropped is a verdict, not a discard
+
+
+def test_lifecycle_order_is_enforced(session, settings):
+    idea = make_idea(session)
+    for action in ("action", "progress", "complete"):
+        with pytest.raises(ServiceError):
+            react(session, settings, idea.id, action, note="x", verdict="worked")
+    react(session, settings, idea.id, "save")
+    react(session, settings, idea.id, "action")
+    react(session, settings, idea.id, "discard", ["not_practical"])  # an experiment can still be discarded
+    assert idea.status == "discarded"
+    react_ok = [e.type for e in events_for(session, idea)]
+    assert react_ok == ["saved", "actioned", "discarded"]

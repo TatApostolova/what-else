@@ -103,6 +103,7 @@ Source: `scope.md > The Core Loop` (step 4).
 - **Add feedback:** add a note (and optional tags) without changing the status.
 - **Rework:** same as in Explore. The reworked version appears in Explore. Because you already liked the original, it stays Saved in the Library **(assumption)**.
 - **Discard:** with reasons and an optional note ("why you've changed your mind").
+- **Add your own idea** (added in build at the learner's request): a title and optional description, added straight to the Library as Saved and labelled "YOUR IDEA". It has the same actions as agent ideas, and the agents see it in the history as the person's own idea. Reworking it credits both ("REVERSE THINKING ← YOUR IDEA").
 - Each idea can expand to show its history: original text, feedback, comments and status changes, oldest first **(assumption: simple list)**.
 - Acceptance criteria:
   - [ ] Move to Action moves the idea to Experiments.

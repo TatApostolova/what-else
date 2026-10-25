@@ -1,12 +1,19 @@
+{% set idea_events = events.get(idea.id, []) %}
 <article class="card idea" id="idea-{{ idea.id }}">
   <div class="idea-top">
     <h2 class="idea-title">{{ idea.title }}</h2>
     <span class="technique">{{ technique_label(idea.techniques) }}</span>
   </div>
+  {% if idea.status in ("actioned", "completed") %}
+  <p class="status-line">
+    {% if idea.status == "actioned" %}<span class="badge badge-active">Running</span>
+    {% else %}<span class="badge badge-verdict-{{ idea.verdict }}">{{ verdicts.get(idea.verdict, "Finished") }}</span>{% endif %}
+  </p>
+  {% endif %}
   {% if idea.parent_idea_id %}
   <p class="lineage">Reworked from: {{ titles.get(idea.parent_idea_id, "an earlier idea") }}</p>
   {% endif %}
-  <p class="idea-text">{{ idea.text }}</p>
+  {% if idea.text %}<p class="idea-text">{{ idea.text }}</p>{% endif %}
   {% if idea.how %}
   <details class="how">
     <summary>How the agents made this</summary>
@@ -15,7 +22,7 @@
   {% endif %}
 
   {% if idea.status == "saved" %}
-    {% set saved = events.get(idea.id, []) | selectattr("type", "equalto", "saved") | list | last %}
+    {% set saved = idea_events | selectattr("type", "equalto", "saved") | list | last %}
     {% if saved and (saved.tags or saved.note) %}
     <p class="reasons">
       <span class="muted">Saved because:</span>
@@ -25,15 +32,45 @@
     {% endif %}
   {% endif %}
 
-  {% if idea.status == "generated" and challenge.status == "active" %}
+  {% if idea.status in ("actioned", "completed") %}
+    {% set log = idea_events | selectattr("type", "in", ["progress", "completed"]) | list %}
+    {% if log %}
+    <ul class="progress-log">
+      {% for e in log %}
+      <li><span class="when">{{ e.created_at | when }}</span>
+        {% if e.type == "completed" %}<strong>Finished: {{ verdicts.get((e.data or {}).get("verdict"), "") }}</strong>{% endif %}
+        {{ e.note or "" }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  {% endif %}
+
+  {% if challenge.status == "active" %}
   <div class="idea-actions">
-    <button class="btn btn-primary" hx-get="/ideas/{{ idea.id }}/panel/save?tab={{ tab }}"
-            hx-target="#panel-{{ idea.id }}">Save</button>
-    <button class="btn btn-outline" hx-get="/ideas/{{ idea.id }}/panel/discard?tab={{ tab }}"
-            hx-target="#panel-{{ idea.id }}">Discard</button>
-    <button class="btn btn-text" hx-get="/ideas/{{ idea.id }}/panel/rework?tab={{ tab }}"
-            hx-target="#panel-{{ idea.id }}">Rework</button>
+    {% if idea.status == "generated" %}
+      <button class="btn btn-primary" hx-get="/ideas/{{ idea.id }}/panel/save?tab={{ tab }}" hx-target="#panel-{{ idea.id }}">Save</button>
+      <button class="btn btn-outline" hx-get="/ideas/{{ idea.id }}/panel/discard?tab={{ tab }}" hx-target="#panel-{{ idea.id }}">Discard</button>
+      <button class="btn btn-text" hx-get="/ideas/{{ idea.id }}/panel/rework?tab={{ tab }}" hx-target="#panel-{{ idea.id }}">Rework</button>
+    {% elif idea.status == "saved" %}
+      <button class="btn btn-primary" hx-post="/ideas/{{ idea.id }}/action" hx-vals='{"tab": "{{ tab }}"}'
+              hx-target="#tabs" hx-swap="outerHTML">Move to Action</button>
+      <button class="btn btn-outline" hx-get="/ideas/{{ idea.id }}/panel/feedback?tab={{ tab }}" hx-target="#panel-{{ idea.id }}">Add feedback</button>
+      <button class="btn btn-text" hx-get="/ideas/{{ idea.id }}/panel/rework?tab={{ tab }}" hx-target="#panel-{{ idea.id }}">Rework</button>
+      <button class="btn btn-text btn-quiet" hx-get="/ideas/{{ idea.id }}/panel/discard?tab={{ tab }}" hx-target="#panel-{{ idea.id }}">Discard</button>
+    {% elif idea.status == "actioned" %}
+      <button class="btn btn-primary" hx-get="/ideas/{{ idea.id }}/panel/progress?tab={{ tab }}" hx-target="#panel-{{ idea.id }}">Log progress</button>
+      <button class="btn btn-outline" hx-get="/ideas/{{ idea.id }}/panel/complete?tab={{ tab }}" hx-target="#panel-{{ idea.id }}">Finish</button>
+      <button class="btn btn-text" hx-get="/ideas/{{ idea.id }}/panel/feedback?tab={{ tab }}" hx-target="#panel-{{ idea.id }}">Add feedback</button>
+      <button class="btn btn-text btn-quiet" hx-get="/ideas/{{ idea.id }}/panel/discard?tab={{ tab }}" hx-target="#panel-{{ idea.id }}">Discard</button>
+    {% endif %}
   </div>
   <div id="panel-{{ idea.id }}"></div>
+  {% endif %}
+
+  {% if idea.status != "generated" and idea_events %}
+  <details class="history">
+    <summary>History</summary>
+    {% include "_history.html" %}
+  </details>
   {% endif %}
 </article>

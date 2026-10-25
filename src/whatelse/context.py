@@ -71,7 +71,9 @@ def build_context(session: Session, challenge_id: int, tag_labels: dict[str, str
         elif idea.status == "discarded":
             rejected.append(f'- "{idea.title}": {_short(idea.text)}{_reasons(last(idea.id, "discarded"), tag_labels)}')
         elif idea.status == "saved":
-            liked.append(f'- "{idea.title}": {_short(idea.text)}{_reasons(last(idea.id, "saved"), tag_labels)}{later}')
+            own = " (the person's own idea)" if "own" in idea.techniques else ""
+            text = f": {_short(idea.text)}" if idea.text else ""
+            liked.append(f'- "{idea.title}"{own}{text}{_reasons(last(idea.id, "saved"), tag_labels)}{later}')
         elif idea.status in ("actioned", "completed"):
             progress = [e for e in events.get(idea.id, []) if e.type == "progress" and e.note]
             lines = [f'- "{idea.title}": {_short(idea.text)}']

@@ -13,10 +13,15 @@ from whatelse.db import make_engine
 from whatelse.llm import LLM, ClaudeCLI, LLMError
 from whatelse.models import Challenge, Event, Idea
 from whatelse.orchestrator import GenerateRefused, load_techniques, run_generate, run_rework, technique_label
-from whatelse.service import IDEA_ACTIONS, ServiceError, create_challenge, edit_challenge, react
+from whatelse.service import IDEA_ACTIONS, ServiceError, add_own_idea, create_challenge, edit_challenge, react
 
 TABS = ("explore", "library", "experiments")
-PANELS = (*IDEA_ACTIONS, "rework")
+PANELS = ("save", "discard", "rework", "feedback", "progress", "complete")
+EVENT_LABELS = {
+    "idea_created": "Generated", "saved": "Saved", "discarded": "Discarded", "reworked": "Reworked",
+    "feedback": "Feedback", "actioned": "Moved to Action", "progress": "Progress", "completed": "Finished",
+}
+VERDICT_LABELS = {"worked": "Worked", "partly": "Partly worked", "didnt_work": "Didn't work", "dropped": "Dropped"}
 
 
 def create_app(settings: Settings | None = None, llm: LLM | None = None) -> FastAPI:
@@ -35,7 +40,10 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
         settings=settings,
         technique_label=lambda keys: technique_label(keys, techniques),
         tag_label=lambda key: tag_labels.get(key, key.replace("_", " ")),
+        event_label=lambda type_: EVENT_LABELS.get(type_, type_.replace("_", " ").capitalize()),
+        verdicts=VERDICT_LABELS,
     )
+    templates.env.filters["when"] = lambda dt: dt.astimezone().strftime("%d %b %Y, %H:%M") if dt else ""
 
     def render(request: Request, name: str, status_code: int = 200, **ctx) -> HTMLResponse:
         return templates.TemplateResponse(request, name, ctx, status_code=status_code)
@@ -57,7 +65,10 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
     def workspace_data(session: Session, challenge: Challenge) -> dict:
         explore = ideas_with_status(session, challenge.id, "generated")
         library = ideas_with_status(session, challenge.id, "saved")
-        experiments = ideas_with_status(session, challenge.id, "actioned", "completed")
+        experiments = sorted(  # running first, then finished; newest activity first within each
+            ideas_with_status(session, challenge.id, "actioned", "completed"),
+            key=lambda i: (i.status == "completed", -i.updated_at.timestamp()),
+        )
         events: dict[int, list[Event]] = {}
         for event in session.exec(
             select(Event).where(Event.challenge_id == challenge.id, Event.idea_id.is_not(None)).order_by(Event.id)
@@ -112,6 +123,18 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
                 pass  # an empty statement simply isn't saved
         return RedirectResponse(f"/challenges/{challenge_id}", status_code=303)
 
+    @app.post("/challenges/{challenge_id}/ideas", response_class=HTMLResponse)
+    def own_idea(request: Request, challenge_id: int, title: str = Form(""), text: str = Form("")):
+        error = None
+        with Session(engine) as session:
+            get_challenge(session, challenge_id)
+            try:
+                add_own_idea(session, challenge_id, title, text)
+            except ServiceError as exc:
+                error = str(exc)
+            data = workspace_data(session, get_challenge(session, challenge_id))
+            return render(request, "_tabs.html", tab="library", error=error, **data)
+
     @app.post("/challenges/{challenge_id}/generate", response_class=HTMLResponse)
     def generate(request: Request, challenge_id: int):
         error = None
@@ -156,7 +179,7 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
     @app.post("/ideas/{idea_id}/{action}", response_class=HTMLResponse)
     def idea_reaction(request: Request, idea_id: int, action: str,
                       tags: list[str] = Form(default_factory=list), note: str = Form(""),
-                      tab: str = Form("explore")):
+                      verdict: str = Form(""), tab: str = Form("explore")):
         if action not in IDEA_ACTIONS:
             raise HTTPException(404)
         error = None
@@ -165,7 +188,7 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
             if idea is None:
                 raise HTTPException(404)
             try:
-                react(session, settings, idea_id, action, tags, note)
+                react(session, settings, idea_id, action, tags, note, verdict or None)
             except ServiceError as exc:
                 error = str(exc)
             data = workspace_data(session, get_challenge(session, idea.challenge_id))

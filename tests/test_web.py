@@ -182,3 +182,80 @@ def test_edit_challenge_changes_next_generate(make_client, settings):
     with Session(make_engine(settings)) as s:
         edit_event = s.exec(select(Event).where(Event.type == "context_edited")).one()
         assert edit_event.data["previous_context"] == "old context"
+
+
+def test_library_to_experiments_flow(make_client, settings):
+    client = make_client()
+    start(client)
+    client.post("/challenges/1/generate")
+    client.post("/ideas/1/save", data={"tags": ["practical"], "tab": "explore"})
+
+    library = client.get("/challenges/1?tab=library").text
+    assert "Move to Action" in library and "Add feedback" in library and "History" in library
+    assert "Any new thoughts" in client.get("/ideas/1/panel/feedback?tab=library").text
+    client.post("/ideas/1/feedback", data={"note": "worth a go", "tab": "library"})
+    assert "worth a go" in client.get("/challenges/1?tab=library").text
+
+    html = client.post("/ideas/1/action", data={"tab": "library"}).text
+    assert 'Experiments <span class="count">1</span>' in html and 'id="idea-1"' not in html
+
+    client.post("/ideas/1/progress", data={"note": "first email sent", "tab": "experiments"})
+    client.post("/ideas/1/progress", data={"note": "second email sent", "tab": "experiments"})
+    exp = client.get("/challenges/1?tab=experiments").text
+    assert "Running" in exp and exp.index("first email sent") < exp.index("second email sent")
+
+    panel = client.get("/ideas/1/panel/complete?tab=experiments").text
+    assert 'value="didnt_work"' in panel and "Partly worked" in panel
+    done = unescape(client.post("/ideas/1/complete",
+                                data={"verdict": "worked", "note": "landed a meeting", "tab": "experiments"}).text)
+    assert "Finished: Worked" in done and "Log progress" not in done
+
+
+def test_experiments_running_before_finished(make_client):
+    client = make_client()
+    start(client)
+    client.post("/challenges/1/generate")
+    for i in (1, 2):
+        client.post(f"/ideas/{i}/save", data={"tab": "explore"})
+        client.post(f"/ideas/{i}/action", data={"tab": "library"})
+    client.post("/ideas/1/complete", data={"verdict": "partly", "tab": "experiments"})
+    exp = client.get("/challenges/1?tab=experiments").text
+    assert exp.index('id="idea-2"') < exp.index('id="idea-1"')
+
+
+def test_verdict_reaches_the_next_generate(make_client):
+    llm = FakeLLM()
+    client = make_client(llm)
+    start(client)
+    client.post("/challenges/1/generate")
+    client.post("/ideas/1/save", data={"tab": "explore"})
+    client.post("/ideas/1/action", data={"tab": "library"})
+    client.post("/ideas/1/complete", data={"verdict": "didnt_work", "note": "nobody replied", "tab": "experiments"})
+    llm.calls.clear()
+    client.post("/challenges/1/generate")
+    assert "Didn't work" in llm.calls[0]["prompt"] and "nobody replied" in llm.calls[0]["prompt"]
+
+
+def test_add_own_idea_goes_to_library_and_reaches_agents(make_client, settings):
+    llm = FakeLLM()
+    client = make_client(llm)
+    start(client)
+    html = client.post("/challenges/1/ideas", data={"title": "Host a skills swap", "text": "Trade lessons."}).text
+    assert 'Idea Library <span class="count">1</span>' in html and "YOUR IDEA" in html and "Host a skills swap" in html
+    assert "Move to Action" in html
+
+    blank = unescape(client.post("/challenges/1/ideas", data={"title": "  ", "text": "x"}).text)
+    assert "Give your idea a short title" in blank
+
+    client.post("/challenges/1/generate")
+    assert "Host a skills swap\" (the person's own idea)" in llm.calls[0]["prompt"]
+
+
+def test_rework_of_own_idea_credits_both(make_client):
+    client = make_client()
+    start(client)
+    client.post("/challenges/1/ideas", data={"title": "My plan", "text": ""})
+    html = client.post("/ideas/1/rework", data={"note": "make it bolder", "tab": "library"}).text
+    assert "Reworked from: My plan" in client.get("/challenges/1").text
+    explore = client.get("/challenges/1").text
+    assert "REVERSE THINKING ← YOUR IDEA" in explore

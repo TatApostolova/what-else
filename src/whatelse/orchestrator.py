@@ -42,7 +42,7 @@ def load_techniques(keys: list[str]) -> list[Technique]:
 
 def technique_label(keys: list[str], techniques: list[Technique]) -> str:
     """Card label: own technique first, then what it built on, e.g. 'SCAMPER ← ANALOGIES + REVERSE THINKING'."""
-    labels = {t.key: t.label.upper() for t in techniques}
+    labels = {t.key: t.label.upper() for t in techniques} | {"own": "YOUR IDEA"}
     names = [labels.get(k, k.replace("_", " ").upper()) for k in keys]
     if len(names) == 1:
         return names[0]
@@ -162,6 +162,8 @@ def run_rework(engine, idea_id: int, note: str, llm: LLM, settings: Settings) ->
         session.commit()
         run_id, challenge_id = run.id, original.challenge_id
         original_techniques = list(original.techniques)
+        if original_techniques[0] not in techniques:  # e.g. the person's own idea
+            original_techniques = [lead.key] + original_techniques
 
     try:
         out = _ReworkOut.model_validate(llm.complete(system_prompt(lead), prompt, REWORK_SCHEMA))

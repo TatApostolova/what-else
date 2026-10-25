@@ -175,3 +175,20 @@ textarea:focus, input[type="text"]:focus { outline: 2px solid var(--accent); out
 .edit-form { margin-top: 0.5rem; }
 .edit-form label { font-size: 0.85rem; }
 .feedback-panel .working { font-size: 0.85rem; }
+
+/* Library and Experiments */
+.btn-quiet { color: var(--muted); }
+.status-line { margin: 0.35rem 0 0; }
+.badge-verdict-worked { background: var(--green-soft); color: var(--green); }
+.badge-verdict-partly { background: var(--amber-soft); color: var(--amber); }
+.badge-verdict-didnt_work { background: var(--grey-soft); color: var(--muted); }
+.badge-verdict-dropped { background: var(--card); color: var(--muted); border: 1px solid var(--border); }
+.progress-log, .history-list { margin: 0.6rem 0 0; padding-left: 1.1rem; font-size: 0.85rem; display: flex; flex-direction: column; gap: 0.3rem; }
+.history-list { padding-left: 1.3rem; }
+.when { color: var(--muted); font-size: 0.78rem; margin-right: 0.35rem; }
+.history { margin-top: 0.6rem; font-size: 0.85rem; }
+.history summary { cursor: pointer; color: var(--muted); }
+.idea-actions { flex-wrap: wrap; }
+.add-idea { padding: 0.75rem 1.25rem; }
+.add-idea summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.add-idea .form { margin-top: 0.5rem; }

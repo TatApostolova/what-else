@@ -1,0 +1,14 @@
+<ol class="history-list">
+  <li><span class="when">{{ idea.created_at | when }}</span> <strong>{{ "Added by you" if "own" in idea.techniques else "Generated" }}</strong> — “{{ idea.title }}”</li>
+  {% for e in idea_events if e.type != "idea_created" %}
+  <li>
+    <span class="when">{{ e.created_at | when }}</span>
+    <strong>{{ event_label(e.type) }}{% if e.type == "completed" %}: {{ verdicts.get((e.data or {}).get("verdict"), "") }}{% endif %}</strong>
+    {% for t in e.tags %}<span class="chip chip-static">{{ tag_label(t) }}</span>{% endfor %}
+    {% if e.note %}<span class="note">“{{ e.note }}”</span>{% endif %}
+    {% if e.type == "reworked" and (e.data or {}).get("new_idea_id") %}
+      <span class="muted">→ “{{ titles.get(e.data.new_idea_id, "new idea") }}”</span>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ol>
