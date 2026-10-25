@@ -147,3 +147,25 @@ textarea:focus, input[type="text"]:focus { outline: 2px solid var(--accent); out
   .idea-top { flex-direction: column-reverse; gap: 0.25rem; }
   .technique { max-width: none; text-align: left; }
 }
+
+/* Reactions */
+.idea-actions { display: flex; gap: 0.5rem; margin-top: 0.9rem; }
+.feedback-panel {
+  margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.panel-question { margin: 0; font-weight: 600; }
+.panel-actions { display: flex; gap: 0.5rem; align-items: center; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.chip {
+  display: inline-flex; align-items: center; cursor: pointer; user-select: none;
+  border: 1px solid var(--border); border-radius: 999px; padding: 0.2rem 0.75rem;
+  font-size: 0.85rem; background: var(--card); color: var(--text);
+}
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip:hover { border-color: var(--muted); }
+.chip:has(input:checked) { background: var(--accent); border-color: var(--accent); color: #fff; }
+.chip:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.chip-static { cursor: default; font-size: 0.75rem; padding: 0.05rem 0.6rem; background: var(--accent-soft); border-color: transparent; color: var(--accent); }
+.reasons { margin: 0.6rem 0 0; display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; font-size: 0.85rem; }
+.note { color: var(--muted); font-style: italic; }

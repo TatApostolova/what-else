@@ -29,7 +29,7 @@ Build mode: learn
   Learner check: Run `python -m whatelse`, start a challenge, click Generate, and wait for the cards. Restart the app and confirm the cards are still there.
   Commit: `Add challenge creation, workspace and Generate`
 
-- [ ] **3. Save and discard ideas with one-tap reasons**
+- [x] **3. Save and discard ideas with one-tap reasons**
   Becomes usable: Each card has Save, which opens a panel with save tags and a note, and Discard, which does the same with discard tags. A saved idea leaves Explore and appears in a simple Idea Library tab. A discarded idea disappears but is kept. Tab counts are shown.
   Why now: Reactions are the raw material for the learning loop and complete build stage 1. Every reaction is written to the event log from the start.
   PRD ref: `prd.md > Reacting to Ideas (Explore)`, `prd.md > Look and Feel`

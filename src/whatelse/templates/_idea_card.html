@@ -10,4 +10,25 @@
     <p>{{ idea.how }}</p>
   </details>
   {% endif %}
+
+  {% if idea.status == "saved" %}
+    {% set saved = events.get(idea.id, []) | selectattr("type", "equalto", "saved") | list | last %}
+    {% if saved and (saved.tags or saved.note) %}
+    <p class="reasons">
+      <span class="muted">Saved because:</span>
+      {% for t in saved.tags %}<span class="chip chip-static">{{ tag_label(t) }}</span>{% endfor %}
+      {% if saved.note %}<span class="note">“{{ saved.note }}”</span>{% endif %}
+    </p>
+    {% endif %}
+  {% endif %}
+
+  {% if idea.status == "generated" and challenge.status == "active" %}
+  <div class="idea-actions">
+    <button class="btn btn-primary" hx-get="/ideas/{{ idea.id }}/panel/save?tab={{ tab }}"
+            hx-target="#panel-{{ idea.id }}">Save</button>
+    <button class="btn btn-outline" hx-get="/ideas/{{ idea.id }}/panel/discard?tab={{ tab }}"
+            hx-target="#panel-{{ idea.id }}">Discard</button>
+  </div>
+  <div id="panel-{{ idea.id }}"></div>
+  {% endif %}
 </article>

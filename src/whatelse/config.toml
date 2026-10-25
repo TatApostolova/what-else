@@ -75,5 +75,9 @@ key = "too_slow"
 label = "too slow"
 
 [[tags.discard]]
+key = "too_much_work"
+label = "too much work"
+
+[[tags.discard]]
 key = "duplicate"
 label = "same as another idea"

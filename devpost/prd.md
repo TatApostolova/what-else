@@ -88,7 +88,7 @@ Source: `scope.md > The Core Loop` (step 3), `scope.md > Risks to Review Later` 
 - **No reaction:** the idea stays in Explore. Inactivity is never treated as feedback.
 - Reason tags are generic and come from config **(assumption: starting sets)**:
   - Save: "original", "practical", "fits me", "quick to try", "sparks other ideas".
-  - Discard: "too vague", "not practical", "not me", "already tried", "too slow", "same as another idea" (added in `4-spec` to record agent convergence).
+  - Discard: "too vague", "not practical", "not me", "already tried", "too slow", "too much work" (added in build at the learner's request), "same as another idea" (added in `4-spec` to record agent convergence).
 - Acceptance criteria:
   - [ ] Saving takes at most two taps when no note is added, and the idea immediately shows in the Library.
   - [ ] A discarded idea disappears from Explore and its reasons are stored.

@@ -11,9 +11,9 @@ from sqlmodel import Session, func, select
 from whatelse.config import PACKAGE_DIR, Settings, load_settings
 from whatelse.db import make_engine
 from whatelse.llm import LLM, ClaudeCLI, LLMError
-from whatelse.models import Challenge, Idea
+from whatelse.models import Challenge, Event, Idea
 from whatelse.orchestrator import GenerateRefused, load_techniques, run_generate, technique_label
-from whatelse.service import ServiceError, create_challenge
+from whatelse.service import IDEA_ACTIONS, ServiceError, create_challenge, react
 
 TABS = ("explore", "library", "experiments")
 
@@ -29,9 +29,11 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
     app = FastAPI(title="What Else?", docs_url=None, redoc_url=None)
     app.mount("/static", StaticFiles(directory=PACKAGE_DIR / "static"), name="static")
     templates = Jinja2Templates(directory=PACKAGE_DIR / "templates")
+    tag_labels = {t["key"]: t["label"] for t in settings.save_tags + settings.discard_tags}
     templates.env.globals.update(
         settings=settings,
         technique_label=lambda keys: technique_label(keys, techniques),
+        tag_label=lambda key: tag_labels.get(key, key.replace("_", " ")),
     )
 
     def render(request: Request, name: str, status_code: int = 200, **ctx) -> HTMLResponse:
@@ -55,8 +57,14 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
         explore = ideas_with_status(session, challenge.id, "generated")
         library = ideas_with_status(session, challenge.id, "saved")
         experiments = ideas_with_status(session, challenge.id, "actioned", "completed")
+        events: dict[int, list[Event]] = {}
+        for event in session.exec(
+            select(Event).where(Event.challenge_id == challenge.id, Event.idea_id.is_not(None)).order_by(Event.id)
+        ):
+            events.setdefault(event.idea_id, []).append(event)
         return {
             "challenge": challenge,
+            "events": events,
             "explore": explore,
             "library": library,
             "experiments": experiments,
@@ -103,5 +111,35 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
         with Session(engine) as session:
             data = workspace_data(session, get_challenge(session, challenge_id))
             return render(request, "_tabs.html", tab="explore", error=error, **data)
+
+    @app.get("/ideas/{idea_id}/panel/{action}", response_class=HTMLResponse)
+    def feedback_panel(request: Request, idea_id: int, action: str, tab: str = "explore"):
+        if action not in IDEA_ACTIONS:
+            raise HTTPException(404)
+        with Session(engine) as session:
+            idea = session.get(Idea, idea_id)
+            if idea is None:
+                raise HTTPException(404)
+            tags = settings.save_tags if action == "save" else settings.discard_tags
+            return render(request, "_feedback_panel.html", idea=idea, action=action, tags=tags,
+                          tab=tab if tab in TABS else "explore")
+
+    @app.post("/ideas/{idea_id}/{action}", response_class=HTMLResponse)
+    def idea_reaction(request: Request, idea_id: int, action: str,
+                      tags: list[str] = Form(default_factory=list), note: str = Form(""),
+                      tab: str = Form("explore")):
+        if action not in IDEA_ACTIONS:
+            raise HTTPException(404)
+        error = None
+        with Session(engine) as session:
+            idea = session.get(Idea, idea_id)
+            if idea is None:
+                raise HTTPException(404)
+            try:
+                react(session, settings, idea_id, action, tags, note)
+            except ServiceError as exc:
+                error = str(exc)
+            data = workspace_data(session, get_challenge(session, idea.challenge_id))
+            return render(request, "_tabs.html", tab=tab if tab in TABS else "explore", error=error, **data)
 
     return app

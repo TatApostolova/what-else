@@ -109,3 +109,43 @@ def test_ideas_survive_restart_and_stuck_runs_are_cleared(make_client, settings)
     assert fresh.get("/challenges/1").text.count('class="card idea"') == 10
     with Session(make_engine(settings)) as s:
         assert {r.status for r in s.exec(select(GenerationRun)).all()} == {"succeeded", "failed"}
+
+
+def test_save_and_discard_from_explore(make_client, settings):
+    client = make_client()
+    start(client)
+    client.post("/challenges/1/generate")
+
+    panel = client.get("/ideas/1/panel/save?tab=explore").text
+    assert "What do you like about it?" in panel and 'value="fits_me"' in panel
+    assert "same as another idea" in client.get("/ideas/2/panel/discard").text
+
+    html = client.post("/ideas/1/save", data={"tags": ["original", "practical"], "note": "nice", "tab": "explore"}).text
+    assert 'id="idea-1"' not in html  # left Explore
+    assert 'Idea Library <span class="count">1</span>' in html
+    client.post("/ideas/2/discard", data={"tags": ["duplicate"], "tab": "explore"})
+
+    explore = client.get("/challenges/1").text
+    assert explore.count('class="card idea"') == 8
+    library = client.get("/challenges/1?tab=library").text
+    assert 'id="idea-1"' in library and "Saved because:" in library and "nice" in library
+    assert 'id="idea-2"' not in library
+
+
+def test_two_tap_save_without_note(make_client, settings):
+    client = make_client()
+    start(client)
+    client.post("/challenges/1/generate")
+    client.post("/ideas/3/save", data={"tab": "explore"})  # panel submit with nothing chosen
+    with Session(make_engine(settings)) as s:
+        assert s.get(Idea, 3).status == "saved"
+
+
+def test_unreacted_ideas_stay_after_another_generate(make_client):
+    client = make_client()
+    start(client)
+    client.post("/challenges/1/generate")
+    client.post("/ideas/1/discard", data={"tab": "explore"})
+    html = client.post("/challenges/1/generate").text
+    assert html.count('class="card idea"') == 19
+    assert 'id="idea-2"' in html and 'id="idea-1"' not in html

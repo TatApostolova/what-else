@@ -1,0 +1,21 @@
+<form class="feedback-panel"
+      hx-post="/ideas/{{ idea.id }}/{{ action }}" hx-target="#tabs" hx-swap="outerHTML"
+      hx-disabled-elt="find button[type=submit]">
+  <p class="panel-question">
+    {% if action == "save" %}What do you like about it?{% else %}Why isn't this idea right for you?{% endif %}
+    <span class="muted">Optional.</span>
+  </p>
+  <div class="chips">
+    {% for tag in tags %}
+    <label class="chip"><input type="checkbox" name="tags" value="{{ tag.key }}">{{ tag.label }}</label>
+    {% endfor %}
+  </div>
+  <input type="text" name="note" placeholder="Add a note (optional)" autocomplete="off">
+  <input type="hidden" name="tab" value="{{ tab }}">
+  <div class="panel-actions">
+    <button class="btn {{ 'btn-primary' if action == 'save' else 'btn-outline' }}" type="submit">
+      {% if action == "save" %}Save idea{% else %}Discard idea{% endif %}
+    </button>
+    <button class="btn btn-text" type="button" onclick="this.closest('.feedback-panel').remove()">Cancel</button>
+  </div>
+</form>
