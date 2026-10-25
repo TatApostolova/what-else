@@ -15,7 +15,8 @@ from whatelse.patterns import PatternResult
 from pydantic import BaseModel, Field
 
 from whatelse.patterns import challenge_block, render, system_prompt
-from whatelse.service import add_event, check_rework, stage_rework
+from whatelse.models import Challenge
+from whatelse.service import add_event, check_rework, require_active, stage_rework, touch
 
 TECHNIQUES_DIR = PACKAGE_DIR / "techniques"
 PATTERNS = ("collaborative",)
@@ -81,6 +82,7 @@ def run_generate(engine, challenge_id: int, llm: LLM, settings: Settings, reques
         ).first()
         if busy:
             raise GenerateRefused("The agents are already working on this challenge.")
+        require_active(session.get(Challenge, challenge_id))
         ctx = build_context(session, challenge_id, settings.tag_labels)
         run = GenerationRun(
             challenge_id=challenge_id, kind="generate", pattern=pattern, model=settings.model,
@@ -114,7 +116,9 @@ def run_generate(engine, challenge_id: int, llm: LLM, settings: Settings, reques
             add_event(session, challenge_id, "idea_created", idea_id=idea.id, to_status="generated")
         run.status, run.finished_at = "succeeded", utcnow()
         run.data = {**run.data, **result.data}
-        session.add(run)
+        challenge = session.get(Challenge, challenge_id)
+        touch(challenge)
+        session.add_all([run, challenge])
         session.commit()
         for idea in ideas:
             session.refresh(idea)
@@ -145,6 +149,7 @@ def run_rework(engine, idea_id: int, note: str, llm: LLM, settings: Settings) ->
     with Session(engine) as session:
         original = session.get(Idea, idea_id)
         note = check_rework(original, note)
+        require_active(session.get(Challenge, original.challenge_id))
         busy = session.exec(select(GenerationRun).where(
             GenerationRun.challenge_id == original.challenge_id, GenerationRun.status == "running")).first()
         if busy:
@@ -189,7 +194,9 @@ def run_rework(engine, idea_id: int, note: str, llm: LLM, settings: Settings) ->
         run = session.get(GenerationRun, run_id)
         run.status, run.finished_at = "succeeded", utcnow()
         run.data = {**run.data, "new_idea_id": new.id}
-        session.add(run)
+        challenge = session.get(Challenge, challenge_id)
+        touch(challenge)
+        session.add_all([run, challenge])
         session.commit()
         session.refresh(new)
         return new

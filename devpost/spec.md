@@ -109,6 +109,8 @@ PRD ref: `prd.md > Demo Mode`, `prd.md > States and Boundaries` (Privacy, Persis
 | `POST /challenges/{id}/edit` | update statement/context (`context_edited` event) |
 | `POST /challenges/{id}/generate` | run the collaborative pattern; returns new cards (pattern selector cut in build) |
 | `POST /challenges/{id}/status` | pause / achieve / abandon / reopen (+ note) |
+| `POST /challenges/{id}/delete` | permanent delete after confirmation (added in build): rows for the challenge in all four tables, plus matching agent-log lines |
+| `GET /_version`, `POST /_shutdown` | code fingerprint; lets a newer launch stop a stale running copy (added in build) |
 | `POST /challenges/{id}/ideas` | add the person's own idea (added in build): a `manual` run, an `Idea` with `techniques=["own"]`, status `saved` |
 | `POST /ideas/{id}/save` · `/discard` · `/rework` · `/feedback` · `/action` · `/progress` · `/complete` | idea reactions |
 

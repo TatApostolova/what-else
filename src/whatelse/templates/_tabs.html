@@ -1,10 +1,12 @@
 <div id="tabs">
   <nav class="tabs">
+    {% if summary %}<a href="?tab=summary" class="{{ 'active' if tab == 'summary' }}">Summary</a>{% endif %}
     <a href="?tab=explore" class="{{ 'active' if tab == 'explore' }}">Explore <span class="count">{{ counts.explore }}</span></a>
     <a href="?tab=library" class="{{ 'active' if tab == 'library' }}">Idea Library <span class="count">{{ counts.library }}</span></a>
     <a href="?tab=experiments" class="{{ 'active' if tab == 'experiments' }}">Experiments <span class="count">{{ counts.experiments }}</span></a>
   </nav>
-  {% if tab == "explore" %}{% include "_explore.html" %}
+  {% if tab == "summary" and summary %}{% include "_summary.html" %}
   {% elif tab == "library" %}{% include "_library.html" %}
-  {% else %}{% include "_experiments.html" %}{% endif %}
+  {% elif tab == "experiments" %}{% include "_experiments.html" %}
+  {% else %}{% include "_explore.html" %}{% endif %}
 </div>

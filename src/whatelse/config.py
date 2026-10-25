@@ -10,6 +10,18 @@ from pathlib import Path
 PACKAGE_DIR = Path(__file__).resolve().parent
 
 
+def code_fingerprint() -> str:
+    """Changes whenever any file in the package changes, so a stale running copy can be spotted."""
+    import hashlib
+
+    digest = hashlib.sha256()
+    for path in sorted(PACKAGE_DIR.rglob("*")):
+        if path.is_file() and "__pycache__" not in path.parts:
+            stat = path.stat()
+            digest.update(f"{path.relative_to(PACKAGE_DIR)}:{stat.st_mtime_ns}:{stat.st_size};".encode())
+    return digest.hexdigest()[:16]
+
+
 def default_data_dir() -> Path:
     """Per-user app-data folder, outside the repository."""
     if os.name == "nt":

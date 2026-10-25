@@ -59,7 +59,7 @@ Build mode: learn
   Learner check: Move a saved idea to Action, log two progress notes, finish it as "Worked", and expand its history.
   Commit: `Add Idea Library actions and Experiments`
 
-- [ ] **6. Several challenges: dashboard, close / pause / reopen, closing summary**
+- [x] **6. Several challenges: dashboard, close / pause / reopen, closing summary**
   Becomes usable: The dashboard lists challenges (Active, then Paused, then closed) with status and last activity. Challenges can be closed as Achieved or Abandoned, paused, and reopened. A non-active challenge is read-only. A closing summary appears on close and as a Summary tab.
   Why now: This is build stage 4. The data was keyed to challenges from slice 2, so this is UI and service work only.
   PRD ref: `prd.md > Screens and Layout` (Dashboard), `prd.md > Challenge Outcomes`
@@ -105,6 +105,8 @@ Activity mode:
 - Prompts go to `claude -p` on stdin instead of as an argument — long prompts (history, pasted CVs) would hit the Windows command-line length limit; stdin was tested and works.
 - Added an `effort` setting (`--effort`, default `low`; `WHATELSE_EFFORT` / `--effort` overrides) and raised the per-call timeout to 180s — real calls on the CLI default model ran far slower than the 10s measured in planning (round 2: 56–120s, one 120s timeout). Replaying one round-2 call: low ~20s, medium ~106s, default ~123s. A full collaborative Generate at low effort took 82s.
 - Collaborative pattern rebuilt as three rounds producing 10 ideas (diverge with a shared banned list of obvious moves → cross-pollinate, 2 ideas per agent each fusing seeds from two or more other techniques → push, where another agent makes each draft bolder and more specific), and `idea_count` = 10 for the single-prompt baseline — the learner judged the two-round, 5-idea output "not super creative", and only 1 of 5 agents had built on others' seeds. Sample run: 10/10 drafts fused two or more techniques, all 10 pushed, 125s, 15 calls. Updated `prd.md` (about 10 ideas) and `spec.md > Creative Agents and Orchestrator`.
+- Added "Delete challenge" to slice 6 — learner request, reversing the PRD non-goal for whole challenges (ideas still can't be deleted). Confirmation prompt; removes all rows for the challenge and purges agent-log lines whose prompt contains any of its statements; refused while a run is in progress.
+- The launcher now replaces a stale running copy: the server exposes a code fingerprint (`/_version`) and a token-protected `/_shutdown`, and `python -m whatelse` stops an out-of-date copy before starting — after an update, the old process kept serving new templates with old code and threw an Internal Server Error.
 - Added "Add your own idea" to slice 5 (Library form → saved idea labelled YOUR IDEA, visible to the agents as the person's own) — learner request, so all ideas, theirs and the agents', live in one place. No schema change: each own idea gets a `manual` GenerationRun and `techniques=["own"]`. Assumption: own ideas start in the Library, not Explore.
 - Cut the single-prompt baseline / blind comparison slice (was slice 5; later slices renumbered 5–7) — the learner had already compared the collaborative agents with a single prompt informally and judged the single prompt clearly worse, so the formal experiment adds nothing. Patterns stay pluggable.
 - `What Else.cmd`, the already-running check and a desktop shortcut were pulled forward from slice 8 into slice 4 — the learner asked for a desktop shortcut for daily use; slice 8 now only needs demo mode.

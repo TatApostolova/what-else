@@ -141,6 +141,7 @@ Source: `scope.md > Built to Finish, Not to Keep You`, `scope.md > The Core Loop
 - **Reopen** returns any Achieved, Abandoned or Paused challenge to Active with everything intact.
 - **While not Active**, the workspace is read-only: there is no Generate and no reactions, but everything can still be viewed. Saved and actioned ideas stay as they were. Reopening restores the full set of actions **(assumption)**.
 - Every status change, including reopening, is recorded as an event.
+- **Delete challenge** (added in build): after a confirmation prompt, permanently removes the challenge, its ideas, events and runs, and its entries in the private agent log.
 - Acceptance criteria:
   - [ ] Closing as Achieved shows the summary with correct counts and the experiment verdicts.
   - [ ] A closed challenge shows its status on the dashboard and can't generate.
@@ -205,7 +206,7 @@ Follows `scope.md > Build Order`. Each stage is usable on its own.
 ## Non-Goals
 - **A persistent, cross-challenge user profile or guided questionnaire.** Context belongs to the challenge, and the start must stay fast.
 - **Scoring ideas.** The user judges by gut.
-- **Deleting ideas or challenges.** History is the learning material.
+- **Deleting ideas.** History is the learning material. *(Revised in build: a whole challenge can now be deleted permanently, with confirmation, at the learner's request. Challenges never share history, so this costs no other challenge anything.)*
 - **Accounts, authentication and multi-user use.** It's a personal local tool.
 - **Paid API usage.** Agents run on the existing subscription.
 - **Job-search-specific logic in the core.** The challenge statement carries the framing.

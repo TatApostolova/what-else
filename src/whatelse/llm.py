@@ -54,6 +54,28 @@ def _write_log(log_path: Path | None, entry: dict) -> None:
         f.write(line + "\n")
 
 
+def purge_log(log_path: Path, needles: list[str]) -> int:
+    """Remove every logged call whose prompt contains one of `needles`. Returns how many."""
+    needles = [n.strip() for n in needles if n and n.strip()]
+    if not needles or not log_path.exists():
+        return 0
+    with _log_lock:
+        kept, removed = [], 0
+        for line in log_path.read_text(encoding="utf-8").splitlines():
+            try:
+                prompt = json.loads(line).get("prompt", "")
+            except json.JSONDecodeError:
+                prompt = ""
+            if any(n in prompt for n in needles):
+                removed += 1
+            else:
+                kept.append(line)
+        tmp = log_path.with_suffix(".tmp")
+        tmp.write_text("".join(line + "\n" for line in kept), encoding="utf-8")
+        tmp.replace(log_path)
+    return removed
+
+
 _LOGIN_HINTS = ("/login", "not logged in", "please log in", "invalid api key", "authentication")
 
 

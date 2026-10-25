@@ -128,3 +128,39 @@ def test_lifecycle_order_is_enforced(session, settings):
     assert idea.status == "discarded"
     react_ok = [e.type for e in events_for(session, idea)]
     assert react_ok == ["saved", "actioned", "discarded"]
+
+
+def test_challenge_status_changes_write_events(session):
+    from whatelse.service import change_challenge_status
+
+    c = create_challenge(session, "A challenge", None)
+    change_challenge_status(session, c.id, "pause", note="ignored for pause")
+    assert (c.status, c.outcome_note) == ("paused", None)
+    change_challenge_status(session, c.id, "reopen")
+    change_challenge_status(session, c.id, "achieve", note="got there")
+    assert (c.status, c.outcome_note) == ("achieved", "got there")
+    with pytest.raises(ServiceError):
+        change_challenge_status(session, c.id, "pause")  # closed challenges must be reopened first
+    change_challenge_status(session, c.id, "reopen")
+    assert (c.status, c.outcome_note) == ("active", None)
+    statuses = session.exec(select(Event).where(Event.type == "challenge_status").order_by(Event.id)).all()
+    assert [(e.from_status, e.to_status) for e in statuses] == [
+        ("active", "paused"), ("paused", "active"), ("active", "achieved"), ("achieved", "active")]
+    assert statuses[2].note == "got there"
+
+
+def test_closed_challenge_refuses_changes(session, settings):
+    from whatelse.service import add_own_idea, change_challenge_status, edit_challenge
+
+    idea = make_idea(session)
+    change_challenge_status(session, idea.challenge_id, "abandon")
+    for attempt in (
+        lambda: react(session, settings, idea.id, "save"),
+        lambda: edit_challenge(session, idea.challenge_id, "new", None),
+        lambda: add_own_idea(session, idea.challenge_id, "mine", None),
+    ):
+        with pytest.raises(ServiceError, match="Reopen it"):
+            attempt()
+    change_challenge_status(session, idea.challenge_id, "reopen")
+    react(session, settings, idea.id, "save")
+    assert idea.status == "saved"

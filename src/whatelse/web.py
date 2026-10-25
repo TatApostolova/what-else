@@ -3,19 +3,25 @@
 from __future__ import annotations
 
 from fastapi import FastAPI, Form, HTTPException, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlmodel import Session, func, select
 
-from whatelse.config import PACKAGE_DIR, Settings, load_settings
+from whatelse.config import PACKAGE_DIR, Settings, code_fingerprint, load_settings
 from whatelse.db import make_engine
-from whatelse.llm import LLM, ClaudeCLI, LLMError
-from whatelse.models import Challenge, Event, Idea
+from whatelse.llm import LLM, ClaudeCLI, LLMError, purge_log
+from whatelse.models import Challenge, Event, GenerationRun, Idea
 from whatelse.orchestrator import GenerateRefused, load_techniques, run_generate, run_rework, technique_label
-from whatelse.service import IDEA_ACTIONS, ServiceError, add_own_idea, create_challenge, edit_challenge, react
+from whatelse.service import (
+    CHALLENGE_ACTIONS, IDEA_ACTIONS, ServiceError, add_own_idea, change_challenge_status, create_challenge,
+    delete_challenge, edit_challenge, react,
+)
+from whatelse.summary import build_summary
 
-TABS = ("explore", "library", "experiments")
+TABS = ("explore", "library", "experiments", "summary")
+CLOSED = ("achieved", "abandoned")
+STATUS_ORDER = {"active": 0, "paused": 1, "achieved": 2, "abandoned": 2}
 PANELS = ("save", "discard", "rework", "feedback", "progress", "complete")
 EVENT_LABELS = {
     "idea_created": "Generated", "saved": "Saved", "discarded": "Discarded", "reworked": "Reworked",
@@ -33,6 +39,8 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
     techniques = load_techniques(settings.techniques)
 
     app = FastAPI(title="What Else?", docs_url=None, redoc_url=None)
+    app.state.fingerprint = code_fingerprint()
+    app.state.server = None  # set by __main__ so a newer launch can stop a stale copy
     app.mount("/static", StaticFiles(directory=PACKAGE_DIR / "static"), name="static")
     templates = Jinja2Templates(directory=PACKAGE_DIR / "templates")
     tag_labels = {t["key"]: t["label"] for t in settings.save_tags + settings.discard_tags}
@@ -77,6 +85,7 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
         titles = dict(session.exec(select(Idea.id, Idea.title).where(Idea.challenge_id == challenge.id)).all())
         return {
             "challenge": challenge,
+            "summary": build_summary(session, challenge.id) if challenge.status in CLOSED else None,
             "events": events,
             "titles": titles,
             "explore": explore,
@@ -85,13 +94,37 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
             "counts": {"explore": len(explore), "library": len(library), "experiments": len(experiments)},
         }
 
+    @app.get("/_version", response_class=PlainTextResponse)
+    def version():
+        return app.state.fingerprint
+
+    @app.post("/_shutdown", response_class=PlainTextResponse)
+    def shutdown(token: str = Form("")):
+        """Lets a newer launch replace this copy. Needs this copy's fingerprint as the token."""
+        if token != app.state.fingerprint or app.state.server is None:
+            raise HTTPException(403)
+        with Session(engine) as session:
+            if session.exec(select(GenerationRun).where(GenerationRun.status == "running")).first():
+                raise HTTPException(409, "The agents are working; try again when they finish.")
+        app.state.server.should_exit = True
+        return "stopping"
+
     @app.get("/", response_class=HTMLResponse)
     def home(request: Request):
         with Session(engine) as session:
             if not session.exec(select(func.count()).select_from(Challenge)).one():
                 return render(request, "welcome.html")
-            challenges = session.exec(select(Challenge).order_by(Challenge.updated_at.desc())).all()
-            return render(request, "dashboard.html", challenges=challenges)
+            challenges = sorted(
+                session.exec(select(Challenge)).all(),
+                key=lambda c: (STATUS_ORDER.get(c.status, 3), -c.updated_at.timestamp()),
+            )
+            stats: dict[int, dict[str, int]] = {}
+            for cid, status in session.exec(select(Idea.challenge_id, Idea.status)):
+                s = stats.setdefault(cid, {"ideas": 0, "saved": 0, "experiments": 0})
+                s["ideas"] += 1
+                s["saved"] += status == "saved"
+                s["experiments"] += status in ("actioned", "completed")
+            return render(request, "dashboard.html", challenges=challenges, stats=stats)
 
     @app.get("/challenges/new", response_class=HTMLResponse)
     def new_challenge(request: Request):
@@ -107,10 +140,13 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
             return RedirectResponse(f"/challenges/{challenge.id}", status_code=303)
 
     @app.get("/challenges/{challenge_id}", response_class=HTMLResponse)
-    def workspace(request: Request, challenge_id: int, tab: str = "explore"):
-        tab = tab if tab in TABS else "explore"
+    def workspace(request: Request, challenge_id: int, tab: str | None = None):
         with Session(engine) as session:
-            data = workspace_data(session, get_challenge(session, challenge_id))
+            challenge = get_challenge(session, challenge_id)
+            closed = challenge.status in CLOSED
+            if tab not in TABS or (tab == "summary" and not closed):
+                tab = "summary" if closed else "explore"
+            data = workspace_data(session, challenge)
             return render(request, "workspace.html", tab=tab, **data)
 
     @app.post("/challenges/{challenge_id}/edit")
@@ -122,6 +158,32 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
             except ServiceError:
                 pass  # an empty statement simply isn't saved
         return RedirectResponse(f"/challenges/{challenge_id}", status_code=303)
+
+    @app.post("/challenges/{challenge_id}/status")
+    def status(challenge_id: int, action: str = Form(""), note: str = Form("")):
+        if action not in CHALLENGE_ACTIONS:
+            raise HTTPException(400, "Unknown action")
+        with Session(engine) as session:
+            get_challenge(session, challenge_id)
+            try:
+                challenge = change_challenge_status(session, challenge_id, action, note)
+            except ServiceError:
+                return RedirectResponse(f"/challenges/{challenge_id}", status_code=303)
+            tab = "summary" if challenge.status in CLOSED else "explore"
+        return RedirectResponse(f"/challenges/{challenge_id}?tab={tab}", status_code=303)
+
+    @app.post("/challenges/{challenge_id}/delete")
+    def delete(challenge_id: int, confirm: str = Form("")):
+        if confirm != "yes":
+            raise HTTPException(400, "Deletion must be confirmed")
+        with Session(engine) as session:
+            get_challenge(session, challenge_id)
+            if session.exec(select(GenerationRun).where(
+                GenerationRun.challenge_id == challenge_id, GenerationRun.status == "running")).first():
+                return RedirectResponse(f"/challenges/{challenge_id}", status_code=303)
+            statements = delete_challenge(session, challenge_id)
+        purge_log(settings.log_path, statements)
+        return RedirectResponse("/", status_code=303)
 
     @app.post("/challenges/{challenge_id}/ideas", response_class=HTMLResponse)
     def own_idea(request: Request, challenge_id: int, title: str = Form(""), text: str = Form("")):
@@ -140,7 +202,7 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
         error = None
         try:
             run_generate(engine, challenge_id, llm, settings)
-        except GenerateRefused as exc:
+        except (GenerateRefused, ServiceError) as exc:
             error = str(exc)
         except LLMError as exc:
             error = exc.user_message

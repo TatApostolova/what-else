@@ -7,8 +7,40 @@
     <h1>{{ challenge.title }}</h1>
     <span class="badge badge-{{ challenge.status }}">{{ challenge.status|capitalize }}</span>
   </div>
+
+  <div class="status-controls">
+    {% if challenge.status == "active" %}
+      <details class="close-menu">
+        <summary class="btn btn-outline">Close challenge</summary>
+        <form class="card close-form" method="post" action="/challenges/{{ challenge.id }}/status">
+          <label for="outcome-note">How did it end? <span class="muted">(optional note)</span></label>
+          <input type="text" id="outcome-note" name="note" autocomplete="off"
+                 placeholder="What worked, or why you're stopping">
+          <div class="panel-actions">
+            <button class="btn btn-primary" name="action" value="achieve">Achieved</button>
+            <button class="btn btn-outline" name="action" value="abandon">Abandoned</button>
+          </div>
+        </form>
+      </details>
+      <form method="post" action="/challenges/{{ challenge.id }}/status">
+        <button class="btn btn-text btn-quiet" name="action" value="pause">Pause</button>
+      </form>
+    {% else %}
+      <form method="post" action="/challenges/{{ challenge.id }}/status">
+        <button class="btn btn-primary" name="action" value="reopen">Reopen challenge</button>
+      </form>
+      <span class="muted small">Read-only while {{ "paused" if challenge.status == "paused" else "closed" }}. Reopening keeps everything.</span>
+    {% endif %}
+    <form class="delete-form" method="post" action="/challenges/{{ challenge.id }}/delete"
+          onsubmit="return confirm('Delete this challenge permanently? All its ideas, feedback, experiments and history will be removed. This cannot be undone.')">
+      <input type="hidden" name="confirm" value="yes">
+      <button class="btn btn-text btn-danger" type="submit">Delete challenge</button>
+    </form>
+  </div>
+
   <details class="card challenge-panel">
     <summary>Challenge and context</summary>
+    {% if challenge.status == "active" %}
     <form class="form edit-form" method="post" action="/challenges/{{ challenge.id }}/edit">
       <label for="statement">The challenge</label>
       <textarea id="statement" name="statement" rows="3" required>{{ challenge.statement }}</textarea>
@@ -17,6 +49,12 @@
       <p class="muted small">Changes shape the next Generate. Existing ideas stay as they are.</p>
       <button class="btn btn-outline" type="submit">Save changes</button>
     </form>
+    {% else %}
+    <h3>The challenge</h3>
+    <p class="prewrap">{{ challenge.statement }}</p>
+    <h3>Context</h3>
+    <p class="prewrap">{{ challenge.context or "None." }}</p>
+    {% endif %}
   </details>
 </section>
 {% include "_tabs.html" %}

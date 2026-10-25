@@ -1,4 +1,5 @@
 <section class="tab-body">
+  {% if challenge.status == "active" %}
   <div class="generate-bar">
     <button class="btn btn-primary"
             hx-post="/challenges/{{ challenge.id }}/generate"
@@ -6,10 +7,11 @@
             hx-indicator="#working" hx-disabled-elt="this">Generate</button>
     <span id="working" class="working">The agents are working… this takes about two minutes.</span>
   </div>
+  {% endif %}
   {% if error %}{% include "_error.html" %}{% endif %}
   {% for idea in explore %}
     {% include "_idea_card.html" %}
   {% else %}
-    <p class="empty">Click <strong>Generate</strong> and the agents will come up with ideas for this challenge.</p>
+    <p class="empty">{% if challenge.status == "active" %}Click <strong>Generate</strong> and the agents will come up with ideas for this challenge.{% else %}No ideas waiting for a reaction.{% endif %}</p>
   {% endfor %}
 </section>

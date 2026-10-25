@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from whatelse.models import Challenge, Event, GenerationRun, Idea, utcnow
 
@@ -84,6 +84,8 @@ def react(session: Session, settings, idea_id: int, action: str, tags: list[str]
     idea = session.get(Idea, idea_id)
     if idea is None:
         raise ServiceError("That idea doesn't exist.")
+    challenge = session.get(Challenge, idea.challenge_id)
+    require_active(challenge)
     if idea.status not in spec.allowed_from:
         raise ServiceError(f"That can't be done to an idea that is {idea.status}.")
     note = (note or "").strip() or None
@@ -102,7 +104,6 @@ def react(session: Session, settings, idea_id: int, action: str, tags: list[str]
     if spec.needs_verdict:
         idea.verdict = verdict
     idea.updated_at = utcnow()
-    challenge = session.get(Challenge, idea.challenge_id)
     touch(challenge)
     session.add_all([idea, challenge])
     session.commit()
@@ -141,6 +142,7 @@ def edit_challenge(session: Session, challenge_id: int, statement: str, context:
     challenge = session.get(Challenge, challenge_id)
     if challenge is None:
         raise ServiceError("That challenge doesn't exist.")
+    require_active(challenge)
     statement = (statement or "").strip()
     if not statement:
         raise ServiceError("The challenge can't be empty.")
@@ -169,6 +171,7 @@ def add_own_idea(session: Session, challenge_id: int, title: str, text: str | No
     challenge = session.get(Challenge, challenge_id)
     if challenge is None:
         raise ServiceError("That challenge doesn't exist.")
+    require_active(challenge)
     title = " ".join((title or "").split())
     if not title:
         raise ServiceError("Give your idea a short title.")
@@ -186,3 +189,63 @@ def add_own_idea(session: Session, challenge_id: int, title: str, text: str | No
     session.commit()
     session.refresh(idea)
     return idea
+
+
+# Challenge outcomes: action -> (statuses it's allowed from, new status, takes an outcome note).
+CHALLENGE_ACTIONS = {
+    "pause": ({"active"}, "paused", False),
+    "achieve": ({"active"}, "achieved", True),
+    "abandon": ({"active"}, "abandoned", True),
+    "reopen": ({"paused", "achieved", "abandoned"}, "active", False),
+}
+STATUS_WORDS = {"paused": "paused", "achieved": "closed as achieved", "abandoned": "closed as abandoned"}
+
+
+def require_active(challenge: Challenge) -> None:
+    """Paused and closed challenges are read-only until reopened."""
+    if challenge.status != "active":
+        raise ServiceError(f"This challenge is {STATUS_WORDS.get(challenge.status, challenge.status)}. "
+                           "Reopen it to make changes.")
+
+
+def change_challenge_status(session: Session, challenge_id: int, action: str, note: str | None = None) -> Challenge:
+    if action not in CHALLENGE_ACTIONS:
+        raise ServiceError(f"Unknown action {action!r}.")
+    allowed_from, to_status, takes_note = CHALLENGE_ACTIONS[action]
+    challenge = session.get(Challenge, challenge_id)
+    if challenge is None:
+        raise ServiceError("That challenge doesn't exist.")
+    if challenge.status not in allowed_from:
+        raise ServiceError(f"A challenge that is {challenge.status} can't do that.")
+    note = ((note or "").strip() or None) if takes_note else None
+    add_event(session, challenge.id, "challenge_status", note=note,
+              from_status=challenge.status, to_status=to_status, data={"action": action})
+    challenge.status = to_status
+    challenge.outcome_note = note  # cleared on reopen; the event log keeps every earlier note
+    touch(challenge)
+    session.add(challenge)
+    session.commit()
+    session.refresh(challenge)
+    return challenge
+
+
+def delete_challenge(session: Session, challenge_id: int) -> list[str]:
+    """Permanently delete a challenge and everything recorded for it.
+
+    Returns every statement the challenge ever had, so the caller can also purge
+    the private agent-call log (whose prompts contain the statement).
+    """
+    challenge = session.get(Challenge, challenge_id)
+    if challenge is None:
+        raise ServiceError("That challenge doesn't exist.")
+    events = session.exec(select(Event).where(Event.challenge_id == challenge_id)).all()
+    statements = [challenge.statement] + [
+        e.data["previous_statement"] for e in events
+        if e.type == "context_edited" and (e.data or {}).get("previous_statement")
+    ]
+    for model in (Event, Idea, GenerationRun):
+        for row in session.exec(select(model).where(model.challenge_id == challenge_id)).all():
+            session.delete(row)
+    session.delete(challenge)
+    session.commit()
+    return statements

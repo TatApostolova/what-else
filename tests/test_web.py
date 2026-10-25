@@ -1,3 +1,4 @@
+import re
 import threading
 from html import unescape
 
@@ -259,3 +260,88 @@ def test_rework_of_own_idea_credits_both(make_client):
     assert "Reworked from: My plan" in client.get("/challenges/1").text
     explore = client.get("/challenges/1").text
     assert "REVERSE THINKING ← YOUR IDEA" in explore
+
+
+def test_close_shows_summary_with_correct_counts(make_client):
+    client = make_client()
+    start(client)
+    client.post("/challenges/1/generate")
+    client.post("/ideas/1/save", data={"tab": "explore"})
+    client.post("/ideas/2/save", data={"tab": "explore"})
+    client.post("/ideas/3/discard", data={"tab": "explore"})
+    client.post("/ideas/4/rework", data={"note": "smaller", "tab": "explore"})
+    client.post("/ideas/1/action", data={"tab": "library"})
+    client.post("/ideas/1/complete", data={"verdict": "worked", "tab": "experiments"})
+    client.post("/challenges/1/ideas", data={"title": "Mine"})
+
+    resp = client.post("/challenges/1/status", data={"action": "achieve", "note": "found a way in"},
+                       follow_redirects=False)
+    assert resp.headers["location"] == "/challenges/1?tab=summary"
+    page = unescape(client.get("/challenges/1").text)  # closed challenges open on the Summary
+    assert "found a way in" in page and 'class="tabs"' in page
+    stats = dict(re.findall(r"<dt>([^<]+)</dt><dd>(\d+)</dd>", page))
+    assert stats == {"Generated": "11", "Your own": "1", "Saved": "3", "Discarded": "1", "Reworked": "1",
+                     "Actioned": "1", "Finished": "1"}
+    assert "Worked" in page and "Mine" in page
+
+
+def test_closed_challenge_is_read_only_until_reopened(make_client, settings):
+    llm = FakeLLM()
+    client = make_client(llm)
+    start(client)
+    client.post("/challenges/1/generate")
+    client.post("/challenges/1/status", data={"action": "pause"})
+    page = client.get("/challenges/1").text
+    assert "Reopen challenge" in page and "Generate</button>" not in page and "panel/save" not in page
+
+    calls = len(llm.calls)
+    html = unescape(client.post("/challenges/1/generate").text)
+    assert "This challenge is paused" in html and len(llm.calls) == calls
+    assert "Reopen it" in unescape(client.post("/ideas/1/save", data={"tab": "explore"}).text)
+    with Session(make_engine(settings)) as s:
+        assert s.get(Idea, 1).status == "generated"
+
+    client.post("/challenges/1/status", data={"action": "reopen"})
+    page = client.get("/challenges/1").text
+    assert "Generate</button>" in page and "panel/save" in page and page.count('class="card idea"') == 10
+
+
+def test_dashboard_orders_active_paused_closed(make_client):
+    client = make_client()
+    for name in ("Closed one", "Paused one", "Active one"):
+        start(client, statement=name)
+    client.post("/challenges/1/status", data={"action": "abandon"})
+    client.post("/challenges/2/status", data={"action": "pause"})
+    client.post("/challenges/3/generate")
+    page = client.get("/").text
+    assert page.index("Active one") < page.index("Paused one") < page.index("Closed one")
+    assert "10 ideas" in page and "Abandoned" in page
+
+
+def test_delete_challenge_removes_everything(make_client, settings):
+    import json
+
+    client = make_client()
+    start(client, statement="Keep me")
+    start(client, statement="Delete me please", context="secret context")
+    client.post("/challenges/2/generate")
+    client.post("/ideas/1/save", data={"tab": "explore"})
+    client.post("/challenges/2/edit", data={"statement": "Delete me, edited", "context": ""})
+    log = settings.log_path
+    log.parent.mkdir(parents=True, exist_ok=True)
+    log.write_text("\n".join(json.dumps({"prompt": p}) for p in
+                             ["...Delete me please...", "...Delete me, edited...", "...Keep me..."]) + "\n",
+                   encoding="utf-8")
+
+    assert "Delete challenge" in client.get("/challenges/2").text
+    assert client.post("/challenges/2/delete", data={}).status_code == 400  # must be confirmed
+    resp = client.post("/challenges/2/delete", data={"confirm": "yes"}, follow_redirects=False)
+    assert resp.status_code == 303 and resp.headers["location"] == "/"
+
+    assert client.get("/challenges/2").status_code == 404
+    assert "Delete me" not in client.get("/").text and "Keep me" in client.get("/").text
+    with Session(make_engine(settings)) as s:
+        for model in (Idea, Event, GenerationRun):
+            assert s.exec(select(model).where(model.challenge_id == 2)).all() == []
+        assert s.exec(select(Event).where(Event.challenge_id == 1)).all()  # other challenge untouched
+    assert [json.loads(l)["prompt"] for l in log.read_text(encoding="utf-8").splitlines()] == ["...Keep me..."]

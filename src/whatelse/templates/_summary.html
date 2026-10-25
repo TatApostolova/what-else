@@ -1,0 +1,38 @@
+<section class="tab-body summary">
+  <div class="card">
+    <p class="summary-outcome">
+      <span class="badge badge-{{ challenge.status }}">{{ challenge.status|capitalize }}</span>
+      <span class="muted">{{ challenge.updated_at | when }}</span>
+    </p>
+    {% if challenge.outcome_note %}<p class="summary-note">“{{ challenge.outcome_note }}”</p>{% endif %}
+    {% set c = summary.counts %}
+    <dl class="stats">
+      <div><dt>Generated</dt><dd>{{ c.generated }}</dd></div>
+      {% if c.own %}<div><dt>Your own</dt><dd>{{ c.own }}</dd></div>{% endif %}
+      <div><dt>Saved</dt><dd>{{ c.saved }}</dd></div>
+      <div><dt>Discarded</dt><dd>{{ c.discarded }}</dd></div>
+      <div><dt>Reworked</dt><dd>{{ c.reworked }}</dd></div>
+      <div><dt>Actioned</dt><dd>{{ c.actioned }}</dd></div>
+      <div><dt>Finished</dt><dd>{{ c.completed }}</dd></div>
+    </dl>
+  </div>
+
+  <h3>Experiments</h3>
+  {% for idea in summary.experiments %}
+  <div class="summary-row">
+    {% if idea.status == "completed" %}
+      <span class="badge badge-verdict-{{ idea.verdict }}">{{ verdicts.get(idea.verdict, "Finished") }}</span>
+    {% else %}<span class="badge">Unfinished</span>{% endif %}
+    <span>{{ idea.title }}</span>
+  </div>
+  {% else %}
+  <p class="muted">No experiments were run.</p>
+  {% endfor %}
+
+  <h3>Saved ideas</h3>
+  {% for idea in summary.saved %}
+  <div class="summary-row"><span class="technique-inline">{{ technique_label(idea.techniques) }}</span><span>{{ idea.title }}</span></div>
+  {% else %}
+  <p class="muted">None left in the Library.</p>
+  {% endfor %}
+</section>
