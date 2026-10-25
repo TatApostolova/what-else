@@ -1,0 +1,79 @@
+# What Else? configuration. Generic on purpose: the challenge statement carries the framing.
+
+# Collaboration pattern used by Generate when "Default" is chosen: "collaborative" or "single_prompt".
+pattern = "collaborative"
+
+# Ideas per Generate for the single-prompt pattern. Keep it equal to
+# ideas_per_agent x number of techniques so the comparison stays fair.
+idea_count = 10
+
+# Collaborative pattern: wild seeds per agent in round 1, ideas per agent in round 2.
+seeds_per_agent = 3
+ideas_per_agent = 2
+
+# Claude model passed to `claude -p --model`. Empty means the CLI default.
+model = ""
+
+# Thinking effort passed to `claude -p --effort` (low, medium, high, xhigh, max). Empty means the CLI default.
+# Measured 2026-10-25 on one build-round call: low ~20s, medium ~106s, CLI default ~123s.
+effort = "low"
+
+# Seconds before a single agent call is killed.
+timeout_seconds = 180
+
+# Technique files in techniques/, in display order.
+techniques = [
+    "reverse_thinking",
+    "random_associations",
+    "analogies",
+    "scamper",
+    "challenging_assumptions",
+]
+
+[hints]
+statement = "What are you trying to figure out?"
+context = "Optional. What do you bring that isn't obvious at first glance? What have you already tried? Any constraints? Pasting notes or a CV works too."
+
+[[tags.save]]
+key = "original"
+label = "original"
+
+[[tags.save]]
+key = "practical"
+label = "practical"
+
+[[tags.save]]
+key = "fits_me"
+label = "fits me"
+
+[[tags.save]]
+key = "quick_to_try"
+label = "quick to try"
+
+[[tags.save]]
+key = "sparks_ideas"
+label = "sparks other ideas"
+
+[[tags.discard]]
+key = "too_vague"
+label = "too vague"
+
+[[tags.discard]]
+key = "not_practical"
+label = "not practical"
+
+[[tags.discard]]
+key = "not_me"
+label = "not me"
+
+[[tags.discard]]
+key = "already_tried"
+label = "already tried"
+
+[[tags.discard]]
+key = "too_slow"
+label = "too slow"
+
+[[tags.discard]]
+key = "duplicate"
+label = "same as another idea"

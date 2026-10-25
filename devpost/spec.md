@@ -13,7 +13,7 @@ What Else? is a small web app that runs on your own computer. Every part is plai
 - **The pages** are HTML templates (Jinja2) with a small helper library (HTMX) that lets a button update one part of the page, such as the Explore list, without reloading the whole page. There's no JavaScript framework and no build step.
 - **The database** is one SQLite file on your machine, like a spreadsheet the program reads and writes. Your real database and the demo database are two separate files, and neither is ever in the repository.
 - **The event log:** every reaction (save, discard, rework, feedback, progress, verdict, close, reopen) is written as a new, timestamped row with its reason tags. Rows are never edited or deleted, so the full history of every idea and challenge is always there.
-- **The agents:** each creative technique is a text file describing how that agent thinks. When you press Generate, the app runs Claude Code in headless mode (`claude -p`) once per agent, on your existing subscription with no API key. In round 1 each agent proposes seeds. In round 2 each agent sees all the *other* agents' seeds and builds the strongest unconventional idea it can with its own technique. It might extend, invert, challenge or recombine one seed or several. That gives five ideas, each labelled with every technique that contributed to it.
+- **The agents:** each creative technique is a text file describing how that agent thinks. When you press Generate, the app runs Claude Code in headless mode (`claude -p`) once per agent, on your existing subscription with no API key. In round 1 (diverge) each agent names the obvious moves, which become a shared banned list, and proposes wild seeds. In round 2 (cross-pollinate) each agent sees all the *other* agents' seeds and makes two ideas, each fusing seeds from at least two other techniques. In round 3 (push) each agent takes two ideas made by other agents and pushes them further with its own technique. That gives ten ideas, each labelled with every technique that contributed to it.
 - **The context builder** is one Python file that decides what history the agents see: the challenge, your context, and a summary of what you saved, discarded, reworked and tested. It's the only place that does this, so a smarter analysis layer can replace it later.
 - **The LLM adapter** is one Python file that knows how to call Claude. Nothing else in the app does. Swapping in an API key or another provider later means changing only this file.
 
@@ -29,7 +29,7 @@ PRD ref: `prd.md > The Core Journey`.
    2. creates a `GenerationRun` (status `running`);
    3. asks `context.py` for the agent context (statement, context, history summary);
    4. hands it to `orchestrator.py`, which loads the configured pattern and the five technique definitions;
-   5. the pattern makes its `claude -p` calls through `llm.py` (round 1: 5 parallel calls; round 2: 5 parallel calls);
+   5. the pattern makes its `claude -p` calls through `llm.py` (three rounds of 5 parallel calls each);
    6. each returned idea is checked by Pydantic and stored as an `Idea` (status `generated`) with an `idea_created` event;
    7. the run is marked `succeeded` and the new cards are returned as HTML into the Explore list.
    The browser shows "The agents are working…" until the response arrives.
@@ -136,11 +136,13 @@ PRD ref: `prd.md > Learning Loop`.
 ### Creative Agents and Orchestrator
 - `techniques/*.md`: one file per technique (`reverse_thinking`, `random_associations`, `analogies`, `scamper`, `challenging_assumptions`). Each has a short frontmatter (`key`, `label`) and a body describing how that agent thinks. Editing a technique means editing its file.
 - `patterns/collaborative.py` (**default**):
-  - **Round 1:** 5 parallel calls. Each technique gets the context and returns 2 seeds (`title`, `text`). The orchestrator gives every seed a stable id such as `analogies-1`.
-  - **Round 2:** 5 parallel calls. Each technique gets the context plus all *other* techniques' seeds, with their ids. It returns 1 finished idea: the strongest unconventional idea it can make with its own technique, whether by extending, inverting, challenging or recombining **one or more** seeds. The number of seeds isn't fixed. The idea must list the seed ids it built on (`built_on`) and say briefly how (`how`, e.g. "inverts analogies-1, combines with scamper-2").
+  - *(Revised in build, slice 1: three rounds and 10 ideas instead of two rounds and 5, because the first version's ideas weren't creative enough and 4 of 5 agents ignored the seeds.)*
+  - **Round 1 (diverge):** 5 parallel calls. Each technique names the 3 most obvious moves (merged into a shared **banned list**) and returns 3 wild seeds (`title`, `text`), unfiltered for feasibility. The orchestrator gives every seed a stable id such as `analogies-1`.
+  - **Round 2 (cross-pollinate):** 5 parallel calls. Each technique gets the context, the banned list and all *other* techniques' seeds, with their ids. It returns 2 ideas (`ideas_per_agent`), each of which must **fuse seeds from at least two other techniques** and avoid the banned list. Each lists `built_on` and `how`. The code checks the ids and records whether the fusion rule was met (`fused_two_techniques`), without rejecting ideas that miss it.
+  - **Round 3 (push):** 5 parallel calls. Every draft is given to exactly one *other* agent (agent i pushes the first draft of agent i+1 and the second of agent i+2), which makes it bolder, replaces its most conventional part and makes it more specific. The pushed version replaces the draft, and the pushing technique is appended to `techniques`. A failed push keeps those drafts unchanged; a failed round-2 call fails the run.
   - **Attribution:** the orchestrator, not the model, works out `techniques` = the agent's own technique first, followed by the technique of every seed listed in `built_on` (no duplicates). It drops any seed id that doesn't exist. The card label reads e.g. "SCAMPER ← ANALOGIES + REVERSE THINKING". If `built_on` is empty, the label shows only the agent's own technique.
   - The round-1 seeds are stored in `GenerationRun.data` for later analysis, not shown.
-- `patterns/single_prompt.py` (**baseline for the stage-1 comparison**): one call. All five techniques are described in one prompt, which returns 5 ideas each tagged with its technique.
+- `patterns/single_prompt.py` (**baseline for the stage-1 comparison**): one call. All five techniques are described in one prompt, which returns 10 ideas (`idea_count`) each tagged with its technique.
 - **The comparison is a genuine experiment, not a demonstration.** The goal is to *find out* whether multi-agent collaboration produces better ideas, not to prove that it does. Both patterns get the same context, the same idea count and prompt wording of equal care, and neither is tuned harder than the other. In stage 1 the same challenge is run with each pattern, and the cards are judged by gut, with the pattern name hidden until after judging. The initial result sets only a **provisional** default in `config.toml`, even if that's the single prompt. Different patterns may suit different challenges, or different stages of the same challenge, so neither is treated as permanently better.
 - **Both patterns stay available.** Next to Generate there's a small "Pattern" selector with these options:
   - **Default** (from config).
@@ -254,12 +256,14 @@ claude -p "<prompt>"
   --setting-sources ""
   --no-session-persistence
   [--model <model>]          # only if set in config; otherwise the CLI default
+  [--effort <level>]         # from config (default "low"); added in build, see checklist Revisions
 ```
+The prompt is sent on **stdin**, not as an argument, so long prompts don't hit the Windows command-line limit.
 - **Response:** one JSON object. `is_error` is the success flag, and `structured_output` holds the parsed object matching the schema (also present as a string in `result`). `usage` and `duration_ms` go to the log.
 - **Measured 2026-10-19:** these flags cut input from about 21k to **136 tokens** for a trivial call (783 for an idea prompt). A structured 2-seed call took about 10s, so a collaborative Generate is about 2 rounds × ~10–15s ≈ 20–30s.
 - **Auth:** the claude.ai subscription login. `llm.py` refuses to run and shows an error if `ANTHROPIC_API_KEY` is set in the environment, to prevent accidental billing.
-- **Limits/cost:** no per-call charge. Calls count against the subscription's usage limits (a collaborative Generate = 10 calls, Rework = 1).
-- **Timeout:** 120s per call (configurable). The subprocess is killed on timeout.
+- **Limits/cost:** no per-call charge. Calls count against the subscription's usage limits (a collaborative Generate = 15 calls, Rework = 1).
+- **Timeout:** 180s per call (configurable; raised from 120s in build). The subprocess is killed on timeout.
 - **Do not use `--bare`:** it requires an API key and doesn't accept OAuth login.
 - **Docs:** https://code.claude.com/docs/en/headless · https://code.claude.com/docs/en/cli-reference
 - **Verify early in the build:** that `--json-schema` output stays reliable for arrays of 5 ideas, and how the CLI reports a usage-limit error (`is_error` + message), so the friendly message triggers correctly.
@@ -289,7 +293,8 @@ Listed in `Stack`. All installed and imported successfully on Python 3.14.2 on 2
 - **Stack from `scope.md > Technical Direction`:** FastAPI, SQLModel/SQLite, Jinja2 + HTMX, a `claude -p` adapter, and techniques/patterns as files.
 - **Local only, no deployment.** The submission is a demo video plus the public repository.
 
-- **The collaborative two-round pattern** (5 seed calls, then 5 build-on calls, all in parallel; 10 calls per Generate) is the starting default. **Round 2 is open:** each agent may extend, invert, challenge or recombine any number of other agents' seeds, whichever produces the strongest unconventional idea. Technique attribution is preserved for every seed used. The agent recommended the two rounds; you confirmed them and removed the two-technique restriction. Tradeoff accepted: more subscription usage per Generate.
+- **Revised in build:** the collaborative pattern became three rounds (diverge with a banned list of obvious moves, cross-pollinate with a two-technique fusion rule, push) producing 10 ideas from 15 calls, about 2 minutes at low effort. Your decision after judging the first version "not super creative".
+- **The collaborative two-round pattern** (5 seed calls, then 5 build-on calls, all in parallel; 10 calls per Generate) was the starting default. **Round 2 is open:** each agent may extend, invert, challenge or recombine any number of other agents' seeds, whichever produces the strongest unconventional idea. Technique attribution is preserved for every seed used. The agent recommended the two rounds; you confirmed them and removed the two-technique restriction. Tradeoff accepted: more subscription usage per Generate.
 - **Keep the single-prompt baseline, and run the comparison as a genuine experiment.** The aim is to discover whether multi-agent collaboration produces better ideas, not to prove that it does. The first blind comparison sets a **provisional** default only. Both patterns stay selectable (including a Blind option) for further testing, because different approaches may suit different challenges or stages.
 - **Preserve data, don't analyse it yet.** The pattern is recorded per run, so every idea and reaction can be traced back to it. Convergence is watched for through a `duplicate` discard tag and the stored seeds/`built_on`. There's no automatic pattern selection or analytics in the MVP.
 
@@ -298,7 +303,7 @@ Listed in `Stack`. All installed and imported successfully on Python 3.14.2 on 2
 
 **The useful unknown: running multi-agent work on a subscription without paid API calls** (from `learner-profile.md > Desired Learning Outcome`).
 - **What clarified it:** a live test showed that `claude -p` with a custom system prompt, no tools, no MCP servers and no setting sources costs about 136 input tokens instead of about 21k. That turned "fewer, richer calls" from a necessity into a choice. `--json-schema` gives validated structured output.
-- **Still to check in build stage 1:** how fast real usage limits are reached with 10 calls per Generate, and whether the collaborative pattern actually beats the single prompt by gut.
+- **Still to check in build stage 1:** how fast real usage limits are reached with 15 calls per Generate, and whether the collaborative pattern actually beats the single prompt by gut.
 
 **Open issues**
 - **Collaborative vs single-prompt quality:** settled by the stage-1 comparison (`prd.md > Open Questions`).

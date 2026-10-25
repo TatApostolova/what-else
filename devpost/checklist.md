@@ -9,8 +9,8 @@ Build mode: learn
 
 ## Slices
 
-- [ ] **1. The five agents collaborate on a challenge and return ideas (terminal)**
-  Becomes usable: A command, `python -m whatelse.try "<challenge>"`, runs the collaborative pattern for real through `claude -p` and prints about 5 ideas, each with its technique label, `built_on` and `how`.
+- [x] **1. The five agents collaborate on a challenge and return ideas (terminal)**
+  Becomes usable: A command, `python -m whatelse.try "<challenge>"`, runs the collaborative pattern for real through `claude -p` and prints about 10 ideas, each with its technique label, `built_on` and `how`.
   Why now: The agents are the kernel and the biggest unknown: whether `--json-schema` is reliable, how fast two parallel rounds run, how a usage-limit error looks, and whether the ideas are any good. This is the one allowed "layer first" slice, because it proves the critical risk and leaves runnable evidence. It also includes the project scaffold.
   PRD ref: `prd.md > Generating Ideas`
   Spec ref: `spec.md > Stack`, `spec.md > File Structure`, `spec.md > Components > Creative Agents and Orchestrator`, `spec.md > Components > LLM Adapter`, `spec.md > External Services and Dependencies > Claude Code CLI`
@@ -111,4 +111,10 @@ Reflection:
 Activity mode:
 
 ## Revisions
+
+- Prompts go to `claude -p` on stdin instead of as an argument — long prompts (history, pasted CVs) would hit the Windows command-line length limit; stdin was tested and works.
+- Added an `effort` setting (`--effort`, default `low`; `WHATELSE_EFFORT` / `--effort` overrides) and raised the per-call timeout to 180s — real calls on the CLI default model ran far slower than the 10s measured in planning (round 2: 56–120s, one 120s timeout). Replaying one round-2 call: low ~20s, medium ~106s, default ~123s. A full collaborative Generate at low effort took 82s.
+- Collaborative pattern rebuilt as three rounds producing 10 ideas (diverge with a shared banned list of obvious moves → cross-pollinate, 2 ideas per agent each fusing seeds from two or more other techniques → push, where another agent makes each draft bolder and more specific), and `idea_count` = 10 for the single-prompt baseline — the learner judged the two-round, 5-idea output "not super creative", and only 1 of 5 agents had built on others' seeds. Sample run: 10/10 drafts fused two or more techniques, all 10 pushed, 125s, 15 calls. Updated `prd.md` (about 10 ideas) and `spec.md > Creative Agents and Orchestrator`.
+- Round 1 tolerates a single failed agent (its seeds are just missing); round 2 stays all-or-nothing as specified — one flaky call out of five shouldn't throw away a 10-call run before any idea exists.
+- Usage-limit error format still unverified (no way to trigger it on demand); `is_error` + message is classified, with a login-message heuristic for "not logged in".
 

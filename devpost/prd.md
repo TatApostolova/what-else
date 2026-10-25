@@ -15,7 +15,7 @@ Source: `scope.md > The Core Loop`, `scope.md > What "Working" Looks Like`.
 
 1. **Arrive.** On first use you see a welcome screen with a one-line explanation of What Else? and a single prominent **Start a Challenge** button. On later visits you see the dashboard of existing challenges.
 2. **Start a challenge.** Write a few sentences about the problem and, if you like, some free-text context (placeholder hints included; pasting a CV or notes is fine). Submit, and you land in the challenge workspace on the Explore tab.
-3. **Generate.** Click **Generate**. The agents work together, and about 5 ideas appear, each labelled with the technique(s) that produced it.
+3. **Generate.** Click **Generate**. The agents work together, and about 10 ideas appear, each labelled with the technique(s) that produced it.
 4. **React** to each idea in Explore:
    - **Save** with one-tap reasons and an optional note. The idea moves to the Idea Library.
    - **Discard** with one-tap reasons and an optional note. It is stored, never deleted.
@@ -71,11 +71,11 @@ Source: `scope.md > Built to Finish, Not to Keep You`, `scope.md > The POC Bound
 Source: `scope.md > The Unique Kernel`, `scope.md > The POC Boundary` (Creative agents, Learning loop).
 
 - **Generate** runs the five technique agents (reverse thinking, random associations, analogies, SCAMPER, challenging assumptions) through one collaboration pattern in which they build on each other's ideas.
-- Each run adds about 5 ideas to Explore. Each idea shows its technique label(s).
+- Each run adds about 10 ideas to Explore (raised from 5 during the build, at the learner's request). Each idea shows its technique label(s).
 - While it runs, the button is disabled and a "The agents are working…" indicator is shown. Generation can take a while, and that's acceptable **(assumption)**.
 - Every generated idea is stored automatically with its technique, its run and its status history.
 - Acceptance criteria:
-  - [ ] Clicking Generate on a new challenge produces about 5 idea cards in Explore, each with a technique label.
+  - [ ] Clicking Generate on a new challenge produces about 10 idea cards in Explore, each with a technique label.
   - [ ] The ideas are visibly shaped by the statement, and by the context if any was given.
   - [ ] Clicking Generate twice in a row is impossible while a run is in progress.
 
