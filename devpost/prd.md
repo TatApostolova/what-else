@@ -5,7 +5,7 @@ status: approved
 
 # What Else? — Product Requirements
 
-A local creative studio where collaborating AI agents, each using a different creative-thinking technique, generate unconventional possibilities for a challenge you describe, and learn from your reactions until the challenge is resolved. Career exploration is the first use case.
+A local creative studio where collaborating AI agents, each using a different creative-thinking technique, generate unconventional possibilities for a challenge you describe, and learn from your reactions until the challenge is resolved. It works for any kind of challenge: a business, a career move, a project, an event.
 Source: `scope.md > The Unique Kernel`, `scope.md > Built to Finish, Not to Keep You`.
 
 This is a proof of concept. Every part is kept as simple as possible except the creative agents (`scope.md > The POC Boundary`). Interface details below are provisional MVP choices. Anything marked **(assumption)** was decided by the agent and can be revisited during the build without reopening this document.
@@ -211,7 +211,7 @@ Follows `scope.md > Build Order`. Each stage is usable on its own.
 - **Deleting ideas.** History is the learning material. *(Revised in build: a whole challenge can now be deleted permanently, with confirmation, at the learner's request. Challenges never share history, so this costs no other challenge anything.)*
 - **Accounts, authentication and multi-user use.** It's a personal local tool.
 - **Paid API usage.** Agents run on the existing subscription.
-- **Job-search-specific logic in the core.** The challenge statement carries the framing.
+- **Domain-specific logic in the core.** The challenge statement carries the framing.
 - **Chat interface.** The interaction is cards and reactions, not conversation.
 
 ## Open Questions
