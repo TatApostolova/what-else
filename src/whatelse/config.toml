@@ -1,11 +1,7 @@
 # What Else? configuration. Generic on purpose: the challenge statement carries the framing.
 
-# Collaboration pattern used by Generate when "Default" is chosen: "collaborative" or "single_prompt".
+# Collaboration pattern used by Generate (a module in patterns/).
 pattern = "collaborative"
-
-# Ideas per Generate for the single-prompt pattern. Keep it equal to
-# ideas_per_agent x number of techniques so the comparison stays fair.
-idea_count = 10
 
 # Collaborative pattern: wild seeds per agent in round 1, ideas per agent in round 2.
 seeds_per_agent = 3

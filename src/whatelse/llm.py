@@ -195,14 +195,7 @@ class FakeLLM:
                 for i in range(count("pushed", 2))
             ]}
         if "ideas" in props:
-            item_props = props["ideas"]["items"]["properties"]
             n = count("ideas", 2)
-            if "technique" in item_props:  # single prompt
-                keys = item_props["technique"].get("enum", ["scamper"])
-                return {"ideas": [
-                    {"title": f"Fake idea {i + 1}", "text": "Simulated idea.", "technique": keys[i % len(keys)]}
-                    for i in range(n)
-                ]}
             seed_ids = re.findall(r"^- \[([^\]]+)\]", prompt, flags=re.M)
             return {"ideas": [
                 {"title": f"Fake draft {i + 1}", "text": "Simulated draft.", "built_on": seed_ids[i:i + 2],

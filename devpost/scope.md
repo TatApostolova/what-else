@@ -88,6 +88,8 @@ The POC is built in stages. Each stage leaves the app usable for real on its own
 4. **Multiple challenges and outcomes:** the challenge list, switching, closing or pausing, reopening, and the closing summary.
 5. **Demo mode:** the fictional persona and separate demo database, for the video and screenshots.
 
+*Revised in build (2026-10-25): the formal multi-agent vs single-prompt comparison was dropped; the learner had already compared them informally and found the collaborative agents clearly better.*
+
 The data model is keyed to challenges from stage 1, so stage 4 is UI work, not a data migration.
 
 ## Technical Direction (preliminary, for `4-spec`)

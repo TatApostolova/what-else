@@ -107,7 +107,7 @@ PRD ref: `prd.md > Demo Mode`, `prd.md > States and Boundaries` (Privacy, Persis
 | `GET /challenges/new`, `POST /challenges` | new challenge form / create |
 | `GET /challenges/{id}?tab=explore\|library\|experiments\|summary` | workspace |
 | `POST /challenges/{id}/edit` | update statement/context (`context_edited` event) |
-| `POST /challenges/{id}/generate` | run the chosen pattern (`pattern=default\|collaborative\|single_prompt\|blind`); returns new cards |
+| `POST /challenges/{id}/generate` | run the collaborative pattern; returns new cards (pattern selector cut in build) |
 | `POST /challenges/{id}/status` | pause / achieve / abandon / reopen (+ note) |
 | `POST /ideas/{id}/save` · `/discard` · `/rework` · `/feedback` · `/action` · `/progress` · `/complete` | idea reactions |
 
@@ -142,15 +142,7 @@ PRD ref: `prd.md > Learning Loop`.
   - **Round 3 (push):** 5 parallel calls. Every draft is given to exactly one *other* agent (agent i pushes the first draft of agent i+1 and the second of agent i+2), which makes it bolder, replaces its most conventional part and makes it more specific. The pushed version replaces the draft, and the pushing technique is appended to `techniques`. A failed push keeps those drafts unchanged; a failed round-2 call fails the run.
   - **Attribution:** the orchestrator, not the model, works out `techniques` = the agent's own technique first, followed by the technique of every seed listed in `built_on` (no duplicates). It drops any seed id that doesn't exist. The card label reads e.g. "SCAMPER ← ANALOGIES + REVERSE THINKING". If `built_on` is empty, the label shows only the agent's own technique.
   - The round-1 seeds are stored in `GenerationRun.data` for later analysis, not shown.
-- `patterns/single_prompt.py` (**baseline for the stage-1 comparison**): one call. All five techniques are described in one prompt, which returns 10 ideas (`idea_count`) each tagged with its technique.
-- **The comparison is a genuine experiment, not a demonstration.** The goal is to *find out* whether multi-agent collaboration produces better ideas, not to prove that it does. Both patterns get the same context, the same idea count and prompt wording of equal care, and neither is tuned harder than the other. In stage 1 the same challenge is run with each pattern, and the cards are judged by gut, with the pattern name hidden until after judging. The initial result sets only a **provisional** default in `config.toml`, even if that's the single prompt. Different patterns may suit different challenges, or different stages of the same challenge, so neither is treated as permanently better.
-- **Both patterns stay available.** Next to Generate there's a small "Pattern" selector with these options:
-  - **Default** (from config).
-  - **Collaborative**.
-  - **Single prompt**.
-  - **Blind**: picks one at random and doesn't reveal which.
-
-  Idea cards never show the pattern name, so Blind keeps judging honest during ongoing use, not just in stage 1. The run stores the pattern, and a run summary at the bottom of the Explore tab can reveal it on request ("Show how these were made") **(assumption: minimal UI)**.
+- **Cut in build: the single-prompt baseline, the stage-1 blind comparison and the Pattern selector (Default / Collaborative / Single prompt / Blind).** You had already compared the collaborative pattern with a single prompt yourself and found the single prompt's ideas clearly weaker, so the formal comparison wasn't worth building. Patterns stay pluggable (`patterns/*.py`, `pattern` in `config.toml`), and every run still records its pattern, so a comparison can be added later.
 - **Data kept for later analysis, with no analytics built now.** Every idea links to its run, and every run records the pattern and model. Every reaction is an event linked to the idea. So "pattern → idea → reaction" can be queried later, and nothing extra needs to be stored. There's no automatic pattern selection and no effectiveness dashboard.
 - **Watching for convergence** (different agents producing variations of essentially the same idea), without building similarity detection:
   - Round-2 prompts tell each agent to aim for a direction the seeds *don't* already cover, not to polish the most obvious seed.
@@ -161,7 +153,7 @@ PRD ref: `prd.md > Learning Loop`.
 - Prompt wording for patterns and Rework lives in `prompts/*.md`, not in Python strings.
 - Parallel calls use `concurrent.futures.ThreadPoolExecutor` (5 workers).
 - If a round-2 call fails, the whole run fails (no partial ideas; see `prd.md > States and Boundaries`).
-- Switching pattern means changing `pattern = "single_prompt"` in `config.toml` or setting `WHATELSE_PATTERN`. Each run records which pattern produced it.
+- Adding another pattern means adding a file in `patterns/` and naming it in `config.toml` (or `WHATELSE_PATTERN`). Each run records which pattern produced it.
 PRD ref: `prd.md > Generating Ideas`, `prd.md > Reacting to Ideas (Explore)` (Rework).
 
 ### LLM Adapter
@@ -188,7 +180,7 @@ Four tables (SQLModel). All timestamps are timezone-aware UTC. Tags are JSON lis
 **`Event`** (append-only): `id`, `challenge_id`, `idea_id` (nullable), `type`, `tags` (JSON list), `note` (nullable), `from_status`, `to_status` (nullable), `data` (JSON, nullable), `created_at`.
 Event types: `challenge_created`, `context_edited`, `challenge_status` (pause/achieve/abandon/reopen in `to_status`), `idea_created`, `saved`, `discarded`, `reworked`, `feedback`, `actioned`, `progress`, `completed`.
 
-`GenerationRun.pattern` holds the pattern actually used, and `GenerationRun.data.requested` holds what was asked for (`default|collaborative|single_prompt|blind`), so blind runs can be told apart.
+`GenerationRun.pattern` holds the pattern actually used, and `GenerationRun.data.requested` holds what was asked for (always `default` now that the selector is cut).
 
 **Reason tags** live in `config.toml`. The discard list adds `duplicate` ("same as another idea") to the PRD's starting set, to record convergence. They're kept as `[tags.save]` and `[tags.discard]` lists of `{key, label}`. The database stores only keys, so labels can change without touching data.
 
@@ -220,9 +212,8 @@ AI-Hackaton/
 │   ├── web.py                # FastAPI app and routes
 │   ├── techniques/           # one .md per creative technique (5 files)
 │   ├── patterns/
-│   │   ├── collaborative.py  # default: seed round + build-on round
-│   │   └── single_prompt.py  # baseline for the stage-1 comparison
-│   ├── prompts/              # prompt text for rounds, single prompt, rework
+│   │   └── collaborative.py  # default: diverge, cross-pollinate, push
+│   ├── prompts/              # prompt text for rounds, history, rework
 │   ├── templates/            # Jinja2 pages and HTMX partials (see Templates and Styling)
 │   ├── static/
 │   │   ├── style.css         # all styling (see Look and Feel)
@@ -295,7 +286,7 @@ Listed in `Stack`. All installed and imported successfully on Python 3.14.2 on 2
 
 - **Revised in build:** the collaborative pattern became three rounds (diverge with a banned list of obvious moves, cross-pollinate with a two-technique fusion rule, push) producing 10 ideas from 15 calls, about 2 minutes at low effort. Your decision after judging the first version "not super creative".
 - **The collaborative two-round pattern** (5 seed calls, then 5 build-on calls, all in parallel; 10 calls per Generate) was the starting default. **Round 2 is open:** each agent may extend, invert, challenge or recombine any number of other agents' seeds, whichever produces the strongest unconventional idea. Technique attribution is preserved for every seed used. The agent recommended the two rounds; you confirmed them and removed the two-technique restriction. Tradeoff accepted: more subscription usage per Generate.
-- **Keep the single-prompt baseline, and run the comparison as a genuine experiment.** The aim is to discover whether multi-agent collaboration produces better ideas, not to prove that it does. The first blind comparison sets a **provisional** default only. Both patterns stay selectable (including a Blind option) for further testing, because different approaches may suit different challenges or stages.
+- **Revised in build: single-prompt baseline and comparison cut** (you had already compared informally; collaborative was clearly better). Original decision: **Keep the single-prompt baseline, and run the comparison as a genuine experiment.** The aim is to discover whether multi-agent collaboration produces better ideas, not to prove that it does. The first blind comparison sets a **provisional** default only. Both patterns stay selectable (including a Blind option) for further testing, because different approaches may suit different challenges or stages.
 - **Preserve data, don't analyse it yet.** The pattern is recorded per run, so every idea and reaction can be traced back to it. Convergence is watched for through a `duplicate` discard tag and the stored seeds/`built_on`. There's no automatic pattern selection or analytics in the MVP.
 
 **Implementation details derived by the agent**
@@ -303,9 +294,9 @@ Listed in `Stack`. All installed and imported successfully on Python 3.14.2 on 2
 
 **The useful unknown: running multi-agent work on a subscription without paid API calls** (from `learner-profile.md > Desired Learning Outcome`).
 - **What clarified it:** a live test showed that `claude -p` with a custom system prompt, no tools, no MCP servers and no setting sources costs about 136 input tokens instead of about 21k. That turned "fewer, richer calls" from a necessity into a choice. `--json-schema` gives validated structured output.
-- **Still to check in build stage 1:** how fast real usage limits are reached with 15 calls per Generate, and whether the collaborative pattern actually beats the single prompt by gut.
+- **Still to check in build stage 1:** how fast real usage limits are reached with 15 calls per Generate (the collaborative-vs-single-prompt question was settled informally by you, see above).
 
 **Open issues**
-- **Collaborative vs single-prompt quality:** settled by the stage-1 comparison (`prd.md > Open Questions`).
+- **Collaborative vs single-prompt quality:** settled informally by you during the build: collaborative was clearly better.
 - **How lineage is shown on reworked cards:** a "Reworked from: <title>" line is the default and can be refined during the build (`prd.md > Open Questions`).
 - **Usage-limit error format:** verify early in the build (see `External Services and Dependencies > Claude Code CLI`).

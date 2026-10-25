@@ -179,7 +179,7 @@ Source: `scope.md > The POC Boundary` (Demo mode; Privacy by default).
 ## What We're Building
 Follows `scope.md > Build Order`. Each stage is usable on its own.
 
-1. **Challenge → Generate → Save/Discard:** the welcome screen, the new-challenge form, the workspace with Explore, the five technique agents with one collaboration pattern, Save/Discard with tags and notes, and full history storage. Includes the multi-agent vs single-prompt comparison by gut.
+1. **Challenge → Generate → Save/Discard:** the welcome screen, the new-challenge form, the workspace with Explore, the five technique agents with one collaboration pattern, Save/Discard with tags and notes, and full history storage. Includes the multi-agent vs single-prompt comparison by gut. *(The single-prompt comparison was cut during the build: the learner had already compared the collaborative pattern against a single prompt informally and judged the collaborative ideas clearly better.)*
 2. **Learning loop and Rework:** history fed into Generate, and Rework creating linked ideas.
 3. **Idea Library and Experiments:** Move to Action, Add feedback, Rework and Discard from the Library, progress logs, and verdicts.
 4. **Multiple challenges and outcomes:** the dashboard, switching, Close/Pause/Reopen, read-only state, and the closing summary.

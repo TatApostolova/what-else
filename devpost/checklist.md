@@ -49,17 +49,7 @@ Build mode: learn
   Learner check: Discard an idea as "already tried", rework another with a note, then Generate again. Is the rework reshaped around your note, and do the new ideas avoid the rejected one?
   Commit: `Add learning context and Rework`
 
-- [ ] **5. Pick the pattern: single-prompt baseline and blind comparison**
-  Becomes usable: A Pattern selector next to Generate offers Default, Collaborative, Single prompt and Blind. Cards never show which pattern made them. "Show how these were made" reveals it after you've judged.
-  Why now: This settles the core assumption in build stage 1 (does multi-agent collaboration beat one rich prompt?) before the rest of the app is built on the collaborative pattern; both patterns get the same history from slice 4, so the comparison stays fair. The result sets the provisional default in `config.toml`.
-  PRD ref: `prd.md > What We're Building` (stage 1 comparison), `prd.md > Open Questions`
-  Spec ref: `spec.md > Components > Creative Agents and Orchestrator` (single prompt, comparison, Blind, convergence)
-  Build: `patterns/single_prompt.py` + prompt, given equal care. The selector, with `requested` vs actual pattern stored on the run. The run summary reveal.
-  Verify (mechanical): `pytest` (each option records the right pattern; blind records `requested=blind` and a real pattern; no pattern name appears in the card HTML). One real single-prompt run.
-  Learner check: Run the stage-1 comparison on the same challenge using Blind a few times. Judge the cards by gut, then reveal. Which pattern should be the provisional default?
-  Commit: `Add single-prompt baseline and blind pattern selection`
-
-- [ ] **6. Develop saved ideas: Library actions and Experiments**
+- [ ] **5. Develop saved ideas: Library actions and Experiments**
   Becomes usable: In the Library you can Move to Action, Add feedback, Rework or Discard an idea, and expand its history. The Experiments tab lets you log dated progress and finish with a verdict (Worked / Partly / Didn't work / Dropped).
   Why now: This is build stage 3. Experiment outcomes are the strongest learning signal, and `context.py` already reads them.
   PRD ref: `prd.md > Idea Library`, `prd.md > Experiments`
@@ -69,7 +59,7 @@ Build mode: learn
   Learner check: Move a saved idea to Action, log two progress notes, finish it as "Worked", and expand its history.
   Commit: `Add Idea Library actions and Experiments`
 
-- [ ] **7. Several challenges: dashboard, close / pause / reopen, closing summary**
+- [ ] **6. Several challenges: dashboard, close / pause / reopen, closing summary**
   Becomes usable: The dashboard lists challenges (Active, then Paused, then closed) with status and last activity. Challenges can be closed as Achieved or Abandoned, paused, and reopened. A non-active challenge is read-only. A closing summary appears on close and as a Summary tab.
   Why now: This is build stage 4. The data was keyed to challenges from slice 2, so this is UI and service work only.
   PRD ref: `prd.md > Screens and Layout` (Dashboard), `prd.md > Challenge Outcomes`
@@ -79,7 +69,7 @@ Build mode: learn
   Learner check: Create a second challenge, switch between the two, close one as Achieved and read its summary, then reopen it.
   Commit: `Add dashboard, challenge outcomes and closing summary`
 
-- [ ] **8. Demo mode and the double-click launcher**
+- [ ] **7. Demo mode and the double-click launcher**
   Becomes usable: `python -m whatelse --demo` opens a separate `demo.db` seeded with a fictional persona, with a "Demo" badge. `--reset-demo` re-seeds it. Double-clicking `What Else.cmd` starts the app minimised, or just opens the browser if the app is already running.
   Why now: This is build stage 5. It's needed for the demo video in `6-ship`, and it's safest last, once the real flow is stable.
   PRD ref: `prd.md > Demo Mode`
@@ -91,7 +81,7 @@ Build mode: learn
 
 ## Hands-on Checkpoints
 
-- [ ] Early usable behavior explored — after slice 1 (judge the raw agent ideas), and after slice 5 (blind comparison sets the provisional default pattern)
+- [x] Early usable behavior explored — after slice 1 (judged the raw agent ideas; led to the three-round, 10-idea pattern) and again after slice 4 (learning loop confirmed good)
 - [ ] Final kick-the-tires exploration and feedback completed
 
 ## Final Review
@@ -115,6 +105,7 @@ Activity mode:
 - Prompts go to `claude -p` on stdin instead of as an argument — long prompts (history, pasted CVs) would hit the Windows command-line length limit; stdin was tested and works.
 - Added an `effort` setting (`--effort`, default `low`; `WHATELSE_EFFORT` / `--effort` overrides) and raised the per-call timeout to 180s — real calls on the CLI default model ran far slower than the 10s measured in planning (round 2: 56–120s, one 120s timeout). Replaying one round-2 call: low ~20s, medium ~106s, default ~123s. A full collaborative Generate at low effort took 82s.
 - Collaborative pattern rebuilt as three rounds producing 10 ideas (diverge with a shared banned list of obvious moves → cross-pollinate, 2 ideas per agent each fusing seeds from two or more other techniques → push, where another agent makes each draft bolder and more specific), and `idea_count` = 10 for the single-prompt baseline — the learner judged the two-round, 5-idea output "not super creative", and only 1 of 5 agents had built on others' seeds. Sample run: 10/10 drafts fused two or more techniques, all 10 pushed, 125s, 15 calls. Updated `prd.md` (about 10 ideas) and `spec.md > Creative Agents and Orchestrator`.
+- Cut the single-prompt baseline / blind comparison slice (was slice 5; later slices renumbered 5–7) — the learner had already compared the collaborative agents with a single prompt informally and judged the single prompt clearly worse, so the formal experiment adds nothing. Patterns stay pluggable.
 - `What Else.cmd`, the already-running check and a desktop shortcut were pulled forward from slice 8 into slice 4 — the learner asked for a desktop shortcut for daily use; slice 8 now only needs demo mode.
 - Rework takes a required note only, no reason tags (assumption) — the note is the instruction, and neither tag list fits "change this"; it can be added if it's missed. A rework is refused while a Generate is running on the same challenge.
 - Learning loop + Rework (now slice 4) moved ahead of the pattern comparison (now slice 5) — the learner wanted the agents learning from reactions sooner; the comparison stays fair because both patterns receive the same history.

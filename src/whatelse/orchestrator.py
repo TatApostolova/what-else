@@ -18,7 +18,7 @@ from whatelse.patterns import challenge_block, render, system_prompt
 from whatelse.service import add_event, check_rework, stage_rework
 
 TECHNIQUES_DIR = PACKAGE_DIR / "techniques"
-PATTERNS = ("collaborative", "single_prompt")
+PATTERNS = ("collaborative",)
 
 
 @dataclass(frozen=True)

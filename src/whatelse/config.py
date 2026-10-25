@@ -26,7 +26,6 @@ class Settings:
     pattern: str
     model: str | None
     effort: str | None
-    idea_count: int
     seeds_per_agent: int
     ideas_per_agent: int
     timeout_seconds: int
@@ -71,7 +70,6 @@ def load_settings(mode: str | None = None) -> Settings:
         pattern=os.environ.get("WHATELSE_PATTERN", raw["pattern"]),
         model=model,
         effort=effort,
-        idea_count=int(raw["idea_count"]),
         seeds_per_agent=int(raw["seeds_per_agent"]),
         ideas_per_agent=int(raw["ideas_per_agent"]),
         timeout_seconds=int(raw["timeout_seconds"]),
