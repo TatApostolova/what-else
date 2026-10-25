@@ -35,6 +35,7 @@ def ideas(settings, status=None):
 def test_starts_with_the_sample_challenge(client, demo_settings):
     page = client.get("/").text
     assert "Sample mode" in page and "Reset demo" in page
+    assert "five AI agents" in page and "Open the sample challenge" in page
     assert "bookshop" in page
     seed = load_seed()
     statuses = [i.status for i in ideas(demo_settings)]
@@ -83,7 +84,10 @@ def test_no_new_challenges_or_shutdown_in_demo(client):
 def test_reset_is_missing_outside_demo(settings):
     client = TestClient(create_app(settings, FakeLLM()))
     assert client.post("/demo/reset").status_code == 404
-    assert "Sample mode" not in client.get("/").text
+    client.post("/challenges", data={"statement": "Mine"})
+    page = client.get("/").text
+    assert "Your challenges" in page
+    assert "Sample mode" not in page and "five AI agents" not in page
 
 
 def test_replay_records_missing_answers_through_the_fallback(demo_settings):

@@ -1,4 +1,21 @@
 {% extends "base.html" %}
+{% block intro %}
+{% if settings.is_demo %}
+<section class="intro">
+  <h1>Fresh ideas for any challenge, from five AI agents that think differently.</h1>
+  <p class="intro-lead">What Else? is for anyone stuck on a challenge and tired of the obvious answers: a small business,
+    a career move, a project, an event. Describe it, and five creative agents (Reverse Thinking, Random Associations,
+    Analogies, SCAMPER and Challenging Assumptions) build on each other's ideas. You save, discard or rework them,
+    try the best ones, and the agents learn from what you liked and what worked.</p>
+  <ol class="intro-steps">
+    <li>Open the sample challenge: a bookshop that wants more weekday visitors.</li>
+    <li>Click <strong>Generate</strong>, then Save, Discard or Rework a few ideas.</li>
+    <li>Look at the Idea Library and Experiments, then close the challenge as Achieved to see its summary.</li>
+  </ol>
+  {% if challenges %}<a class="btn btn-primary btn-large" href="/challenges/{{ challenges[0].id }}">Open the sample challenge</a>{% endif %}
+</section>
+{% endif %}
+{% endblock %}
 {% block content %}
 <div class="page-head">
   <h1>Your challenges</h1>
