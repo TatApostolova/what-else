@@ -1,0 +1,7 @@
+<section class="tab-body">
+  {% for idea in library %}
+    {% include "_idea_card.html" %}
+  {% else %}
+    <p class="empty">Save an idea in Explore to keep it here.</p>
+  {% endfor %}
+</section>

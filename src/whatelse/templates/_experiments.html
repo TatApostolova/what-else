@@ -1,0 +1,7 @@
+<section class="tab-body">
+  {% for idea in experiments %}
+    {% include "_idea_card.html" %}
+  {% else %}
+    <p class="empty">Move a saved idea to Action in the Idea Library to track it here.</p>
+  {% endfor %}
+</section>

@@ -1,0 +1,46 @@
+"""`python -m whatelse`: start the local server and open the browser."""
+
+from __future__ import annotations
+
+import argparse
+import socket
+import threading
+import time
+import webbrowser
+
+import uvicorn
+
+from whatelse.config import load_settings
+from whatelse.web import create_app
+
+HOST, PORT = "127.0.0.1", 8000
+
+
+def open_browser_when_ready(url: str, timeout: float = 20.0) -> None:
+    """Open the browser only once the server answers, so the first load never fails."""
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        try:
+            with socket.create_connection((HOST, PORT), timeout=0.5):
+                break
+        except OSError:
+            time.sleep(0.25)
+    webbrowser.open(url)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(prog="python -m whatelse", description="What Else? — local creative studio")
+    parser.add_argument("--no-browser", action="store_true", help="don't open the browser")
+    args = parser.parse_args()
+
+    settings = load_settings()
+    app = create_app(settings)
+    url = f"http://{HOST}:{PORT}"
+    print(f"What Else? is running at {url} (data: {settings.db_path}). Press Ctrl+C to stop.")
+    if not args.no_browser:
+        threading.Thread(target=open_browser_when_ready, args=(url,), daemon=True).start()
+    uvicorn.run(app, host=HOST, port=PORT, log_level="warning")
+
+
+if __name__ == "__main__":
+    main()

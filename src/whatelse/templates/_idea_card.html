@@ -1,0 +1,13 @@
+<article class="card idea" id="idea-{{ idea.id }}">
+  <div class="idea-top">
+    <h2 class="idea-title">{{ idea.title }}</h2>
+    <span class="technique">{{ technique_label(idea.techniques) }}</span>
+  </div>
+  <p class="idea-text">{{ idea.text }}</p>
+  {% if idea.how %}
+  <details class="how">
+    <summary>How the agents made this</summary>
+    <p>{{ idea.how }}</p>
+  </details>
+  {% endif %}
+</article>

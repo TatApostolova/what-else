@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-head">
+  <h1>Your challenges</h1>
+  <a class="btn btn-primary" href="/challenges/new">New challenge</a>
+</div>
+<ul class="challenge-list">
+  {% for c in challenges %}
+  <li class="card challenge-row">
+    <a href="/challenges/{{ c.id }}">{{ c.title }}</a>
+    <span class="badge badge-{{ c.status }}">{{ c.status|capitalize }}</span>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

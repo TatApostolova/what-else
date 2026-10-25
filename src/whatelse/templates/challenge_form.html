@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}New challenge · What Else?{% endblock %}
+{% block content %}
+<a class="back" href="/">← Back</a>
+<h1>New challenge</h1>
+<form class="card form" method="post" action="/challenges">
+  <label for="statement">{{ settings.hints.statement }}</label>
+  <textarea id="statement" name="statement" rows="4" required
+            placeholder="A few sentences about the problem.">{{ statement }}</textarea>
+  {% if error %}<p class="form-error">{{ error }}</p>{% endif %}
+
+  <label for="context">Context <span class="muted">(optional)</span></label>
+  <textarea id="context" name="context" rows="7" placeholder="{{ settings.hints.context }}">{{ context }}</textarea>
+
+  <button class="btn btn-primary" type="submit">Start</button>
+</form>
+{% endblock %}

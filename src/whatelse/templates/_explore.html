@@ -1,0 +1,15 @@
+<section class="tab-body">
+  <div class="generate-bar">
+    <button class="btn btn-primary"
+            hx-post="/challenges/{{ challenge.id }}/generate"
+            hx-target="#tabs" hx-swap="outerHTML"
+            hx-indicator="#working" hx-disabled-elt="this">Generate</button>
+    <span id="working" class="working">The agents are working… this takes about two minutes.</span>
+  </div>
+  {% if error %}{% include "_error.html" %}{% endif %}
+  {% for idea in explore %}
+    {% include "_idea_card.html" %}
+  {% else %}
+    <p class="empty">Click <strong>Generate</strong> and the agents will come up with ideas for this challenge.</p>
+  {% endfor %}
+</section>

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ challenge.title }} · What Else?{% endblock %}
+{% block content %}
+<a class="back" href="/">← All challenges</a>
+<section class="challenge-head">
+  <div class="challenge-title">
+    <h1>{{ challenge.title }}</h1>
+    <span class="badge badge-{{ challenge.status }}">{{ challenge.status|capitalize }}</span>
+  </div>
+  <details class="card challenge-panel">
+    <summary>Challenge and context</summary>
+    <h3>The challenge</h3>
+    <p class="prewrap">{{ challenge.statement }}</p>
+    <h3>Context</h3>
+    <p class="prewrap">{{ challenge.context or "None yet." }}</p>
+  </details>
+</section>
+{% include "_tabs.html" %}
+{% endblock %}

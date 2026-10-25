@@ -19,7 +19,7 @@ Build mode: learn
   Learner check: Run `python -m whatelse.try` with a challenge of your own and read the ideas. Do they feel unconventional? Do the technique labels and the "how it built on others" lines make sense?
   Commit: `Add collaborative creative agents with Claude CLI adapter`
 
-- [ ] **2. Start a challenge in the browser and generate ideas into Explore**
+- [x] **2. Start a challenge in the browser and generate ideas into Explore**
   Becomes usable: `python -m whatelse` opens the app. The welcome screen leads to the new-challenge form, and that leads to the workspace. Generate shows "The agents are working…" and then idea cards appear in Explore. Everything is stored in SQLite and survives a restart.
   Why now: This puts the kernel behind the real interface as soon as it's proven, and sets up the data model every later slice writes to.
   PRD ref: `prd.md > The Core Journey` (steps 1–3), `prd.md > Challenges`, `prd.md > Generating Ideas`, `prd.md > States and Boundaries`
@@ -115,6 +115,7 @@ Activity mode:
 - Prompts go to `claude -p` on stdin instead of as an argument — long prompts (history, pasted CVs) would hit the Windows command-line length limit; stdin was tested and works.
 - Added an `effort` setting (`--effort`, default `low`; `WHATELSE_EFFORT` / `--effort` overrides) and raised the per-call timeout to 180s — real calls on the CLI default model ran far slower than the 10s measured in planning (round 2: 56–120s, one 120s timeout). Replaying one round-2 call: low ~20s, medium ~106s, default ~123s. A full collaborative Generate at low effort took 82s.
 - Collaborative pattern rebuilt as three rounds producing 10 ideas (diverge with a shared banned list of obvious moves → cross-pollinate, 2 ideas per agent each fusing seeds from two or more other techniques → push, where another agent makes each draft bolder and more specific), and `idea_count` = 10 for the single-prompt baseline — the learner judged the two-round, 5-idea output "not super creative", and only 1 of 5 agents had built on others' seeds. Sample run: 10/10 drafts fused two or more techniques, all 10 pushed, 125s, 15 calls. Updated `prd.md` (about 10 ideas) and `spec.md > Creative Agents and Orchestrator`.
+- Slice 2 includes a bare challenge list at `/` once a challenge exists (slice 7 adds ordering, last activity and outcomes) and all three tabs with their empty states — the home page needed somewhere to go after the first challenge, and the tabs cost nothing to show early.
 - Round 1 tolerates a single failed agent (its seeds are just missing); round 2 stays all-or-nothing as specified — one flaky call out of five shouldn't throw away a 10-call run before any idea exists.
 - Usage-limit error format still unverified (no way to trigger it on demand); `is_error` + message is classified, with a login-message heuristic for "not logged in".
 

@@ -1,0 +1,149 @@
+/* What Else? — one hand-written stylesheet. See spec.md > Look and Feel. */
+
+:root {
+  --page: #f7f7f5;
+  --card: #ffffff;
+  --border: #e7e5e4;
+  --text: #1c1917;
+  --muted: #78716c;
+  --accent: #0f766e;
+  --accent-soft: #ccfbf1;
+  --amber: #b45309;
+  --amber-soft: #fef3c7;
+  --green: #15803d;
+  --green-soft: #dcfce7;
+  --grey-soft: #f5f5f4;
+  --danger-soft: #fef2f2;
+  --danger: #b91c1c;
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(28, 25, 23, 0.04), 0 2px 8px rgba(28, 25, 23, 0.04);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+h1 { font-size: 1.5rem; margin: 0.25rem 0 1rem; line-height: 1.25; }
+h2 { font-size: 1.05rem; margin: 0; }
+h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin: 1rem 0 0.25rem; }
+
+.muted { color: var(--muted); font-weight: normal; }
+.prewrap { white-space: pre-wrap; margin: 0; }
+
+/* Layout */
+.site-header {
+  max-width: 760px; margin: 0 auto; padding: 1.25rem 1rem 0;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.brand { font-weight: 700; color: var(--text); font-size: 1.05rem; }
+.brand:hover { text-decoration: none; }
+.page { max-width: 760px; margin: 0 auto; padding: 1rem 1rem 4rem; }
+.page-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.back { display: inline-block; color: var(--muted); font-size: 0.85rem; margin-bottom: 0.5rem; }
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem 1.25rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block; font: inherit; font-weight: 600; cursor: pointer;
+  border-radius: 8px; padding: 0.5rem 1rem; border: 1px solid transparent;
+  background: none; color: var(--text); line-height: 1.2;
+}
+.btn:hover { text-decoration: none; }
+.btn:disabled { opacity: 0.5; cursor: wait; }
+.btn-primary { background: var(--text); color: #fff; }
+.btn-primary:hover { background: #292524; }
+.btn-outline { border-color: var(--border); background: var(--card); }
+.btn-outline:hover { border-color: var(--muted); }
+.btn-text { color: var(--accent); padding-left: 0.5rem; padding-right: 0.5rem; }
+.btn-large { padding: 0.75rem 1.5rem; font-size: 1rem; }
+
+/* Badges */
+.badge {
+  display: inline-block; font-size: 0.75rem; font-weight: 600;
+  padding: 0.1rem 0.6rem; border-radius: 999px; background: var(--grey-soft); color: var(--muted);
+  white-space: nowrap;
+}
+.badge-active { background: var(--accent-soft); color: var(--accent); }
+.badge-paused { background: var(--amber-soft); color: var(--amber); }
+.badge-achieved { background: var(--green-soft); color: var(--green); }
+.badge-abandoned { background: var(--grey-soft); color: var(--muted); }
+.badge-demo { background: var(--amber-soft); color: var(--amber); }
+
+/* Welcome */
+.welcome { text-align: center; padding: 4rem 0 2rem; }
+.welcome h1 { font-size: 2rem; }
+.lead { font-size: 1.05rem; color: var(--muted); max-width: 32rem; margin: 0 auto 2rem; }
+
+/* Forms */
+.form { display: flex; flex-direction: column; gap: 0.5rem; }
+.form label { font-weight: 600; margin-top: 0.5rem; }
+textarea, input[type="text"] {
+  font: inherit; color: var(--text); width: 100%;
+  border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.75rem; background: #fff;
+}
+textarea:focus, input[type="text"]:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
+.form .btn { align-self: flex-start; margin-top: 0.75rem; }
+.form-error { color: var(--danger); margin: 0; font-size: 0.9rem; }
+
+/* Dashboard */
+.challenge-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+.challenge-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.challenge-row a { font-weight: 600; }
+
+/* Workspace */
+.challenge-title { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.challenge-title h1 { margin-bottom: 0.5rem; }
+.challenge-panel { margin-bottom: 1.5rem; padding: 0.75rem 1.25rem; }
+.challenge-panel summary { cursor: pointer; color: var(--muted); font-weight: 600; }
+
+.tabs { display: flex; gap: 1.5rem; border-bottom: 1px solid var(--border); margin-bottom: 1.25rem; }
+.tabs a { color: var(--muted); padding: 0.5rem 0; border-bottom: 2px solid transparent; font-weight: 600; margin-bottom: -1px; }
+.tabs a:hover { color: var(--text); text-decoration: none; }
+.tabs a.active { color: var(--accent); border-bottom-color: var(--accent); }
+.count { font-weight: normal; font-size: 0.8rem; margin-left: 0.15rem; }
+
+.tab-body { display: flex; flex-direction: column; gap: 1rem; }
+.empty { color: var(--muted); text-align: center; padding: 2rem 0; }
+
+.generate-bar { display: flex; align-items: center; gap: 1rem; }
+.working { color: var(--muted); display: none; }
+.working.htmx-request { display: inline; }
+
+.notice { margin: 0; padding: 0.75rem 1rem; border-radius: 8px; }
+.notice-error { background: var(--danger-soft); color: var(--danger); }
+
+/* Idea cards */
+.idea-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.idea-title { font-size: 1.05rem; font-weight: 600; }
+.technique {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted);
+  text-align: right; max-width: 45%; line-height: 1.4; padding-top: 0.2rem;
+}
+.idea-text { margin: 0.5rem 0 0; }
+.how { margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted); }
+.how summary { cursor: pointer; }
+.how p { margin: 0.25rem 0 0; }
+
+@media (max-width: 560px) {
+  .idea-top { flex-direction: column-reverse; gap: 0.25rem; }
+  .technique { max-width: none; text-align: left; }
+}

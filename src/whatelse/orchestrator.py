@@ -5,10 +5,14 @@ from __future__ import annotations
 import importlib
 from dataclasses import dataclass
 
+from sqlmodel import Session, select
+
 from whatelse.config import PACKAGE_DIR, Settings
-from whatelse.context import AgentContext
+from whatelse.context import AgentContext, build_context
 from whatelse.llm import LLM, LLMError
+from whatelse.models import GenerationRun, Idea, utcnow
 from whatelse.patterns import PatternResult
+from whatelse.service import add_event
 
 TECHNIQUES_DIR = PACKAGE_DIR / "techniques"
 PATTERNS = ("collaborative", "single_prompt")
@@ -52,3 +56,63 @@ def generate(ctx: AgentContext, llm: LLM, settings: Settings, pattern: str | Non
     if not result.ideas:
         raise LLMError("failed", "pattern returned no ideas")
     return result
+
+
+class GenerateRefused(Exception):
+    """Generate can't start (e.g. a run is already in progress)."""
+
+
+def run_generate(engine, challenge_id: int, llm: LLM, settings: Settings, requested: str = "default") -> list[Idea]:
+    """Create a run, call the agents, and store the ideas — or mark the run failed.
+
+    The database session is closed while the agents work, so a slow Generate
+    never holds the database. Raises LLMError (run marked failed, no ideas
+    stored) or GenerateRefused.
+    """
+    pattern = settings.pattern if requested == "default" else requested
+    with Session(engine) as session:
+        busy = session.exec(
+            select(GenerationRun).where(
+                GenerationRun.challenge_id == challenge_id, GenerationRun.status == "running"
+            )
+        ).first()
+        if busy:
+            raise GenerateRefused("The agents are already working on this challenge.")
+        ctx = build_context(session, challenge_id)
+        run = GenerationRun(
+            challenge_id=challenge_id, kind="generate", pattern=pattern, model=settings.model,
+            data={"requested": requested, "effort": settings.effort},
+        )
+        session.add(run)
+        session.commit()
+        run_id = run.id
+
+    try:
+        result = generate(ctx, llm, settings, pattern)
+    except Exception as exc:
+        error = exc if isinstance(exc, LLMError) else LLMError("failed", repr(exc))
+        with Session(engine) as session:
+            run = session.get(GenerationRun, run_id)
+            run.status, run.error, run.finished_at = "failed", str(error)[:500], utcnow()
+            session.add(run)
+            session.commit()
+        raise error from exc
+
+    with Session(engine) as session:
+        run = session.get(GenerationRun, run_id)
+        ideas = [
+            Idea(challenge_id=challenge_id, run_id=run_id, title=d.title, text=d.text,
+                 techniques=d.techniques, built_on=d.built_on, how=d.how)
+            for d in result.ideas
+        ]
+        session.add_all(ideas)
+        session.flush()
+        for idea in ideas:
+            add_event(session, challenge_id, "idea_created", idea_id=idea.id, to_status="generated")
+        run.status, run.finished_at = "succeeded", utcnow()
+        run.data = {**run.data, **result.data}
+        session.add(run)
+        session.commit()
+        for idea in ideas:
+            session.refresh(idea)
+        return ideas
