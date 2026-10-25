@@ -26,6 +26,8 @@ Stack: Python, FastAPI, Jinja2 + HTMX, SQLite via SQLModel. Agents run through t
 Requirements: Python 3.12+ and the [Claude Code CLI](https://code.claude.com/docs/en/overview), logged in with a claude.ai subscription. Make sure `ANTHROPIC_API_KEY` is **not** set, or calls will be billed to the API.
 
 ```
+git clone https://github.com/TatApostolova/what-else.git
+cd what-else
 python -m venv .venv
 .venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
 pip install -e ".[dev]"
@@ -34,7 +36,12 @@ python -m whatelse
 
 This opens http://127.0.0.1:8000. On Windows you can also double-click `What Else.cmd`. Your data stays in a local SQLite file outside the repository.
 
-- **Sample mode locally:** set `WHATELSE_MODE=demo` before `python -m whatelse`.
+- **Sample mode locally** (no Claude Code needed):
+  ```
+  $env:WHATELSE_MODE="demo"; python -m whatelse      # Windows PowerShell
+  set "WHATELSE_MODE=demo" && python -m whatelse     # Windows cmd
+  WHATELSE_MODE=demo python -m whatelse              # macOS/Linux
+  ```
 - **Tests:** `pytest` (uses a fake LLM and a temporary database, never calls Claude).
 - **Re-recording the sample:** `python tools/record_demo.py` (uses your Claude Code login).
 
