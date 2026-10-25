@@ -9,10 +9,14 @@
   </div>
   <details class="card challenge-panel">
     <summary>Challenge and context</summary>
-    <h3>The challenge</h3>
-    <p class="prewrap">{{ challenge.statement }}</p>
-    <h3>Context</h3>
-    <p class="prewrap">{{ challenge.context or "None yet." }}</p>
+    <form class="form edit-form" method="post" action="/challenges/{{ challenge.id }}/edit">
+      <label for="statement">The challenge</label>
+      <textarea id="statement" name="statement" rows="3" required>{{ challenge.statement }}</textarea>
+      <label for="context">Context <span class="muted">(optional)</span></label>
+      <textarea id="context" name="context" rows="5" placeholder="{{ settings.hints.context }}">{{ challenge.context or "" }}</textarea>
+      <p class="muted small">Changes shape the next Generate. Existing ideas stay as they are.</p>
+      <button class="btn btn-outline" type="submit">Save changes</button>
+    </form>
   </details>
 </section>
 {% include "_tabs.html" %}

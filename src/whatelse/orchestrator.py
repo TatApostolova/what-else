@@ -12,7 +12,10 @@ from whatelse.context import AgentContext, build_context
 from whatelse.llm import LLM, LLMError
 from whatelse.models import GenerationRun, Idea, utcnow
 from whatelse.patterns import PatternResult
-from whatelse.service import add_event
+from pydantic import BaseModel, Field
+
+from whatelse.patterns import challenge_block, render, system_prompt
+from whatelse.service import add_event, check_rework, stage_rework
 
 TECHNIQUES_DIR = PACKAGE_DIR / "techniques"
 PATTERNS = ("collaborative", "single_prompt")
@@ -78,7 +81,7 @@ def run_generate(engine, challenge_id: int, llm: LLM, settings: Settings, reques
         ).first()
         if busy:
             raise GenerateRefused("The agents are already working on this challenge.")
-        ctx = build_context(session, challenge_id)
+        ctx = build_context(session, challenge_id, settings.tag_labels)
         run = GenerationRun(
             challenge_id=challenge_id, kind="generate", pattern=pattern, model=settings.model,
             data={"requested": requested, "effort": settings.effort},
@@ -116,3 +119,75 @@ def run_generate(engine, challenge_id: int, llm: LLM, settings: Settings, reques
         for idea in ideas:
             session.refresh(idea)
         return ideas
+
+
+class _ReworkOut(BaseModel):
+    title: str = Field(min_length=1)
+    text: str = Field(min_length=1)
+    how: str = ""
+
+
+REWORK_SCHEMA = {
+    "type": "object",
+    "properties": {"title": {"type": "string"}, "text": {"type": "string"}, "how": {"type": "string"}},
+    "required": ["title", "text", "how"],
+    "additionalProperties": False,
+}
+
+
+def run_rework(engine, idea_id: int, note: str, llm: LLM, settings: Settings) -> Idea:
+    """One call with the original idea's own technique, the note and the history.
+
+    On success the new idea and the original's status change are stored together;
+    on failure the original is left exactly as it was. Raises ServiceError or LLMError.
+    """
+    techniques = {t.key: t for t in load_techniques(settings.techniques)}
+    with Session(engine) as session:
+        original = session.get(Idea, idea_id)
+        note = check_rework(original, note)
+        busy = session.exec(select(GenerationRun).where(
+            GenerationRun.challenge_id == original.challenge_id, GenerationRun.status == "running")).first()
+        if busy:
+            raise GenerateRefused("The agents are already working on this challenge.")
+        ctx = build_context(session, original.challenge_id, settings.tag_labels)
+        lead = techniques.get(original.techniques[0]) or next(iter(techniques.values()))
+        prompt = render(
+            "rework", challenge=challenge_block(ctx), title=original.title, text=original.text,
+            techniques=", ".join(techniques[k].label for k in original.techniques if k in techniques) or lead.label,
+            note=note, label=lead.label,
+        )
+        run = GenerationRun(challenge_id=original.challenge_id, kind="rework", pattern="rework",
+                            model=settings.model, data={"idea_id": idea_id, "effort": settings.effort})
+        session.add(run)
+        session.commit()
+        run_id, challenge_id = run.id, original.challenge_id
+        original_techniques = list(original.techniques)
+
+    try:
+        out = _ReworkOut.model_validate(llm.complete(system_prompt(lead), prompt, REWORK_SCHEMA))
+    except Exception as exc:
+        error = exc if isinstance(exc, LLMError) else LLMError("failed", repr(exc))
+        with Session(engine) as session:
+            run = session.get(GenerationRun, run_id)
+            run.status, run.error, run.finished_at = "failed", str(error)[:500], utcnow()
+            session.add(run)
+            session.commit()
+        raise error
+
+    with Session(engine) as session:
+        original = session.get(Idea, idea_id)
+        new = Idea(challenge_id=challenge_id, run_id=run_id, parent_idea_id=idea_id,
+                   title=out.title.strip(), text=out.text.strip(), techniques=original_techniques,
+                   how=out.how.strip() or None)
+        session.add(new)
+        session.flush()
+        add_event(session, challenge_id, "idea_created", idea_id=new.id, to_status="generated",
+                  data={"parent_idea_id": idea_id})
+        stage_rework(session, original, note, new)
+        run = session.get(GenerationRun, run_id)
+        run.status, run.finished_at = "succeeded", utcnow()
+        run.data = {**run.data, "new_idea_id": new.id}
+        session.add(run)
+        session.commit()
+        session.refresh(new)
+        return new

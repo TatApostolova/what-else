@@ -12,10 +12,11 @@ from whatelse.config import PACKAGE_DIR, Settings, load_settings
 from whatelse.db import make_engine
 from whatelse.llm import LLM, ClaudeCLI, LLMError
 from whatelse.models import Challenge, Event, Idea
-from whatelse.orchestrator import GenerateRefused, load_techniques, run_generate, technique_label
-from whatelse.service import IDEA_ACTIONS, ServiceError, create_challenge, react
+from whatelse.orchestrator import GenerateRefused, load_techniques, run_generate, run_rework, technique_label
+from whatelse.service import IDEA_ACTIONS, ServiceError, create_challenge, edit_challenge, react
 
 TABS = ("explore", "library", "experiments")
+PANELS = (*IDEA_ACTIONS, "rework")
 
 
 def create_app(settings: Settings | None = None, llm: LLM | None = None) -> FastAPI:
@@ -62,9 +63,11 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
             select(Event).where(Event.challenge_id == challenge.id, Event.idea_id.is_not(None)).order_by(Event.id)
         ):
             events.setdefault(event.idea_id, []).append(event)
+        titles = dict(session.exec(select(Idea.id, Idea.title).where(Idea.challenge_id == challenge.id)).all())
         return {
             "challenge": challenge,
             "events": events,
+            "titles": titles,
             "explore": explore,
             "library": library,
             "experiments": experiments,
@@ -99,6 +102,16 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
             data = workspace_data(session, get_challenge(session, challenge_id))
             return render(request, "workspace.html", tab=tab, **data)
 
+    @app.post("/challenges/{challenge_id}/edit")
+    def edit(challenge_id: int, statement: str = Form(""), context: str = Form("")):
+        with Session(engine) as session:
+            get_challenge(session, challenge_id)
+            try:
+                edit_challenge(session, challenge_id, statement, context)
+            except ServiceError:
+                pass  # an empty statement simply isn't saved
+        return RedirectResponse(f"/challenges/{challenge_id}", status_code=303)
+
     @app.post("/challenges/{challenge_id}/generate", response_class=HTMLResponse)
     def generate(request: Request, challenge_id: int):
         error = None
@@ -114,15 +127,31 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
 
     @app.get("/ideas/{idea_id}/panel/{action}", response_class=HTMLResponse)
     def feedback_panel(request: Request, idea_id: int, action: str, tab: str = "explore"):
-        if action not in IDEA_ACTIONS:
+        if action not in PANELS:
             raise HTTPException(404)
         with Session(engine) as session:
             idea = session.get(Idea, idea_id)
             if idea is None:
                 raise HTTPException(404)
-            tags = settings.save_tags if action == "save" else settings.discard_tags
+            tags = {"save": settings.save_tags, "discard": settings.discard_tags}.get(action, [])
             return render(request, "_feedback_panel.html", idea=idea, action=action, tags=tags,
                           tab=tab if tab in TABS else "explore")
+
+    @app.post("/ideas/{idea_id}/rework", response_class=HTMLResponse)
+    def rework(request: Request, idea_id: int, note: str = Form(""), tab: str = Form("explore")):
+        error = None
+        try:
+            run_rework(engine, idea_id, note, llm, settings)
+        except (ServiceError, GenerateRefused) as exc:
+            error = str(exc)
+        except LLMError as exc:
+            error = exc.user_message
+        with Session(engine) as session:
+            idea = session.get(Idea, idea_id)
+            if idea is None:
+                raise HTTPException(404)
+            data = workspace_data(session, get_challenge(session, idea.challenge_id))
+            return render(request, "_tabs.html", tab=tab if tab in TABS else "explore", error=error, **data)
 
     @app.post("/ideas/{idea_id}/{action}", response_class=HTMLResponse)
     def idea_reaction(request: Request, idea_id: int, action: str,

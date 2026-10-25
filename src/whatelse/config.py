@@ -40,6 +40,10 @@ class Settings:
         return self.mode == "demo"
 
     @property
+    def tag_labels(self) -> dict[str, str]:
+        return {t["key"]: t["label"] for t in self.save_tags + self.discard_tags}
+
+    @property
     def db_path(self) -> Path:
         return self.data_dir / ("demo.db" if self.is_demo else "whatelse.db")
 

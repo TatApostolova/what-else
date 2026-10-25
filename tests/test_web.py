@@ -149,3 +149,36 @@ def test_unreacted_ideas_stay_after_another_generate(make_client):
     html = client.post("/challenges/1/generate").text
     assert html.count('class="card idea"') == 19
     assert 'id="idea-2"' in html and 'id="idea-1"' not in html
+
+
+def test_rework_from_explore_shows_lineage(make_client, settings):
+    client = make_client()
+    start(client)
+    client.post("/challenges/1/generate")
+    assert "What should change?" in client.get("/ideas/1/panel/rework").text
+    html = client.post("/ideas/1/rework", data={"note": "make it cheaper", "tab": "explore"}).text
+    assert 'id="idea-1"' not in html and 'id="idea-11"' in html
+    assert "Reworked from: Pushed idea" in html
+
+
+def test_rework_without_note_shows_message(make_client):
+    client = make_client()
+    start(client)
+    client.post("/challenges/1/generate")
+    html = unescape(client.post("/ideas/1/rework", data={"note": "", "tab": "explore"}).text)
+    assert "Say what you'd like changed" in html and 'id="idea-1"' in html
+
+
+def test_edit_challenge_changes_next_generate(make_client, settings):
+    llm = FakeLLM()
+    client = make_client(llm)
+    start(client, context="old context")
+    resp = client.post("/challenges/1/edit", data={"statement": "A new framing", "context": "new context"},
+                       follow_redirects=False)
+    assert resp.status_code == 303
+    assert "A new framing" in client.get("/challenges/1").text
+    client.post("/challenges/1/generate")
+    assert "new context" in llm.calls[0]["prompt"] and "old context" not in llm.calls[0]["prompt"]
+    with Session(make_engine(settings)) as s:
+        edit_event = s.exec(select(Event).where(Event.type == "context_edited")).one()
+        assert edit_event.data["previous_context"] == "old context"

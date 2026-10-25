@@ -209,4 +209,6 @@ class FakeLLM:
                  "how": "fuses two seeds"}
                 for i in range(n)
             ]}
+        if "title" in props:  # rework
+            return {"title": "Fake reworked idea", "text": "Simulated rework.", "how": "simulated change"}
         return {"idea": {"title": "Fake idea", "text": "Simulated idea.", "built_on": [], "how": ""}}

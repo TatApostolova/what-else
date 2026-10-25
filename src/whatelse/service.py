@@ -80,3 +80,54 @@ def react(session: Session, settings, idea_id: int, action: str,
     session.commit()
     session.refresh(idea)
     return idea
+
+
+# Rework: a generated idea becomes `reworked` (it leaves Explore); a saved idea stays
+# saved, because the person already liked it. The new idea is created by the orchestrator.
+REWORK_FROM = {"generated": "reworked", "saved": "saved"}
+
+
+def check_rework(idea: Idea | None, note: str | None) -> str:
+    """Validate a rework request before any agent is called. Returns the cleaned note."""
+    if idea is None:
+        raise ServiceError("That idea doesn't exist.")
+    if idea.status not in REWORK_FROM:
+        raise ServiceError(f"An idea that is {idea.status} can't be reworked.")
+    note = (note or "").strip()
+    if not note:
+        raise ServiceError("Say what you'd like changed, so the agents know how to rework it.")
+    return note
+
+
+def stage_rework(session: Session, idea: Idea, note: str, new_idea: Idea) -> None:
+    """Stage the original's event and status change; the caller commits it with the new idea."""
+    to_status = REWORK_FROM[idea.status]
+    add_event(session, idea.challenge_id, "reworked", idea_id=idea.id, note=note,
+              from_status=idea.status, to_status=to_status, data={"new_idea_id": new_idea.id})
+    idea.status = to_status
+    idea.updated_at = utcnow()
+    session.add(idea)
+
+
+def edit_challenge(session: Session, challenge_id: int, statement: str, context: str | None) -> Challenge:
+    challenge = session.get(Challenge, challenge_id)
+    if challenge is None:
+        raise ServiceError("That challenge doesn't exist.")
+    statement = (statement or "").strip()
+    if not statement:
+        raise ServiceError("The challenge can't be empty.")
+    context = (context or "").strip() or None
+    if statement == challenge.statement and context == challenge.context:
+        return challenge
+    add_event(session, challenge.id, "context_edited", data={
+        "statement_changed": statement != challenge.statement,
+        "context_changed": context != challenge.context,
+        "previous_statement": challenge.statement,
+        "previous_context": challenge.context,
+    })
+    challenge.statement, challenge.context, challenge.title = statement, context, title_from(statement)
+    touch(challenge)
+    session.add(challenge)
+    session.commit()
+    session.refresh(challenge)
+    return challenge

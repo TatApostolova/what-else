@@ -48,7 +48,7 @@ def challenge_block(ctx: AgentContext) -> str:
         context=(ctx.context or "").strip() or "(none given)",
     )
     if ctx.history.strip():
-        block += "\n\n## History of this challenge\n" + ctx.history.strip()
+        block += "\n\n" + render("history", history=ctx.history.strip())
     return block
 
 

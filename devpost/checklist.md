@@ -39,25 +39,25 @@ Build mode: learn
   Learner check: Save one idea with a reason, discard another, and check the Library tab. Does picking reasons feel quick enough that you'd actually do it?
   Commit: `Add save and discard reactions with reason tags`
 
-- [ ] **4. Pick the pattern: single-prompt baseline and blind comparison**
-  Becomes usable: A Pattern selector next to Generate offers Default, Collaborative, Single prompt and Blind. Cards never show which pattern made them. "Show how these were made" reveals it after you've judged.
-  Why now: This settles the core assumption in build stage 1 (does multi-agent collaboration beat one rich prompt?) before more is built on the collaborative pattern. The result sets the provisional default in `config.toml`.
-  PRD ref: `prd.md > What We're Building` (stage 1 comparison), `prd.md > Open Questions`
-  Spec ref: `spec.md > Components > Creative Agents and Orchestrator` (single prompt, comparison, Blind, convergence)
-  Build: `patterns/single_prompt.py` + prompt, given equal care. The selector, with `requested` vs actual pattern stored on the run. The run summary reveal.
-  Verify (mechanical): `pytest` (each option records the right pattern; blind records `requested=blind` and a real pattern; no pattern name appears in the card HTML). One real single-prompt run.
-  Learner check: Run the stage-1 comparison on the same challenge using Blind a few times. Judge the cards by gut, then reveal. Which pattern should be the provisional default?
-  Commit: `Add single-prompt baseline and blind pattern selection`
-
-- [ ] **5. The agents learn from your reactions, and Rework reshapes an idea**
+- [x] **4. The agents learn from your reactions, and Rework reshapes an idea**
   Becomes usable: Generate now sees this challenge's history (liked, rejected, reworked, tried, plus titles already suggested). Rework (a required note plus optional tags) returns one new idea, labelled "Reworked from: …", into Explore. The statement and context can be edited from the header panel.
-  Why now: This is build stage 2, the learning half of the kernel. It needs reactions from slice 3 to exist.
+  Why now: This is build stage 2, the learning half of the kernel. It needs reactions from slice 3 to exist. Moved ahead of the pattern comparison at the learner's request.
   PRD ref: `prd.md > Learning Loop`, `prd.md > Reacting to Ideas (Explore)` (Rework), `prd.md > Challenges` (editing)
   Spec ref: `spec.md > Components > Context Builder (learning boundary)`, `spec.md > Components > Creative Agents and Orchestrator` (Rework)
   Build: `context.py` `build_context` (capped at about 40 items, newest first, scoped to one challenge) wired into both patterns. `/ideas/{id}/rework` with lineage (`parent_idea_id`; the original becomes `reworked` in Explore and stays `saved` in the Library). `POST /challenges/{id}/edit` with a `context_edited` event. `tests/test_context.py`.
   Verify (mechanical): `pytest` (the summary contains each section; unreacted ideas appear only as titles; challenge A's history never shows up in challenge B; a failed rework leaves the original untouched). One real Rework and one real Generate after a discard tagged "already tried".
   Learner check: Discard an idea as "already tried", rework another with a note, then Generate again. Is the rework reshaped around your note, and do the new ideas avoid the rejected one?
   Commit: `Add learning context and Rework`
+
+- [ ] **5. Pick the pattern: single-prompt baseline and blind comparison**
+  Becomes usable: A Pattern selector next to Generate offers Default, Collaborative, Single prompt and Blind. Cards never show which pattern made them. "Show how these were made" reveals it after you've judged.
+  Why now: This settles the core assumption in build stage 1 (does multi-agent collaboration beat one rich prompt?) before the rest of the app is built on the collaborative pattern; both patterns get the same history from slice 4, so the comparison stays fair. The result sets the provisional default in `config.toml`.
+  PRD ref: `prd.md > What We're Building` (stage 1 comparison), `prd.md > Open Questions`
+  Spec ref: `spec.md > Components > Creative Agents and Orchestrator` (single prompt, comparison, Blind, convergence)
+  Build: `patterns/single_prompt.py` + prompt, given equal care. The selector, with `requested` vs actual pattern stored on the run. The run summary reveal.
+  Verify (mechanical): `pytest` (each option records the right pattern; blind records `requested=blind` and a real pattern; no pattern name appears in the card HTML). One real single-prompt run.
+  Learner check: Run the stage-1 comparison on the same challenge using Blind a few times. Judge the cards by gut, then reveal. Which pattern should be the provisional default?
+  Commit: `Add single-prompt baseline and blind pattern selection`
 
 - [ ] **6. Develop saved ideas: Library actions and Experiments**
   Becomes usable: In the Library you can Move to Action, Add feedback, Rework or Discard an idea, and expand its history. The Experiments tab lets you log dated progress and finish with a verdict (Worked / Partly / Didn't work / Dropped).
@@ -91,7 +91,7 @@ Build mode: learn
 
 ## Hands-on Checkpoints
 
-- [ ] Early usable behavior explored — after slice 1 (judge the raw agent ideas), and after slice 4 (blind comparison sets the provisional default pattern)
+- [ ] Early usable behavior explored — after slice 1 (judge the raw agent ideas), and after slice 5 (blind comparison sets the provisional default pattern)
 - [ ] Final kick-the-tires exploration and feedback completed
 
 ## Final Review
@@ -115,6 +115,9 @@ Activity mode:
 - Prompts go to `claude -p` on stdin instead of as an argument — long prompts (history, pasted CVs) would hit the Windows command-line length limit; stdin was tested and works.
 - Added an `effort` setting (`--effort`, default `low`; `WHATELSE_EFFORT` / `--effort` overrides) and raised the per-call timeout to 180s — real calls on the CLI default model ran far slower than the 10s measured in planning (round 2: 56–120s, one 120s timeout). Replaying one round-2 call: low ~20s, medium ~106s, default ~123s. A full collaborative Generate at low effort took 82s.
 - Collaborative pattern rebuilt as three rounds producing 10 ideas (diverge with a shared banned list of obvious moves → cross-pollinate, 2 ideas per agent each fusing seeds from two or more other techniques → push, where another agent makes each draft bolder and more specific), and `idea_count` = 10 for the single-prompt baseline — the learner judged the two-round, 5-idea output "not super creative", and only 1 of 5 agents had built on others' seeds. Sample run: 10/10 drafts fused two or more techniques, all 10 pushed, 125s, 15 calls. Updated `prd.md` (about 10 ideas) and `spec.md > Creative Agents and Orchestrator`.
+- `What Else.cmd`, the already-running check and a desktop shortcut were pulled forward from slice 8 into slice 4 — the learner asked for a desktop shortcut for daily use; slice 8 now only needs demo mode.
+- Rework takes a required note only, no reason tags (assumption) — the note is the instruction, and neither tag list fits "change this"; it can be added if it's missed. A rework is refused while a Generate is running on the same challenge.
+- Learning loop + Rework (now slice 4) moved ahead of the pattern comparison (now slice 5) — the learner wanted the agents learning from reactions sooner; the comparison stays fair because both patterns receive the same history.
 - Slice 2 includes a bare challenge list at `/` once a challenge exists (slice 7 adds ordering, last activity and outcomes) and all three tabs with their empty states — the home page needed somewhere to go after the first challenge, and the tabs cost nothing to show early.
 - Round 1 tolerates a single failed agent (its seeds are just missing); round 2 stays all-or-nothing as specified — one flaky call out of five shouldn't throw away a 10-call run before any idea exists.
 - Usage-limit error format still unverified (no way to trigger it on demand); `is_error` + message is classified, with a login-message heuristic for "not logged in".

@@ -3,6 +3,9 @@
     <h2 class="idea-title">{{ idea.title }}</h2>
     <span class="technique">{{ technique_label(idea.techniques) }}</span>
   </div>
+  {% if idea.parent_idea_id %}
+  <p class="lineage">Reworked from: {{ titles.get(idea.parent_idea_id, "an earlier idea") }}</p>
+  {% endif %}
   <p class="idea-text">{{ idea.text }}</p>
   {% if idea.how %}
   <details class="how">
@@ -28,6 +31,8 @@
             hx-target="#panel-{{ idea.id }}">Save</button>
     <button class="btn btn-outline" hx-get="/ideas/{{ idea.id }}/panel/discard?tab={{ tab }}"
             hx-target="#panel-{{ idea.id }}">Discard</button>
+    <button class="btn btn-text" hx-get="/ideas/{{ idea.id }}/panel/rework?tab={{ tab }}"
+            hx-target="#panel-{{ idea.id }}">Rework</button>
   </div>
   <div id="panel-{{ idea.id }}"></div>
   {% endif %}

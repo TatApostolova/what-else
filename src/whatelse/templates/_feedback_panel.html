@@ -1,6 +1,11 @@
 <form class="feedback-panel"
       hx-post="/ideas/{{ idea.id }}/{{ action }}" hx-target="#tabs" hx-swap="outerHTML"
-      hx-disabled-elt="find button[type=submit]">
+      hx-disabled-elt="find button[type=submit]" hx-indicator="find .working">
+  {% if action == "rework" %}
+  <p class="panel-question">What should change?</p>
+  <textarea name="note" rows="2" required
+            placeholder="For example: make it something I can test in one evening"></textarea>
+  {% else %}
   <p class="panel-question">
     {% if action == "save" %}What do you like about it?{% else %}Why isn't this idea right for you?{% endif %}
     <span class="muted">Optional.</span>
@@ -11,11 +16,13 @@
     {% endfor %}
   </div>
   <input type="text" name="note" placeholder="Add a note (optional)" autocomplete="off">
+  {% endif %}
   <input type="hidden" name="tab" value="{{ tab }}">
   <div class="panel-actions">
-    <button class="btn {{ 'btn-primary' if action == 'save' else 'btn-outline' }}" type="submit">
-      {% if action == "save" %}Save idea{% else %}Discard idea{% endif %}
+    <button class="btn {{ 'btn-outline' if action == 'discard' else 'btn-primary' }}" type="submit">
+      {% if action == "save" %}Save idea{% elif action == "discard" %}Discard idea{% else %}Rework idea{% endif %}
     </button>
     <button class="btn btn-text" type="button" onclick="this.closest('.feedback-panel').remove()">Cancel</button>
+    {% if action == "rework" %}<span class="working">An agent is reworking it… about half a minute.</span>{% endif %}
   </div>
 </form>
