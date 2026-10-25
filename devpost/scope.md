@@ -76,7 +76,7 @@ The full loop, across **multiple challenges**, with every part kept thin except 
 - **Domain-agnostic core:** the creative engine, agent collaboration, idea repository, feedback and learning loop contain no logic for any particular domain. Reason tags (e.g. "too vague", "not practical", "not me", "already tried", "too slow") and placeholder hints are generic, so any challenge works. The challenge statement carries the framing, and any remaining wording lives in config files, not code.
 - **Privacy by default:** the user's real challenges, ideas, feedback and outcomes stay private. The real database, agent call logs and any prompt/response dumps live only in git-ignored local paths. The repository, logs, screenshots, demo video and submission contain no personal information.
 - **Real use first:** the default mode runs on the user's own private database, and data persists across sessions and restarts. Every feature in the loop must work for genuine day-to-day use, not just look right in the demo.
-- **Demo mode:** a fictional persona's challenge plus a separate demo database (e.g. chosen by a config setting or environment variable). It's used for the video and screenshots and is safe to commit as seed data.
+- **Demo mode:** a fictional persona's challenge plus a separate demo database (e.g. chosen by a config setting or environment variable). It's used for the video and screenshots and is safe to commit as seed data. *Revised at submission (2026-10-25):* it also runs as a hosted sample for judges, replaying agent answers recorded earlier, because live agents need the user's own Claude Code login.
 - **Simple local web UI** with SQLite.
 - **No paid API calls:** agents run on an existing Claude subscription through Claude Code headless mode (`claude -p`). **Verified 2026-10-18:** with the CLI logged in via a claude.ai subscription and no `ANTHROPIC_API_KEY` set, a test call returned JSON successfully in about 2s. Usage counts against the subscription's limits instead of being billed. Each call carries about 21k tokens of Claude Code overhead, so `4-spec` should keep calls lean and few.
 
@@ -133,7 +133,7 @@ Raised on 2026-10-19 and parked on purpose. They don't change the POC scope. Rev
 - More collaboration patterns (debate, chaining, critique rounds) and side-by-side comparison of patterns.
 - Agents that research the web (real companies, real public problems) instead of only ideating.
 - Richer Rework (e.g. turning an idea into a concrete step-by-step plan).
-- Deployment beyond the local machine.
+- Deployment of the live app beyond the local machine (only the recorded sample is hosted).
 - Domain-specific tuning (tailored reason tags, hints and prompt framing per kind of challenge) if generic ones prove too blunt.
 
 ## Explicitly Cut

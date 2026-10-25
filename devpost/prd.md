@@ -148,12 +148,16 @@ Source: `scope.md > Built to Finish, Not to Keep You`, `scope.md > The Core Loop
   - [ ] Reopening makes Generate and reactions available again, and nothing is lost.
 
 ### Demo Mode
-*Cut during the build (learner decision): no seeded persona or demo flags. `WHATELSE_MODE=demo` still opens a separate, empty demo database with a "Demo" badge.*
+*Cut during the build (learner decision), then brought back at submission (2026-10-25) as a hosted sample, so judges can try the app without an account or Claude Code.*
 
 Source: `scope.md > The POC Boundary` (Demo mode; Privacy by default).
 
-- A setting starts the app on a separate demo database seeded with a fictional persona's challenge. The real database is never touched.
+- A setting (`WHATELSE_MODE=demo`) starts the app on a separate demo database with a fictional challenge: a small bookshop that wants more weekday visitors. The real database is never touched.
+- Generate and Rework replay agent answers recorded earlier from real runs, and a banner says so. Everything else (reactions, Library, Experiments, closing summary) works as normal.
+- The sample is rebuilt on every start, and a **Reset demo** button restores it. Visitors can't start new challenges in sample mode.
+- The first page says what the app does and who it's for, with three steps to try it. The full challenge and its context are shown on the challenge page.
 - A small "Demo" badge in the header makes the mode obvious **(assumption)**.
+- A copy runs at https://what-else-demo.onrender.com.
 - Acceptance criteria:
   - [ ] Starting in demo mode shows only the demo challenge(s), and starting in normal mode shows only the real ones.
   - [ ] The demo flow in `scope.md > What "Working" Looks Like` can be performed end to end in about a minute, excluding generation wait time.

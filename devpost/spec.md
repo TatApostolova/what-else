@@ -76,10 +76,10 @@ Rationale: the stack was agreed in `scope.md > Technical Direction`. You chose t
   ```
 - **Run for real use:** `python -m whatelse` starts the server on http://127.0.0.1:8000 and opens the browser. Data goes to the private data folder (see `Data Model > Where data lives`).
 - **Open without a terminal (Windows):** double-click `What Else.cmd` in the project folder, or a desktop shortcut to it. It activates `.venv` and runs `python -m whatelse` in a minimised console window. Closing that window stops the app. If the app is already running (port 8000 answers), `__main__.py` just opens the browser at http://127.0.0.1:8000 instead of starting a second server. Once the app is running, http://127.0.0.1:8000 can also be bookmarked. Added after spec approval, at your request.
-- **Run for the demo video:** `python -m whatelse --demo` (or `WHATELSE_MODE=demo`). This uses a separate `demo.db`, seeded from `demo/seed.json` (a fictional persona's challenge) on first start, and shows a "Demo" badge.
-- **Reset the demo:** `python -m whatelse --demo --reset-demo` deletes and re-seeds only `demo.db`.
-- **Tests:** `pytest`. Tests use a fake LLM and a temporary database, so they never call Claude.
-- **Submission:** a short demo video recorded in demo mode, plus the public GitHub repository. No deployment: the app relies on the user's own Claude Code login, so a hosted version would need a different provider (see `scope.md > Later`).
+- **Sample mode (revised at submission, 2026-10-25):** set `WHATELSE_MODE=demo` before `python -m whatelse`. It uses a separate `demo.db`, rebuilds a fictional bookshop challenge from `demo/seed.json` on every start, and replays agent answers recorded earlier from real runs, so it needs no Claude Code login and no API key. A banner explains this, and **Reset demo** rebuilds the sample. See `Components > Demo Mode`.
+- **Hosted sample for judges:** https://what-else-demo.onrender.com runs sample mode on Render's free plan, configured by `render.yaml` (`pip install .`, then `python -m whatelse --no-browser --host 0.0.0.0 --port $PORT`). The free plan sleeps after about 15 idle minutes, so the first load can take about a minute, and it has no lasting disk, which is fine because the sample is rebuilt on every start.
+- **Tests:** `pytest`. Tests use a fake LLM (or the replay adapter) and a temporary database, so they never call Claude.
+- **Submission:** a short demo video, the public GitHub repository and the hosted sample. Live agents stay local-only, because they rely on the user's own Claude Code login. A live hosted version would need a different provider plus accounts and cost controls (see `scope.md > Later`).
 
 ## Look and Feel
 Carries forward `prd.md > Look and Feel` and `scope.md > Inspiration & Identity`. All styling lives in one hand-written `static/style.css`, with no CSS framework.
@@ -96,7 +96,7 @@ Carries forward `prd.md > Look and Feel` and `scope.md > Inspiration & Identity`
 ## Components
 
 ### App Entry and Config
-`__main__.py` parses `--demo` / `--reset-demo`, chooses the database, runs migrations-free `create_all()`, seeds the demo if needed, starts Uvicorn and opens the browser. `config.py` merges `config.toml` (reason tags, placeholder hints, active pattern, idea count, model, call timeout) with environment variables (`WHATELSE_MODE`, `WHATELSE_DATA_DIR`, `WHATELSE_PATTERN`, `WHATELSE_MODEL`).
+`__main__.py` parses `--no-browser`, `--port` and `--host` (added at submission for hosting), replaces a stale running copy, starts Uvicorn and opens the browser. `create_app` chooses the database for the mode, runs migrations-free `create_all()`, and in sample mode rebuilds the sample. `config.py` merges `config.toml` (reason tags, placeholder hints, active pattern, idea count, model, call timeout) with environment variables (`WHATELSE_MODE`, `WHATELSE_DATA_DIR`, `WHATELSE_PATTERN`, `WHATELSE_MODEL`).
 PRD ref: `prd.md > Demo Mode`, `prd.md > States and Boundaries` (Privacy, Persistence).
 
 ### Web Routes and Pages
@@ -111,14 +111,15 @@ PRD ref: `prd.md > Demo Mode`, `prd.md > States and Boundaries` (Privacy, Persis
 | `POST /challenges/{id}/generate` | run the collaborative pattern; returns new cards (pattern selector cut in build) |
 | `POST /challenges/{id}/status` | pause / achieve / abandon / reopen (+ note) |
 | `POST /challenges/{id}/delete` | permanent delete after confirmation (added in build): rows for the challenge in all four tables, plus matching agent-log lines |
-| `GET /_version`, `POST /_shutdown` | code fingerprint; lets a newer launch stop a stale running copy (added in build) |
+| `GET /_version`, `POST /_shutdown` | code fingerprint; lets a newer launch stop a stale running copy (added in build; shutdown refused in sample mode) |
+| `POST /demo/reset` | sample mode only: rebuild the sample challenge (added at submission) |
 | `POST /challenges/{id}/ideas` | add the person's own idea (added in build): a `manual` run, an `Idea` with `techniques=["own"]`, status `saved` |
 | `POST /ideas/{id}/save` · `/discard` · `/rework` · `/feedback` · `/action` · `/progress` · `/complete` | idea reactions |
 
 PRD ref: `prd.md > Screens and Layout`, `prd.md > Challenges`, `prd.md > Reacting to Ideas (Explore)`, `prd.md > Idea Library`, `prd.md > Experiments`, `prd.md > Challenge Outcomes`.
 
 ### Templates and Styling
-`templates/`: `base.html` (header, Demo badge, HTMX script), `welcome.html`, `dashboard.html`, `challenge_form.html`, `workspace.html` (header panel + tabs), and partials `_idea_card.html`, `_feedback_panel.html`, `_explore.html`, `_library.html`, `_experiments.html`, `_summary.html`, `_history.html`, `_error.html`. The challenge panel uses a native `<details>` element, so it's collapsed by default with no JavaScript. Generate uses `hx-indicator` for the working message and `hx-disabled-elt` to disable the button.
+`templates/`: `base.html` (header, Demo badge, sample-mode banner, HTMX script), `welcome.html`, `demo_new.html` (sample mode's stand-in for the new-challenge form), `dashboard.html`, `challenge_form.html`, `workspace.html` (header panel + tabs), and partials `_idea_card.html`, `_feedback_panel.html`, `_explore.html`, `_library.html`, `_experiments.html`, `_summary.html`, `_history.html`, `_error.html`. The challenge panel uses a native `<details>` element, so it's collapsed by default with no JavaScript. Generate uses `hx-indicator` for the working message and `hx-disabled-elt` to disable the button.
 PRD ref: `prd.md > Screens and Layout`, `prd.md > Look and Feel`, `prd.md > States and Boundaries`.
 
 ### Idea and Challenge Service
@@ -168,10 +169,14 @@ PRD ref: `prd.md > Generating Ideas`, `prd.md > States and Boundaries` (generati
 `summary.py` computes, with plain queries: the outcome and note; counts of ideas generated, saved, discarded, reworked, actioned and completed; experiments with their verdicts; and saved ideas. It's rendered by `_summary.html`, shown on close, and available as the Summary tab on closed challenges.
 PRD ref: `prd.md > Challenge Outcomes`.
 
-### Demo Seed
-*Cut in build (learner decision). `WHATELSE_MODE=demo` still selects `demo.db` and shows the badge; there is no seed file and no `--demo` / `--reset-demo` flags.*
+### Demo Mode
+*Cut in build (learner decision), then brought back at submission (2026-10-25) as a hosted sample, because judges need a public site they can use without an account, and the live agents need the user's own Claude Code login.*
 
-`demo/seed.json` holds a fictional persona's challenge (statement + context) and, optionally, a few pre-made events so the Library isn't empty in screenshots. It's loaded into `demo.db` on first demo start. It contains no real data and is committed to the repo.
+- **`demo.py`** holds `ReplayLLM`, a drop-in for the LLM adapter that answers agent calls from `demo/recording.json` instead of calling Claude. The normal pattern code runs unchanged on top of it, so attribution, storage and the UI behave exactly as in a live run. Each Generate replays the next recorded batch (3 batches, cycling). A Rework is matched by the idea's title, and an unrecorded idea (e.g. one the visitor typed) reuses a recorded rework.
+- **`seed_demo`** wipes `demo.db` and rebuilds the sample: it creates the challenge from `demo/seed.json`, replays the first batch, then applies the seed's reactions (saves, discards, an experiment with progress, a finished experiment, the person's own idea), so every tab has something in it. It runs on startup and on **Reset demo**.
+- **`tools/record_demo.py`** records the answers once from real runs, using the developer's Claude Code login. It's resumable: anything already recorded is replayed, not re-asked.
+- **What changes in sample mode:** a banner explains it and offers Reset demo. The dashboard opens with a short intro (what the app does, who it's for, three steps to try it). The full challenge and its context are shown read-only. New challenges are refused (they'd get answers recorded for a different challenge). `/_shutdown` is refused. The Rework box is prefilled with the note the recorded reworks were made with.
+- Visitors share one database. That's acceptable for a sample, and Reset demo restores it.
 PRD ref: `prd.md > Demo Mode`.
 
 ## Data Model
@@ -192,7 +197,7 @@ Event types: `challenge_created`, `context_edited`, `challenge_status` (pause/ac
 
 ### Where data lives
 - **Data folder:** `WHATELSE_DATA_DIR` if set, otherwise the per-user app-data folder (`%LOCALAPPDATA%\WhatElse` on Windows, `~/.local/share/whatelse` elsewhere). It's outside the repo, so it can't be committed by accident.
-- **Files:** `whatelse.db` (real), `demo.db` (demo), `logs/agent-calls.jsonl` (real mode) / `logs/demo-agent-calls.jsonl`.
+- **Files:** `whatelse.db` (real), `demo.db` (sample mode, rebuilt on every start), `logs/agent-calls.jsonl` (real mode) / `logs/demo-agent-calls.jsonl`.
 - **Updates:** only through `service.py` (state changes) and the orchestrator (new ideas and runs).
 - **Leaving and returning:** everything is in SQLite, so closing the browser or restarting the app loses nothing. A run left `running` by a crash is marked `failed` on startup, so Generate isn't blocked forever.
 
@@ -201,11 +206,13 @@ Event types: `challenge_created`, `context_edited`, `challenge_status` (pause/ac
 ```
 AI-Hackaton/
 ├── pyproject.toml            # project metadata, dependencies, [dev] extras, pytest config
-├── README.md                 # what it is, setup, run, demo mode (written in 6-ship)
+├── README.md                 # what it is, hosted sample, setup, run, how it was built
+├── render.yaml               # Render free-plan config for the hosted sample
 ├── What Else.cmd             # double-click launcher (Windows): starts the app minimised, opens browser
+├── tools/record_demo.py      # records the agent answers that sample mode replays
 ├── .gitignore                # already ignores data/, *.db, logs/, private docs
 ├── src/whatelse/
-│   ├── __main__.py           # `python -m whatelse`: flags, DB choice, seed, start server, open browser
+│   ├── __main__.py           # `python -m whatelse`: flags, stale-copy check, start server, open browser
 │   ├── config.py             # loads config.toml + env vars
 │   ├── config.toml           # reason tags, placeholder hints, pattern, idea count, model, timeout
 │   ├── db.py                 # engine per mode, create_all, startup cleanup of stuck runs
@@ -215,6 +222,7 @@ AI-Hackaton/
 │   ├── orchestrator.py       # runs a pattern, validates output, Rework
 │   ├── llm.py                # ClaudeCLI adapter + FakeLLM for tests
 │   ├── summary.py            # closing summary from stored data (no AI)
+│   ├── demo.py               # sample mode: ReplayLLM + seed_demo
 │   ├── web.py                # FastAPI app and routes
 │   ├── techniques/           # one .md per creative technique (5 files)
 │   ├── patterns/
@@ -224,13 +232,16 @@ AI-Hackaton/
 │   ├── static/
 │   │   ├── style.css         # all styling (see Look and Feel)
 │   │   └── htmx.min.js       # vendored HTMX 2.x
-│   └── demo/seed.json        # fictional persona challenge (safe to commit)
+│   └── demo/
+│       ├── seed.json         # fictional bookshop challenge + reactions (safe to commit)
+│       └── recording.json    # recorded agent answers replayed in sample mode
 ├── tests/
 │   ├── conftest.py           # temp DB + FakeLLM fixtures
 │   ├── test_service.py       # transitions write events and statuses correctly
 │   ├── test_context.py       # history summary content, challenge isolation
 │   ├── test_orchestrator.py  # pattern output validated; failures leave no partial ideas
-│   └── test_web.py           # key routes render; read-only when not active
+│   ├── test_web.py           # key routes render; read-only when not active
+│   └── test_demo.py          # sample mode: seed, replay, reset, blocked routes
 ├── scripts/                  # only if needed: one-off schema copy scripts (developer tools)
 └── devpost/                  # planning docs (learner-profile.md and private/ are git-ignored)
 ```
@@ -281,14 +292,14 @@ Listed in `Stack`. All installed and imported successfully on Python 3.14.2 on 2
 - **Reason tags in config** instead of a database table. The tags are a fixed list, and storing keys keeps the data analysis-ready.
 - **Context builder includes everything up to a cap** instead of relevance ranking. That's enough for one challenge's history, and the boundary is ready for a smarter version.
 - **No live grounding/web research.** The ideas are pure ideation (`prd.md > Deferred From the POC`).
-- **Fake LLM only in tests.** The app itself always uses the real agents, because the kernel is never simulated.
+- **Fake LLM only in tests.** The real app always uses the live agents, because the kernel is never simulated. Sample mode replays answers that real agents gave earlier, and says so on every page.
 
 ## Decisions and Open Issues
 
 **Learner decisions**
 - **Python 3.14 + venv/pip instead of uv + 3.12**, provided the dependencies are compatible. The agent verified compatibility on 2026-10-19.
 - **Stack from `scope.md > Technical Direction`:** FastAPI, SQLModel/SQLite, Jinja2 + HTMX, a `claude -p` adapter, and techniques/patterns as files.
-- **Local only, no deployment.** The submission is a demo video plus the public repository.
+- **Local only, no deployment.** *Revised at submission (2026-10-25):* the live app stays local, but a sample-mode copy with recorded answers is hosted on Render's free plan so judges can try it without an account. A live hosted version with an API key was rejected (cost and abuse), and so was tunnelling to the user's PC (subscription sharing and privacy).
 
 - **Revised in build:** the collaborative pattern became three rounds (diverge with a banned list of obvious moves, cross-pollinate with a two-technique fusion rule, push) producing 10 ideas from 15 calls, about 2 minutes at low effort. Your decision after judging the first version "not super creative".
 - **The collaborative two-round pattern** (5 seed calls, then 5 build-on calls, all in parallel; 10 calls per Generate) was the starting default. **Round 2 is open:** each agent may extend, invert, challenge or recombine any number of other agents' seeds, whichever produces the strongest unconventional idea. Technique attribution is preserved for every seed used. The agent recommended the two rounds; you confirmed them and removed the two-technique restriction. Tradeoff accepted: more subscription usage per Generate.
