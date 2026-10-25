@@ -6,7 +6,7 @@ Built for the Devpost **Build With AI: Basics** hackathon.
 
 ## Try it
 
-**Hosted sample (no account needed):** _link added after deployment_
+**Hosted sample (no account needed):** https://what-else-demo.onrender.com
 
 The hosted version runs in **sample mode**: a fictional challenge (a small bookshop looking for new ways to bring people in) with agent answers recorded earlier from real runs. Everything else is live, including Save / Discard / Rework, the Idea Library, Experiments, the dashboard and the closing summary. **Reset demo** in the banner restores the starting state. It's on a free plan that sleeps when idle, so the first load can take about a minute.
 
