@@ -84,10 +84,11 @@ Rationale: the stack was agreed in `scope.md > Technical Direction`. You chose t
 ## Look and Feel
 Carries forward `prd.md > Look and Feel` and `scope.md > Inspiration & Identity`. All styling lives in one hand-written `static/style.css`, with no CSS framework.
 
-- **Palette (CSS variables):** page `#f7f7f5` (warm off-white), cards `#ffffff` with a 1px border `#e7e5e4` and a soft shadow, text `#1c1917`, muted text `#78716c`. One accent, deep teal `#0f766e`, used for links, focus rings, the selected tab and selected tag chips. Save is a dark filled button (`#1c1917`, white text). Discard is outlined. Rework is a text-style button in the accent colour.
+- **Palette (CSS variables):** page `#faf8f4` (warm off-white), cards `#ffffff` with a 1px border `#e7e5e4` and a soft shadow, text `#1c1917`, muted text `#78716c`. One accent, deep teal `#0f766e`, used for links, focus rings, the selected tab, selected tag chips, the "?" in the logo and the summary numbers. Save (and other primary actions) is a teal filled button with white text. Discard is outlined. Rework is a text-style button in the accent colour.
 - **Status badges:** small rounded pills. Active is teal, Paused amber, Achieved green, Abandoned grey. For ideas: Saved, Actioned, Completed plus the verdict (Worked green / Partly amber / Didn't work grey / Dropped outline).
-- **Type:** system sans-serif stack (`system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`). Idea titles about 1.05rem semibold, body 0.95rem, line height 1.5.
-- **Layout:** one centred column, max about 760px wide, with generous spacing. Idea cards stack vertically. The technique label sits in the card's top-right corner as small uppercase muted text ("SCAMPER ← ANALOGIES").
+- **Type:** Fraunces (a warm serif, from Google Fonts) for the logo, page headings, idea titles and summary numbers; DM Sans for body text. Both fall back to system fonts offline. Idea titles about 1.2rem, body 0.95rem, line height 1.5.
+- **Motion:** kept small. New idea cards rise in gently, cards lift on hover (idea cards show a teal left edge), buttons press down, and the "working" message pulses. All of it is off under `prefers-reduced-motion`.
+- **Layout:** one centred column, max about 760px wide, with generous spacing. Idea cards stack vertically. The technique label sits in the card's top-right corner as small uppercase muted text ("SCAMPER ← ANALOGIES"). Tabs are rounded pills; the active one is tinted teal.
 - **Feedback panel:** expands inline under the card's buttons, with tag chips (toggle on tap), a one-line note field and a submit button. No modals.
 - **Copy tone:** short, friendly and plain ("What are you trying to figure out?", "The agents are working…", "Save an idea in Explore to keep it here").
 - **Avoid:** gradients, chat bubbles, dense tables, emoji-heavy UI.
