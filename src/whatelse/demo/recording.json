@@ -1,0 +1,1071 @@
+{
+ "batches": [
+  {
+   "round1": {
+    "reverse_thinking": {
+     "obvious": [
+      "Run weekday afternoon events or book clubs",
+      "Offer a café corner with coffee and snacks",
+      "Partner with the nearby school for reading programmes"
+     ],
+     "seeds": [
+      {
+       "title": "Make the shop impossible to enter without being invited",
+       "text": "Flip the open-door assumption: on Tuesday and Thursday afternoons, the shop is 'closed to browsers' and entry requires a 5-minute slot booked by text the day before. Scarcity and a hint of exclusivity make the empty afternoon the draw, not the problem."
+      },
+      {
+       "title": "You become the customer; WFH neighbours become the sellers",
+       "text": "Reverse the buyer-seller role by hosting a monthly 'Sell Us Your Shelves' session where local remote workers bring in their own used books and pitch you on why they're worth stocking — you listen, they linger, and the foot traffic comes to audition rather than to browse."
+      },
+      {
+       "title": "Start from Friday's closing time and walk the week backwards",
+       "text": "Imagine the shop is fully booked every weekday afternoon; what is the last thing that would have had to happen to fill it? Work backwards until you find a single first step — likely that a handful of WFH regulars treat the back room as a quiet working annex on a standing weekly booking, making the shop a destination they schedule rather than stumble into."
+      }
+     ]
+    },
+    "scamper": {
+     "obvious": [
+      "Host regular evening or weekend events (author talks, book clubs)",
+      "Offer a café corner with coffee and snacks",
+      "Run targeted social media ads or promotions"
+     ],
+     "seeds": [
+      {
+       "title": "Rent the Back Room as a WFH Day Office",
+       "text": "Using the Substitute lens: instead of selling books in the back room, charge nearby remote workers a small daily fee to use it as a quiet desk space — they walk past your shelves every time they make a tea, turning browsers into buyers without any extra marketing."
+      },
+      {
+       "title": "Become the Official School Pick-Up Waiting Room",
+       "text": "Using the Rearrange/Reverse lens: flip the bookshop's role so that between 2:30pm and 4pm it becomes the designated 'wait here for your child' spot — partner with the primary school to hand out a slip at the gate directing parents to your shop, where a single armchair corner and a kids' reading nook do the selling for you."
+      },
+      {
+       "title": "Let WFH Locals 'Own' a Shelf for a Month",
+       "text": "Using the Put to Other Uses lens: rent out small sections of your shelving to remote workers or local micro-businesses as a personal 'curated picks' or tiny pop-up display (their side-project zine, their homemade jam, their reading list) — they promote it to their own networks, driving their friends into the shop on weekday afternoons."
+      }
+     ]
+    },
+    "random_associations": {
+     "obvious": [
+      "Host author events or book-club nights",
+      "Offer coffee or tea to turn the shop into a casual café",
+      "Run an after-school reading programme for kids from the nearby primary school"
+     ],
+     "seeds": [
+      {
+       "title": "The Neighbourhood Logbook You Must Visit to Read",
+       "text": "Sparked by a ship's logbook — captains record daily observations that only make sense in sequence. Give WFH locals a large handwritten logbook on your counter where anyone who visits that afternoon writes one sentence about their day; the only way to read yesterday's entries is to come back in person, creating a daily pull with no digital substitute."
+      },
+      {
+       "title": "Wrap and Tag Books as Unclaimed Lost Property",
+       "text": "Sparked by an airport lost-and-found box — objects wait, tagged with cryptic descriptions, for someone to claim them. Wrap a section of your slow-moving stock in brown paper, label each with only three strange clues (e.g. 'smells like 1987, argues with the sea, ends on a Tuesday'), price them at a discount, and let the mystery itself become the weekday draw."
+      },
+      {
+       "title": "Rent the Back Room as a One-Person Focus Booth by the Hour",
+       "text": "Sparked by a anechoic chamber — a space defined entirely by what it removes (sound, distraction, interruption). Charge WFH neighbours a small hourly fee to use your quiet back room as a no-Wi-Fi, phone-in-a-basket deep-work slot, with a book left on the desk they can buy if they want; the room pays for itself and every user walks through the shop twice."
+      }
+     ]
+    },
+    "challenging_assumptions": {
+     "obvious": [
+      "Host afternoon events or a book club",
+      "Partner with the nearby school for reading programmes",
+      "Run targeted social media ads or promotions for local residents"
+     ],
+     "seeds": [
+      {
+       "title": "Become the neighbourhood's parcel address",
+       "text": "Challenge the assumption that people must want books to enter a bookshop. Offer WFH neighbours a paid monthly subscription to use your shop as their delivery address — they collect parcels between 1 and 5pm, and every visit puts them inside a bookshop."
+      },
+      {
+       "title": "Rent the back room as a focus desk by the hour",
+       "text": "Challenge the assumption that a bookshop sells only books. Turn your unused back room into a bookable quiet-work pod for WFH workers who are sick of their kitchen table — charge £3–5 an hour, keep it simple with just a table, good light, and wifi, and the walk-in trade follows naturally."
+      },
+      {
+       "title": "Make your shop the official school-run waiting room",
+       "text": "Challenge the assumption that foot traffic has to be convinced to visit. Approach parents directly and position the shop as the warm, safe place to wait before the 3pm pickup — offer a standing 'school-run kettle' (free tea, no obligation), so the 2–4pm slot fills itself with people who already pass your door every day."
+      }
+     ]
+    },
+    "analogies": {
+     "obvious": [
+      "Run an in-store event or book club evening",
+      "Offer a discount or promotion for weekday afternoon visits",
+      "Post more consistently on social media to raise awareness"
+     ],
+     "seeds": [
+      {
+       "title": "The Cleaner-Fish Station (Marine Biology)",
+       "text": "On coral reefs, cleaner fish set up a fixed spot at a predictable time and other fish queue up because they know exactly where to find a specific service. Partner with the nearby school to become the official 3:15pm 'reading nook': kids waiting for parents sit in your back room with a free picture book, so parents walk two streets to collect them — straight into your shop."
+      },
+      {
+       "title": "The Ice-Cream Van Reverse Route (Street Vending)",
+       "text": "Ice-cream vans drive to where people already are, then pull them into a transaction. Flip this: at 1pm, one of you walks a single nearby street with a small basket of three 'book of the day' picks and a handwritten card saying 'come try the back room desk this afternoon' — using the outing to drag people back to the shop rather than waiting for them to arrive."
+      },
+      {
+       "title": "The Interval-Training Base Camp (Endurance Sport)",
+       "text": "Ultra-runners set a base camp they return to at timed intervals during a long effort — it gives rhythm to an otherwise shapeless day. Offer WFH neighbours a named '90-minute focus slot' in your back room (one desk, no charge, one free coffee, silence guaranteed), bookable in pairs of days, so the shop becomes a fixed beat in their work week rather than a random errand."
+      }
+     ]
+    }
+   },
+   "round2": {
+    "scamper": {
+     "ideas": [
+      {
+       "title": "The Weekly Mystery Parcel Only You Can Collect",
+       "text": "Substitute the generic parcel-address service with a curated weekly 'blind book drop': WFH neighbours pay £6 a month to have a brown-paper-wrapped mystery book — labelled only with three cryptic clues — waiting behind your counter for them to collect any weekday afternoon that week. Unlike a postal parcel, they can't reschedule or redirect it; they have to walk in and unwrap it in the shop. The mystery-wrapping makes the errand feel like a reward rather than a chore, and the weekly rhythm gives you a reliable drip of afternoon visitors. First step: recruit eight WFH neighbours this week with a handwritten card through their door — eight parcels a week costs you almost nothing to prepare and fills your quiet slot with people who've already paid to show up.",
+       "built_on": [
+        "challenging_assumptions-1",
+        "random_associations-2"
+       ],
+       "how": "substitutes the functional parcel-collection trigger from challenging_assumptions-1 with the mystery-wrapped book mechanic from random_associations-2, turning a utility errand into a weekly ritual people look forward to"
+      },
+      {
+       "title": "The 1pm Book Harvest Run",
+       "text": "Reverse the direction of effort: at 1pm, one of you walks a single nearby street with a tote bag and a printed slip, knocking on WFH neighbours to offer a same-afternoon 'book pick-up' — they leave a small pile outside their door, you collect it, and the slip tells them to come into the shop between 3 and 5pm to hear what you'd pay or trade for each one. You've now created an appointment they feel obligated to keep, and that appointment lands them inside the shop in the quiet window. The logbook from the counter gives them something to read while they wait for your verdict, adding another reason to linger. First step: walk four houses tomorrow, knock and offer the deal — even two people coming in that afternoon is two more than you'd have had.",
+       "built_on": [
+        "analogies-2",
+        "reverse_thinking-2",
+        "random_associations-1"
+       ],
+       "how": "takes the 'go out to pull people back' route from analogies-2, reverses the buyer-seller role from reverse_thinking-2 so neighbours arrive with a purpose, and uses the logbook from random_associations-1 as a reason to linger once they're in"
+      }
+     ]
+    },
+    "challenging_assumptions": {
+     "ideas": [
+      {
+       "title": "Your Neighbours Write the Draw; Their Networks Walk In",
+       "text": "The hidden assumption here is that the bookshop has to create its own pull — but what if the people already nearby are the content, and their personal reputations do the attracting? Recruit three WFH locals each to 'own' a small shelf for a month AND keep a handwritten weekly entry in a counter logbook about their work life and why they picked each book — entries are visible only in person, never photographed or posted online. Their own friends, colleagues and curiosity-seekers have to come in to read what they wrote and see what they chose, turning each shelf-owner's social circle into a reason to visit on a weekday afternoon. First step: this week, approach three remote workers you already know by name, show them an empty shelf, and ask if they'd like their name on a card above it.",
+       "built_on": [
+        "reverse_thinking-2",
+        "random_associations-1",
+        "scamper-3"
+       ],
+       "how": "applies random_associations-1's in-person-only content mechanic to the participant-as-draw logic of reverse_thinking-2 and scamper-3's shelf ownership"
+      },
+      {
+       "title": "Pay First, Come In to Unwrap: The Visit Is the Purchase",
+       "text": "The assumption everyone follows is that customers decide to visit a shop after knowing what's available — but what if the decision to visit happens before they know what they're getting? Take a selection of slow-moving stock, wrap each in brown paper with only three cryptic clues (borrowed from the lost-property idea), price them at a small discount, and sell them by text message as pre-paid mystery slots: the customer pays upfront and is given a collection window — a specific weekday afternoon hour — as the only time they can come in to unwrap and receive it. The pre-payment locks in the visit; the mystery makes it feel like an event rather than an errand; and scarcity of the window means you control exactly when foot traffic lands. First step: wrap ten books today, write the clues, text your existing loyalty-card holders with a link to reply 'YES' to claim a slot this coming Wednesday between 2pm and 4pm.",
+       "built_on": [
+        "reverse_thinking-1",
+        "random_associations-2"
+       ],
+       "how": "fuses reverse_thinking-1's manufactured scarcity and pre-commitment mechanic with random_associations-2's mystery-wrapped stock to make the visit itself the product being sold"
+      }
+     ]
+    },
+    "analogies": {
+     "ideas": [
+      {
+       "title": "The Poste Restante: Personal Slots Only Collected In Person",
+       "text": "Borrowed from 19th-century poste restante post offices — travellers had to appear in person to collect mail held under their name, turning the post office into a social hub. Fuse that mechanism with the in-person-only logbook and the parcel-address subscription: offer 15–20 WFH neighbours a named physical slot (a labelled pigeonhole in your back room) for a small monthly fee. Other subscribers — and you — can leave them a handwritten book recommendation, a clipped review, or a short note; the only way to check your slot is to walk in. Nothing is scanned or emailed. The shop becomes a node people have a personal reason to visit every few days. Start by offering the first ten slots free for a month to neighbours you already know, and let word spread from there.",
+       "built_on": [
+        "random_associations-1",
+        "challenging_assumptions-1",
+        "reverse_thinking-2"
+       ],
+       "how": "applies poste-restante's 'must appear in person to collect something personal' mechanism to fuse the logbook's in-person-only pull with the parcel-address subscription's recurring foot traffic"
+      },
+      {
+       "title": "The Flash Specimen Case: One Shelf, One Neighbour, One Afternoon",
+       "text": "Borrowed from natural-history specimen cabinets on loan rotation — museums lend a single display case to a school or library for a fixed window, then recall it, making each appearance genuinely temporary. Fuse the rented shelf idea with the mystery-wrapped books and the scarcity-booking concept: each weekday afternoon a different WFH local 'takes over' one small display in the shop with something they've curated — wrapped books with cryptic clues, a side-project zine, a handmade object — announced to their own network that morning only and gone by 5pm. You supply the shelf and a printed card; they supply the audience. Because it vanishes the same day, their contacts have a real reason to come specifically that afternoon rather than 'sometime'. First step: sketch a simple one-page 'specimen brief' and invite five remote-working regulars to each claim one Tuesday or Wednesday slot in November.",
+       "built_on": [
+        "scamper-3",
+        "random_associations-2",
+        "reverse_thinking-1"
+       ],
+       "how": "applies the specimen-loan rotation's 'temporary, recalled, genuinely scarce' mechanism to fuse the rented-shelf audience-building with the mystery-wrapping draw and the scarcity-entry idea"
+      }
+     ]
+    },
+    "reverse_thinking": {
+     "ideas": [
+      {
+       "title": "Deliver the Mystery, Demand the Return",
+       "text": "Reverse the parcel-address idea entirely: instead of waiting for people to come collect things from you, you become the deliverer. Wrap ten slow-moving books in brown paper with three cryptic clues (borrowing the lost-property mechanic), then drop one on each of ten nearby WFH neighbours' doorsteps — no charge, no obligation, just a handwritten note: 'Unwrap it. If you want to swap it for another, bring it back any weekday afternoon between 1 and 5.' The return trip is the footfall, created by a social contract rather than a promotion. This week's first step: wrap ten books and walk them to ten doors.",
+       "built_on": [
+        "random_associations-2",
+        "challenging_assumptions-1",
+        "random_associations-1"
+       ],
+       "how": "inverts challenging_assumptions-1's 'they come to collect from you' into 'you go to them so they must come back', using random_associations-2's mystery wrapping as the hook and random_associations-1's 'only redeemable in person' rule as the return mechanism"
+      },
+      {
+       "title": "The Bookshop Submits Its CV to You",
+       "text": "Reverse the role of seller and buyer: instead of WFH locals deciding whether to try your back room, you write a short 'job application' — on paper, slipped under nearby doors — asking local remote workers if they would be willing to 'hire' your back room for one trial Wednesday afternoon shift. You frame yourself as the candidate; they are the employer deciding whether to give you a chance. People who would ignore a discount flyer will often respond to being asked to judge something, and the framing makes them feel in control rather than sold to. First step: write and deliver twenty handwritten 'applications' to households within two streets this week.",
+       "built_on": [
+        "analogies-2",
+        "scamper-1",
+        "scamper-3"
+       ],
+       "how": "reverses the buyer/seller role from scamper-1's back-room rental, using analogies-2's 'go out to drag people back' as the delivery method, and scamper-3's idea that locals promoting their own stake drives visits — here the stake is that they've been asked to judge you"
+      }
+     ]
+    },
+    "random_associations": {
+     "ideas": [
+      {
+       "title": "Your Named Shelf + Your Parcel Address",
+       "text": "Sparked by left-luggage lockers at a train station — lockers work because depositing something creates an automatic reason to return, twice. Offer nearby WFH residents a £5/month 'resident shelf' membership: they get a small, labelled section of shelving to store their current to-read pile, display a side-project zine, or just keep a few personal books — and the same membership doubles as a parcel-delivery address for the shop. Now they have two mundane, non-event reasons to walk in on a weekday afternoon: to swap out their shelf, and to collect a delivery. The combination means some members visit several times a week through pure habit, not interest. First step: knock on ten doors on the nearest WFH-heavy street this week and offer the first month free.",
+       "built_on": [
+        "challenging_assumptions-1",
+        "scamper-3",
+        "reverse_thinking-2"
+       ],
+       "how": "fuses challenging_assumptions-1's parcel-address subscription with scamper-3's rented shelf, then uses reverse_thinking-2's 'locals bring their own things' energy to make the shelf feel personal rather than commercial"
+      },
+      {
+       "title": "We're Holding Something For You",
+       "text": "Sparked by a lost-and-found box — unclaimed objects create a low-level compulsion to come and check, because something specific is waiting for you personally. Each Monday morning, one of you hand-delivers a plain notecard to ten WFH households on a nearby street: 'We've set a book aside for you — it'll be at the back-room desk until Friday. No obligation, just come have a look.' The book is a genuine, specific recommendation (one line on why you picked it for that address). To collect it, they text you for a short slot — borrowing reverse_thinking-1's scarcity mechanic so the visit feels like an appointment, not a cold drop-in. The mystery and personalisation do what no Instagram post can; the slot system means you're never overwhelmed with two staff. First step: write this Monday's ten notes by hand, targeting the street closest to the shop.",
+       "built_on": [
+        "analogies-2",
+        "reverse_thinking-1",
+        "challenging_assumptions-2"
+       ],
+       "how": "takes analogies-2's outbound move (go to them to pull them back) and charges it with reverse_thinking-1's invitation-and-scarcity mechanic, delivering people into the back-room desk space from challenging_assumptions-2"
+      }
+     ]
+    }
+   },
+   "round3": {
+    "scamper": {
+     "pushed": [
+      {
+       "id": "reverse_thinking-d2",
+       "title": "The Back Room Posts Its Own Job Vacancy",
+       "text": "Instead of you slipping an application under doors — which still feels like a business asking for a favour — go one step further and make the back room itself the applicant: write a deadpan 'Vacancy Notice' from the room's point of view (quiet, good natural light, no open-plan distractions, zero commute, salary negotiable at £0) and stick it in your front window like a job ad. Local remote workers walking past apply to *you* by stepping inside and asking about the role, reversing the footfall problem entirely — they come to you to claim the spot, not the other way around. Make the ad look exactly like a standard job listing, printed on plain paper, and put it up this Tuesday morning; when someone asks, show them the room and hand them a one-page 'terms of employment' (quiet hours, bring your own laptop, buy a book when you feel like it).",
+       "how": "substituted the door-drop delivery with a shop-window job posting written from the room's own voice, so curious passers-by self-select and walk in"
+      },
+      {
+       "id": "challenging_assumptions-d1",
+       "title": "Their Letter Is Hidden Inside One of Their Books",
+       "text": "Keep the named shelves, but eliminate the counter logbook — instead, each shelf-owner hides a handwritten letter inside one book on their shelf each week, with no announcement of which book it's in. Their friends and colleagues have to come in and physically browse every title on the shelf to find it, turning a passive display into a weekly treasure hunt that only works in person. The letter can say anything — why they're struggling with a deadline, what the book they hid it in means to them — making it genuinely worth finding. First step this week: ask your first shelf-owner to write and hide their letter before Friday, then tell just two of their friends that something is hidden in the shop, without saying where.",
+       "how": "replaced the visible counter logbook with letters hidden inside the shelf-owner's actual books, so browsing the physical shelf becomes the only way to find them"
+      }
+     ]
+    },
+    "reverse_thinking": {
+     "pushed": [
+      {
+       "id": "random_associations-d1",
+       "title": "Don't Sell the Shelf — Make Them Compete For It",
+       "text": "The conventional part of the original idea is that you go out and offer membership; flip that entirely. Instead, post a handwritten note through the doors of twenty nearby WFH households this week saying: 'We have three resident shelves. Tell us in 50 words why yours should be one of them.' You become the selector, not the supplicant — and scarcity makes the shelf genuinely desirable. People who win will tell their networks they were chosen by the bookshop, which does your marketing for you; people who lose will want to try again next quarter. First step: write the note today, pick the two streets nearest the shop, post it to twenty doors by Thursday.",
+       "how": "reversed the transaction direction — shop becomes gatekeeper judging applicants, not vendor chasing subscribers"
+      },
+      {
+       "id": "analogies-d2",
+       "title": "The Shop Sends the Display Out; You Come to Return It",
+       "text": "The original idea brings locals into the shop to display things — flip the whole direction. Each Monday morning, hand-deliver a small box to one WFH resident two streets away: three wrapped mystery books on loan, a printed card inside saying 'These are yours until Friday at 4pm — return them in person, swap any you want to keep.' The return trip is the weekday afternoon visit, baked in as an obligation rather than an invitation. The resident has spent the week curious about what's inside, shown the box to housemates or on a video call, and now has a reason to walk in on Friday specifically — not 'sometime'. First step: wrap three books this week, write one card, and knock on the door of your most sociable-seeming regular WFH customer to be the first recipient.",
+       "how": "reversed the flow — shop pushes the display outward and the return journey becomes the visit, replacing the opt-in event format"
+      }
+     ]
+    },
+    "analogies": {
+     "pushed": [
+      {
+       "id": "scamper-d1",
+       "title": "The Spy Dead-Drop: Solve the Cipher, Claim Your Book",
+       "text": "Borrowed from Cold War spy tradecraft: a 'dead drop' only works if the agent solves the cipher first. Instead of just wrapping books and leaving them behind the counter, each week you post a small physical card through each subscriber's door — not a flyer, a card the size of a playing card — containing a three-symbol cipher. Solving it reveals a single password. They walk in any weekday afternoon that week, say the password, and only then does the parcel come out from behind the counter. The physical card through the door is itself a tiny event; the cipher makes the walk to the shop feel earned rather than admin; and because the password changes weekly and can't be forwarded digitally, only the person holding the card can collect. First step this week: write one cipher for a test batch of five WFH neighbours you already know — hand-deliver the cards on Monday morning and see who shows up by Friday.",
+       "how": "replaced passive counter-waiting with an active weekly cipher delivered by hand to the door, borrowed from spy dead-drop protocol"
+      },
+      {
+       "id": "challenging_assumptions-d2",
+       "title": "The Dead-Mail Auction: Neighbours Bid, One Wins the Slot",
+       "text": "Borrowed from the US Dead Letter Office, which auctions unclaimed mystery postal items to the public — the bidding frenzy is the whole point, and the mystery object becomes more desirable because others want it. Each Monday morning, photograph the silhouette of one wrapped book (shape and size only, no clues) and post it to your local Nextdoor or WhatsApp group with a starting price of £2 above cover price; neighbours bid by reply until noon, highest bidder wins a named collection slot on Wednesday between 2pm and 4pm, paid upfront by bank transfer. The public bidding does your marketing for you — people who lost the auction this week are primed to bid next week, and the named slot gives you precise control over when your quiet afternoon fills up. First step: wrap one slow-moving hardback today, photograph its silhouette against a plain background, and post the first auction in the most active local group you're already a member of this coming Monday.",
+       "how": "replaced the private text-message pre-sale with a public neighbourhood auction, borrowed from Dead Letter Office mystery-lot bidding"
+      }
+     ]
+    },
+    "challenging_assumptions": {
+     "pushed": [
+      {
+       "id": "reverse_thinking-d1",
+       "title": "The Public Debt Board: Your Name Is on the Window",
+       "text": "The idea assumes 'no obligation' is the right hook — but no-obligation offers are everywhere and easy to ignore. Challenge that: the obligation is the point. When you drop a wrapped book on a doorstep, you also add a handwritten entry to a small chalkboard in your shop window: 'No. 7 Elm Street — holds one of ours.' The board is visible to anyone walking past; the mild, playful public ledger creates gentle social pressure that a private note never could. When they come in to 'clear their name' — that's the footfall, driven by social contract rather than a promotion. First step this week: make the chalkboard, drop five books on one street, and post five entries before the weekend so early passersby see names already on it.",
+       "how": "replaced 'no obligation' with a visible public debt board — making the social contract the draw instead of hiding it"
+      },
+      {
+       "id": "random_associations-d2",
+       "title": "We Saw What You Said. We Found Your Book.",
+       "text": "The most conventional part of this idea is the recommendation itself — it's still an educated guess about a stranger, which means it reads like any other personalised marketing. Challenge the assumption that you don't actually know anything about these neighbours: you do, because they post on NextDoor and local Facebook groups. Spend 30 minutes this week reading your neighbourhood group and note five people who've publicly mentioned a specific interest, worry, or project — rewilding their garden, coping with a redundancy, learning a language. Your notecard doesn't say 'we thought you might like this'; it says 'you mentioned you've been thinking about X — we set something aside that goes straight at that.' No explanation of how you know. The specificity is genuinely uncanny, costs nothing, and does what no algorithm-targeted ad can. First step: identify five real posts this week and write five notecards that quote or echo the person's own words back to them.",
+       "how": "replaced the guessed recommendation with one sourced from the person's own public posts — turning a generic gesture into something that feels almost impossibly specific"
+      }
+     ]
+    },
+    "random_associations": {
+     "pushed": [
+      {
+       "id": "analogies-d1",
+       "title": "The Slot Leaderboard: Rank Earned by Showing Up",
+       "text": "Sparked by sumo wrestling stables, where rank is earned purely by showing up to train and is displayed publicly for all to see. The conventional part of the pigeonhole idea is the monthly fee — it makes the slot feel like a PO box rental, passive and forgettable. Replace the fee with a public 'Reader Rank' chalkboard hung near your front door: each of the 15 slots has a name (or chosen alias) and a tally of visits made and notes left for others. No visit in ten days and your rank drops visibly; someone on the waiting list takes your slot. WFH neighbours who share a street will notice each other's rankings and feel the social pull to stay active — costing you nothing and staggering arrivals across the whole quiet window. First step this week: draw up the blank leaderboard, hand-deliver a card to eight WFH neighbours on one street explaining the system, and offer them the first eight slots free with their name on the board from day one.",
+       "how": "replaced the monthly fee with a visible public ranking system that makes frequency of visits a social currency among neighbours"
+      },
+      {
+       "id": "scamper-d2",
+       "title": "The Significant Find Report: Your Unread Book Has a Secret",
+       "text": "Sparked by the metal detectorist's 'significant find' protocol — when a hobbyist unearths something notable, they don't just price it; they log it, analyse it, and issue a formal written record that makes the object feel important. The conventional part of the Book Harvest Run is the trade-or-cash verdict, which turns the visit into a pawn transaction and undersells your real expertise. Instead, when you collect books at the door, leave a handwritten 'Significant Find' tag: 'Your copy of [title] has been flagged — come to the shop between 3 and 5pm today for its full field report.' When they arrive, hand them a one-page typed assessment: the edition's quirks, what their choice of that book says about their reading taste, and one title you'd pair it with — which sits ready on the counter. They leave feeling like their shelf has hidden depth, and the paired book sells itself. First step: tonight, write a reusable one-page 'field report' template with three fill-in sections; tomorrow at 1pm, knock on six doors, collect whatever they hand you, and leave the tag.",
+       "how": "replaced the pawn-style cash verdict with a personalised written 'field report' that makes the customer's book — and taste — feel significant rather than transactional"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "round1": {
+    "reverse_thinking": {
+     "obvious": [
+      "Run a weekday afternoon event or book club",
+      "Offer a discount or promotion for weekday visits",
+      "Advertise on local social media and community groups"
+     ],
+     "seeds": [
+      {
+       "title": "The Shop That Closes Itself to Get Visitors",
+       "text": "Instead of staying open and waiting, post a sign saying the shop is 'closed to browsers — open by appointment only' on Tuesday and Thursday afternoons. People who want in must knock or text; scarcity makes them come on purpose rather than drift past."
+      },
+      {
+       "title": "You Are the Reviewer, Not the Book",
+       "text": "Flip who gets judged: pin a sheet in the window each Monday asking WFH neighbours to grade *you* — 'Was the last book we recommended any good? Score us here.' People come in during the week to hand in their verdict, and the conversation starts from their authority, not yours."
+      },
+      {
+       "title": "The Back Room Hires the School, Not the Other Way Round",
+       "text": "Instead of you pitching story time to parents, send a note to the primary school saying the back room has a 'reading residency slot' it is offering to one class per term — the teacher applies to use your space, making the school the guest and your shop the institution worth earning access to."
+      }
+     ]
+    },
+    "scamper": {
+     "obvious": [
+      "Run weekday afternoon events or workshops",
+      "Offer a discount or deal during quiet hours",
+      "Partner with the nearby school for reading programmes"
+     ],
+     "seeds": [
+      {
+       "title": "Eliminate the Shop: Sell Subscriptions to the Back Room",
+       "text": "Conventional approach: bring people in to buy books. Lens: Eliminate. Remove the bookshop entirely from the transaction — charge WFH neighbours a small monthly fee just to use the back room as a quiet work annex, no purchase required, so the foot traffic and eventual sales follow the bodies, not the other way around."
+      },
+      {
+       "title": "Reverse Who Chooses: Let the Books Interview the Buyers",
+       "text": "Conventional approach: staff recommend books to customers. Lens: Rearrange/Reverse. Flip it so the books do the selecting — each wrapped book on the shelf has a handwritten questionnaire attached ('Answer three questions; if your answers match mine, you may buy me'), so browsers spend twenty minutes in the shop earning the right to a book rather than browsing past it."
+      },
+      {
+       "title": "Combine School Run and WFH Into One Timed Ritual",
+       "text": "Conventional approach: target WFH people and school-pickup parents separately. Lens: Combine. Merge both audiences into a single 3:15pm 'handoff moment' — WFH neighbours are invited to finish their workday in the back room from 2pm, then at 3:15 the story-time crowd floods in and the two groups briefly share the space, making the shop feel suddenly alive at exactly the hour it's usually dead."
+      }
+     ]
+    },
+    "challenging_assumptions": {
+     "obvious": [
+      "Run a weekday afternoon event series (author talks, book clubs, themed nights)",
+      "Offer a discount or promotion tied to weekday afternoon visits",
+      "Partner with local businesses to cross-promote and drive foot traffic"
+     ],
+     "seeds": [
+      {
+       "title": "Your Afternoon Desk Costs One Book a Month",
+       "text": "Challenge the assumption that the shop's income must come from selling books to browsers. Offer five WFH locals a monthly 'quiet desk' membership in the back room — paid not in cash but in one book purchase per month — so they're physically inside the shop every weekday afternoon by default, and buy incidentally because they're already there."
+      },
+      {
+       "title": "The School Runs Your Marketing For You",
+       "text": "Challenge the assumption that you have to attract adults yourself. Approach the nearby primary school and offer the back room as a free 'reading visit' slot for small groups during the 1–3 pm window — the school timetables it as curriculum, sends permission slips home, and every parent hears the shop's name weekly without you spending a penny on outreach."
+      },
+      {
+       "title": "The Shop Is Open by Summons Only on Tuesdays",
+       "text": "Challenge the assumption that a shop must always be open to anyone who wanders in. Pick one weekday afternoon and make it invitation-only: send ten handwritten cards to WFH neighbours each week saying 'You have a reserved slot this Tuesday, 2–4 pm' — the artificial scarcity makes showing up feel like a small event rather than a casual errand."
+      }
+     ]
+    },
+    "random_associations": {
+     "obvious": [
+      "Host a regular author talk or reading event",
+      "Add a coffee machine and turn the back room into a café",
+      "Run a daytime book club for locals"
+     ],
+     "seeds": [
+      {
+       "title": "The Tide Pool: Only Open at Low Tide",
+       "text": "Stimulus: a tide pool — only accessible at a precise window, miss it and it's gone. Designate one small shelf in the back room as the 'afternoon shelf': it is physically covered and off-limits except between 1pm and 5pm on weekdays, stocked with three or four books that are never on the main floor and rotate weekly, so the only way to ever see them is to show up then."
+      },
+      {
+       "title": "The Ship's Bell: A Noon Signal for WFH Neighbours",
+       "text": "Stimulus: a ship's cook who rings a bell at meal times — the bell creates the appetite, not the other way around. Every weekday at 12:55pm you send a single-image message to a growing list of opted-in WFH neighbours: a photo of one book pulled from the shelf with a hand-scrawled 'held until 5pm for whoever gets here first' tag on it, so the afternoon becomes a small race rather than a browse."
+      },
+      {
+       "title": "The Weather Station Window: Live Reading Conditions",
+       "text": "Stimulus: a roadside weather station that posts real-time readings people glance at out of habit. Each weekday afternoon, hang a small chalkboard in the window showing one line of data — 'Currently in the back room: page 74 of X, mood: unsettled' — updated whenever someone is actually sitting there reading, turning the empty-shop problem into a public signal that draws curiosity from people passing on their lunch walk."
+      }
+     ]
+    },
+    "analogies": {
+     "obvious": [
+      "Run a weekday discount or promotion to incentivise visits",
+      "Host regular ticketed events (author talks, book clubs) to fill the calendar",
+      "Boost social media presence and post more consistently to drive foot traffic"
+     ],
+     "seeds": [
+      {
+       "title": "The Tide Table: Afternoons Reveal What Mornings Hide",
+       "text": "Borrowed from tide tables, which sailors use because low tide exposes things permanently submerged at high tide. Each Monday you post a handwritten 'weekday afternoon tide table' in the window: specific items — a locked display case, a shelf of books you personally annotated, the back room itself — that are physically only accessible between 1pm and 5pm on weekdays, because you're too busy at the weekend to surface them."
+      },
+      {
+       "title": "Professor's Office Hours: The Expert Is In",
+       "text": "Borrowed from university office hours, where a professor holds a standing open slot — not a class, not a meeting, just availability — and students drop in knowing the expert has time to think with them. One of you holds a weekly 'reading hour' (say, Tuesdays 2–4pm) where any WFH neighbour can walk in for an unscheduled 10-minute conversation about what to read next, no purchase required — the constraint being it only works when the shop is quiet enough to talk."
+      },
+      {
+       "title": "The Orienteering Checkpoint: Find All Five, Win the Week",
+       "text": "Borrowed from orienteering races, where checkpoints are hidden across terrain and competitors must physically visit each one to score. Each Monday you hide five small numbered cards inside books scattered across the shop; a simple hand-drawn map (posted on your door and slipped to nearby WFH households) shows only which section each card is in — finding all five earns a small reward, and the hunt only works at weekday-afternoon pace, when you have time to browse rather than grab."
+      }
+     ]
+    }
+   },
+   "round2": {
+    "scamper": {
+     "ideas": [
+      {
+       "title": "The Checkpoint Is Already in Your House",
+       "text": "The conventional approach is to send a signal from the shop outward and hope people come in. Reverse the whole direction: when you hand-deliver the next loan box (building on what already partly worked), slip a small numbered card inside one of the wrapped books. The card says 'You found checkpoint 1 — bring this in before 5pm today and the book on the held shelf is yours.' The race back to the shop is triggered by discovery at home, not by a message from you. The first step is writing five of those cards this week and tucking one into each of the next five loan boxes you drop off.",
+       "built_on": [
+        "random_associations-2",
+        "analogies-3"
+       ],
+       "how": "reverses the Ship's Bell's outward signal by planting the orienteering checkpoint inside books already sitting in WFH homes, so the impulse to visit originates with the neighbour, not the shop"
+      },
+      {
+       "title": "The Back Room Scoreboard Is in the Window",
+       "text": "The conventional approach is to make the back room attractive and hope word spreads. Instead, combine the live-occupancy signal idea with the desk-membership model, but substitute cash or books as payment with school-pickup attendance: offer five WFH parents who already come for story time a named 'afternoon desk' in the back room from 3:30–5pm on any weekday, claimed by showing up rather than paying in advance. Each afternoon, a small chalkboard in the window shows 'Desk 2 of 5 occupied — back room open' — making real human presence in the shop visible to everyone walking past, which does the marketing without any budget. Start by writing five named desk cards to hand out at your first Wednesday story-time session next week.",
+       "built_on": [
+        "random_associations-3",
+        "challenging_assumptions-1",
+        "reverse_thinking-3"
+       ],
+       "how": "substitutes the weather-station chalkboard's abstract reading data with live desk-occupancy drawn from the desk-membership model, and flips the audience from WFH workers to school-pickup parents who are already coming, making their presence the public signal"
+      }
+     ]
+    },
+    "challenging_assumptions": {
+     "ideas": [
+      {
+       "title": "The Book Sets the Appointment, Not You",
+       "text": "The hidden assumption is that customers decide when — or whether — to visit at all. Flip it: the book summons them on a specific afternoon. At 12:55 each weekday, send your opted-in WFH list a single photo of a wrapped book with three handwritten questions attached ('What's the last place you read outside your home? Are you a finisher or an abandoner? Name one thing you'd rather not read about'). The first person to text back answers that feel like a genuine match gets the book held until 5pm — but they must come in to collect it, so the afternoon becomes a small personal deadline rather than a vague intention to pop in sometime. Your first step this week: wrap one book tonight, write three questions on a tag, photograph it, and send it tomorrow at 12:55 to the handful of WFH regulars you already know.",
+       "built_on": [
+        "random_associations-2",
+        "scamper-2"
+       ],
+       "how": "uses random_associations-2's noon signal and held-until-5pm race as the delivery mechanism, but replaces first-come-first-served speed with scamper-2's questionnaire matching — so the draw is fit, not urgency"
+      },
+      {
+       "title": "The Back Room Only Opens When Someone Claims a Slot",
+       "text": "The assumption baked into every quiet-hours fix is that the back room should always be available — more availability should mean more use. Challenge that: make the back room formally closed by default, open only during three published 90-minute slots each week, with two seats per slot. The twist is that to claim next week's slot, you must come into the shop in person this week to pick up a printed slot card — a small physical object that functions like a tide table, telling you exactly when the room surfaces. Scarcity does two things at once: it turns the back room into something worth showing up for, and it forces a weekday visit just to secure the right to another one. Start by printing ten cards for next week's three slots, slipping five to WFH neighbours you already know, and pinning the slot times in the window with a note that cards are available at the counter while they last.",
+       "built_on": [
+        "reverse_thinking-1",
+        "analogies-1",
+        "analogies-2"
+       ],
+       "how": "takes reverse_thinking-1's deliberate scarcity and closes the back room by default; uses analogies-1's tide-table logic to publish exactly when it surfaces; and borrows analogies-2's office-hours structure to make the limited slots feel like access to something worth earning"
+      }
+     ]
+    },
+    "analogies": {
+     "ideas": [
+      {
+       "title": "The Book Sets the Clock; You Have One Hour to Earn It",
+       "text": "Each weekday at 12:55pm you send a single photo to an opted-in list of WFH neighbours: one book, with three handwritten questions attached — 'Answer all three correctly in-store and you can buy me; first right answer wins.' Borrowed from escape rooms, where the timed puzzle is the whole point and the prize is earned by showing up and thinking, not just arriving first. The race gets people through the door; the questions keep them in the shop long enough to notice everything else; and the people who come but don't win still browse. First step: write three quirky but answerable questions for one book this Monday, send the photo to five neighbours at 12:55, and see who walks in.",
+       "built_on": [
+        "random_associations-2",
+        "scamper-2"
+       ],
+       "how": "applies random_associations-2's timed noon-signal race to scamper-2's mechanism of the book earning the buyer, using escape-room logic as the bridge"
+      },
+      {
+       "title": "Only a Member Can Unlock the Door for You",
+       "text": "Give the back-room quiet desk to three WFH regulars — but you never advertise it yourself again after that. Each member holds one transferable guest pass per week, which they hand to a neighbour of their own choosing; the shop stays closed to walk-in browsers on weekday afternoons, so a member's pass is the only way in. Borrowed from speakeasies and private members' clubs, where existing members are the gatekeepers and the owner is never the one asking — which means the social pressure to show up lands on the person who received the invite, not on you. First step: offer the desk to two regulars this week, tell them the pass is theirs to give away, and put the 'closed to browsers' sign up on Monday afternoon.",
+       "built_on": [
+        "reverse_thinking-1",
+        "scamper-1",
+        "challenging_assumptions-3"
+       ],
+       "how": "applies speakeasy referral-chain logic to fuse reverse_thinking-1's closed-door scarcity with scamper-1's back-room membership, using challenging_assumptions-3's invitation mechanism as the handoff point"
+      }
+     ]
+    },
+    "reverse_thinking": {
+     "ideas": [
+      {
+       "title": "The Back Room Rejects You First",
+       "text": "Reverse the usual dynamic: instead of you trying to coax people into the back room, the back room turns them away — unless they earn entry. Each Monday morning, tape a deadpan 'Access Denied' notice to the back room door with one specific question on it ('Name a book that changed your mind. Write your answer on this slip and post it through the front door before 1pm'). Anyone who replies gets a handwritten 'Access Granted' note slid back to them, valid only that weekday afternoon window. The rejection makes entry feel like an achievement rather than a wander-in, and the question primes them for a real conversation when they arrive. First step: write Monday's rejection slip and question this weekend, then see who takes the bait.",
+       "built_on": [
+        "scamper-2",
+        "random_associations-1",
+        "challenging_assumptions-3"
+       ],
+       "how": "inverts scamper-2's 'books select buyers' mechanism so the room itself rejects then selects, gated by random_associations-1's precise time window and challenging_assumptions-3's artificial scarcity"
+      },
+      {
+       "title": "The Checkpoint Starts at Their Front Door",
+       "text": "Reverse the orienteering direction entirely: instead of hiding clues inside the shop for people to hunt, hide the starting gun outside — at WFH neighbours' homes. Each Monday, slip five numbered cards through the doors of five nearby households; each card describes a specific book being held at the counter ('held for the bearer of card 3 until 5pm Friday, first come first served'). The race to claim it starts at their desk, not at your door, so the urgency is already built in before they've even thought about leaving the house. Unlike the 12:55pm push message, this puts something physical in their hand with no opt-in required. First step: write five cards this Monday describing five real books you'd actually hold, then walk them round to five WFH households you already know by sight.",
+       "built_on": [
+        "analogies-3",
+        "random_associations-2"
+       ],
+       "how": "reverses analogies-3's orienteering map so the hunt originates outside and terminates in the shop, fused with random_associations-2's 'held until 5pm race' to create urgency from the moment the card is found"
+      }
+     ]
+    },
+    "random_associations": {
+     "ideas": [
+      {
+       "title": "Your Reading Type Is Needed: Come Give a Verdict",
+       "text": "Inspired by a blood donor clinic — where you're summoned because your specific type is required, not sold to — fuse the shop-gets-graded idea with invitation-only scarcity and weekday-only access. Each Monday, slip one WFH neighbour a card that reads: 'We have a book waiting that only someone who [briefly describes their taste] can fairly judge. Your slot is Tuesday 2–4pm.' They come in not as a customer but as the expert whose opinion you genuinely need; the book is already pulled and wrapped with their name on it. After reading the first chapter in the back room they leave a written verdict, which you pin in the window. The shop isn't selling — it's consulting — and that framing makes showing up on a quiet Tuesday feel like a small appointment worth keeping. First step: pick one regular whose taste you know well, write the card by hand, and post it through their door this Monday.",
+       "built_on": [
+        "reverse_thinking-2",
+        "challenging_assumptions-3",
+        "analogies-1"
+       ],
+       "how": "applies reverse_thinking-2's 'you grade us' authority flip to challenging_assumptions-3's reserved-slot ritual, then borrows analogies-1's weekday-only exclusivity to make the appointment feel like a timed window rather than an open invitation"
+      },
+      {
+       "title": "The Wednesday Call Sheet: Two Jobs, One 3:15 Reveal",
+       "text": "Borrowed from a film-set call sheet — where every person has a specific role, a specific call time, and the whole scene only works if everyone shows up as scheduled — fuse the two-audience merge idea with the back room as a contributed workspace. Each Monday you slip a simple handwritten 'call sheet' to two WFH neighbours: 'Wednesday shoot, 2pm, back room. Your role: organise the travel shelf and write one shelf note per book. Scene wraps at 3:15.' They do a real, satisfying shop task during the quiet hours; at 3:15 the story-time and school-pickup crowd arrives and walks straight into a shop that feels alive and freshly curated. The WFH people tend to stay — they're invested in what they just built — and parents see a buzzing room rather than an empty one. Their names go on a small card tucked into the section they organised. First step: ask one WFH regular this week if they'd spend 90 minutes shelving in exchange for first pick of any book in that section.",
+       "built_on": [
+        "scamper-3",
+        "scamper-1",
+        "reverse_thinking-3"
+       ],
+       "how": "takes scamper-3's 3:15 collision moment as the deadline, uses scamper-1's 'bodies inside the shop create the value' logic to fill the pre-show hours, and borrows reverse_thinking-3's framing of the shop as an institution you earn access to by contributing something real"
+      }
+     ]
+    }
+   },
+   "round3": {
+    "challenging_assumptions": {
+     "pushed": [
+      {
+       "id": "reverse_thinking-d1",
+       "title": "The Last Guest Sets Next Week's Lock",
+       "text": "The assumption here is that you write Monday's question — which keeps you as the permanent gatekeeper and makes the whole thing feel like a shop promotion in disguise. Challenge that: the last person granted access writes next Monday's question, seals it in an envelope, and hands it to you on their way out. You tape it to the door unopened, so even you don't know what it says until it's already public. Now the back room has a human chain running through it — each entrant is curious who set the question they just answered, and every new visitor is quietly auditioned by a neighbour rather than a business. First step: when the person currently using the back room leaves this week, hand them a blank card and ask them to write one question for next Monday before they go.",
+       "how": "replaced the shop as question-setter with the previous entrant, removing the business from the chain entirely"
+      },
+      {
+       "id": "random_associations-d2",
+       "title": "You Own the Section. We Don't Touch It.",
+       "text": "The conventional assumption is that you assign the WFH person a specific task (organise the travel shelf, write shelf notes) — which means they're doing your job to your brief, not actually making something theirs. Challenge that: hand them an empty shelf and a label maker and tell them the section doesn't exist yet, they decide what it is and what goes in it, and their name stays on it permanently as long as they show up once a fortnight to maintain it. They now have a genuine stake in the shop — a reason to come back every two weeks and to bring people to see what they built — and by 3:15 when the school-pickup crowd arrives, they're still there explaining their shelf to strangers. First step: identify the one blank shelf in the back room this week and ask one WFH regular to name it and fill it however they want, no brief given.",
+       "how": "replaced the assigned task with full, permanent creative ownership of an uncurated shelf"
+      }
+     ]
+    },
+    "reverse_thinking": {
+     "pushed": [
+      {
+       "id": "random_associations-d1",
+       "title": "The Judge Picks the Next Judge, Not You",
+       "text": "The conventional part of the original is that you keep choosing who gets invited — which means the shop is still doing the outreach every week. Reverse that entirely: after the first verdict-giver reads their chapter and pins their note, you hand them a blank card and say, 'You pick who comes next — someone whose taste you'd trust to judge fairly.' From that point, you never select another person yourself; each judge recruits the next one by hand-delivering the card to a neighbour they know. The shop steps out of the invitation chain after week one, which makes the summons feel more like a personal recommendation from a friend than a clever marketing trick. First step: choose one regular whose taste you know well, run the first session this week, and have the blank card ready to hand over at the end.",
+       "how": "reversed who does the selecting — the shop exits the invitation chain after the first pick, and each judge recruits the next"
+      },
+      {
+       "id": "analogies-d2",
+       "title": "The Shop Looks Closed. Knock Twice.",
+       "text": "The most conventional part of the original is the 'closed to browsers' sign — it's still the shop publicly announcing a system, which invites questions and awkwardness from anyone who walks past. Reverse the visibility: on weekday afternoons, pull the blinds, lock the front door, and show no sign of life from the street. Pass-holders know to knock twice; you let them in without a word. To anyone outside, the shop is simply shut — there's no membership scheme to explain or defend, no sign that says 'you're not welcome,' just a door that opens for people who know to knock. That gap between 'looks closed' and 'quietly alive inside' is what makes the pass feel like a genuine secret rather than a loyalty scheme with extra steps. First step: tell your two regulars this week that from Monday the afternoon rule is blinds down and knock twice — nothing else needs to be printed or posted.",
+       "how": "replaced the 'closed to browsers' sign with the shop appearing completely shut — the secret is the gap between what strangers see and what pass-holders know"
+      }
+     ]
+    },
+    "random_associations": {
+     "pushed": [
+      {
+       "id": "analogies-d1",
+       "title": "The Live Scoreboard in the Window Beats the Clock",
+       "text": "The most conventional part of the original idea is the private photo sent to an opted-in list — that's still just a targeted message, invisible to everyone else. Replace it entirely with a public cricket-style scoreboard: at 12:55 each weekday, prop the book in the window with three handwritten questions on a card beside it and a small chalkboard reading '0 correct answers — book still available.' Every time someone comes in and tries, update the board — even a wrong attempt becomes 'tried once, still yours.' WFH people glancing out a window or walking past don't need to be on a list; they can see the game is live and unclaimed, which is a far stronger pull than a message they might ignore. First step: write three oddly specific questions about one book this Monday, set up the board at 12:55, and see who walks past and stops.",
+       "how": "replaced the private opted-in photo message with a public live scoreboard visible from the street, inspired by a cricket match score that draws in passers-by who weren't planning to watch"
+      },
+      {
+       "id": "scamper-d2",
+       "title": "The Back Room Has a Tide Table, Not a Sign",
+       "text": "The most conventional part of the original idea is the live occupancy chalkboard — it tells you what's happening right now, but by then you've already walked past. Replace it with a tide table: a printed weekly card in the window showing exactly which named desks are spoken for at which hours next week, like a harbour noticeboard that lets sailors plan around the tides. Passers-by see 'Tuesday 3:30pm — desk 3 (Priya) — one desk still open' and can feel the specific gap pulling at them, not just a vague 'space available' signal. The named real people make the back room feel inhabited and coveted before anyone arrives, doing more social proof than any sign. First step: at Wednesday's story time, pass a paper grid to five parents and ask each to write their name against one afternoon slot — then photograph it and tape it in the window on Thursday morning.",
+       "how": "replaced the live real-time occupancy board with a forward-looking weekly tide table, inspired by harbour tide charts that make future states feel fixed and worth planning around"
+      }
+     ]
+    },
+    "scamper": {
+     "pushed": [
+      {
+       "id": "reverse_thinking-d2",
+       "title": "The Card Arrives Home in a Child's Hands",
+       "text": "The most conventional part of this idea is that you slip a card through a letterbox — it's still a piece of paper from a business, easy to set aside. Substitute the delivery agent entirely: this Wednesday at 3:15, stand near the school gate and hand your five numbered cards directly to children leaving, each one saying 'This is for the grown-up at home who works at a desk — don't lose it.' A child handing a parent something physical at the door is almost impossible to ignore, and the card arrives with a small story already attached. First step: write five cards Tuesday evening, each holding a different real book at the counter until Friday 5pm, then take fifteen minutes at school pickup on Wednesday to hand them out.",
+       "how": "substituted the adult letterbox drop with a child as the delivery agent"
+      },
+      {
+       "id": "challenging_assumptions-d1",
+       "title": "The Questions Were Left by the Last Reader, Not You",
+       "text": "The most conventional part of this idea is that you are the one sending questions to a list — however clever the mechanic, it's still the shop broadcasting to customers. Eliminate yourself as the sender: every book you sell or lend from now on contains a small folded notecard handwritten by the previous reader — three questions they chose to leave for whoever comes next, signed with a first name only. When someone reads the questions and wants to reply, they bring the card back to the shop in person to 'return' it, and you pass it on to the person who wrote it. The afternoon visit isn't to claim a prize; it's to complete a conversation that's already started. First step: write three genuine, personal questions in five books on the shelf today, sign them with your own name, and hand one to the next person who buys something this week.",
+       "how": "replaced you-as-sender with a previous reader, making the summons peer-to-peer"
+      }
+     ]
+    },
+    "analogies": {
+     "pushed": [
+      {
+       "id": "scamper-d1",
+       "title": "The Relay: Each Runner Hands the Baton On",
+       "text": "In a relay race, no single runner covers the whole course — each leg is triggered by a physical hand-off. The conventional part of the checkpoint idea is that you keep doing all the delivering, which already took too long. Replace that: when your regular comes in to claim her held book this week, give her the next sealed loan box and ask her to drop it with one WFH neighbour she actually knows. She becomes the next leg of the relay, and the numbered card inside that box brings her neighbour into the shop, who then becomes the leg after that. You do one delivery to start the chain; the WFH network carries it forward on its own, and each hand-off is a reason to walk through your door.",
+       "how": "replaced your repeated delivery labour with a self-propagating relay where each recipient becomes the next courier"
+      },
+      {
+       "id": "challenging_assumptions-d2",
+       "title": "The Allotment Rule: You Must Inspect Before You're Listed",
+       "text": "In the UK allotment system, you can't go on the waiting list by phone or online — you must come in person to view the plot first, because the inspection is treated as proof of genuine intent. Borrow that mechanism: the slot card for the back room isn't handed over just for showing up at the counter. Each card has a handwritten condition on the back — 'bring in one finished book' or 'write the title of the last book that surprised you on this slip and leave it here.' The condition takes thirty seconds but makes the visit feel earned rather than administrative, and the slips you collect become a living display on the back-room door that draws curiosity from anyone who walks in. Print ten cards this week, write a different one-line condition on each, and tell the two people who already asked about the Vacancy Notice that cards are at the counter.",
+       "how": "replaced the neutral pick-up-a-card mechanic with an allotment-style proof-of-intent condition that makes each visit feel like earning membership"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "round1": {
+    "analogies": {
+     "obvious": [
+      "Run a weekday café or coffee service to draw people in",
+      "Host author talks or book club evenings",
+      "Offer a discount or promotion specifically for weekday afternoon visits"
+     ],
+     "seeds": [
+      {
+       "title": "The Tide Pool: Things Left Behind Attract New Life",
+       "text": "Rock pools don't advertise — they collect interesting debris and creatures find their way in. Each Monday, leave one deliberately odd or beautiful object on a small table by the window (a pressed flower, a strange map, a handwritten riddle) with a card that says 'Ask us about this.' WFH neighbours passing by stop out of curiosity, not commerce."
+      },
+      {
+       "title": "The Pit Stop: Mechanics Time the Car, Not the Driver",
+       "text": "In Formula 1, the pit crew measures everything so the driver doesn't have to think — the stop becomes effortless. Borrow that: set up a dedicated 'WFH recharge bay' in the back room with a fixed 45-minute timer, a chair, a flask of tea, and one curated book waiting on the desk. The whole experience is pre-arranged so dropping in costs the worker zero decisions."
+      },
+      {
+       "title": "The Understudy Rehearsal: The Stage Is Empty, So Use It",
+       "text": "Theatre understudies rehearse on the main stage precisely when the leads aren't using it — the empty slot becomes a training asset. Pitch the quiet back room to the nearby primary school as a weekly 'reading rehearsal' space: one teacher brings four or five children at 1:30pm on a Tuesday to read aloud to each other, filling the dead slot with a small crowd that parents follow."
+      }
+     ]
+    },
+    "reverse_thinking": {
+     "obvious": [
+      "Run in-store events or author readings to draw crowds",
+      "Offer a weekday afternoon discount or happy-hour deal on books",
+      "Promote the shop on social media and local community groups"
+     ],
+     "seeds": [
+      {
+       "title": "The Shop Is Closed to Browsers — Appointment Only",
+       "text": "Reverse the assumption that being open means being available: post a small sign saying weekday afternoons are 'by appointment' — a 10-second booking via a Post-it on the door or a QR code. The mild barrier makes people feel like insiders when they arrive, and curious enough to bother in the first place."
+      },
+      {
+       "title": "Customers Write the Recommendations, Not You",
+       "text": "Flip the direction of curation entirely: instead of you recommending books to visitors, invite WFH neighbours to come in on a weekday afternoon and write a recommendation card for a book they love — which goes on the shelf under their name. They become the shop's unpaid curators and keep coming back to see if anyone bought 'their' book."
+      },
+      {
+       "title": "The Shop Pays You to Come In",
+       "text": "Reverse the transaction: instead of customers spending money to visit, the shop gives WFH neighbours a small store-credit 'wage' (say, £3) to spend one quiet afternoon hour doing a simple task — reorganising a section, writing shelf labels, or suggesting a display. They get a genuine work break and leave with a reason to return and spend the credit."
+      }
+     ]
+    },
+    "random_associations": {
+     "obvious": [
+      "Host a ticketed author event or book club evening",
+      "Partner with a local café to offer coffee and attract footfall",
+      "Run paid social media ads targeting the local area"
+     ],
+     "seeds": [
+      {
+       "title": "The Lost Property Box Knows Your Book",
+       "text": "Sparked by a lost-and-found box: fill a box in your window with handwritten cards describing books in purely emotional terms ('a novel someone left half-read on a train because they were crying') — no titles, no authors. Passers-by must come inside and match the card to the actual book on the shelf to 'claim' it at a small discount."
+      },
+      {
+       "title": "Your Afternoon Is Stamped on the Envelope",
+       "text": "Sparked by a post office sorting room: assign each of your twenty nearest WFH households a named 'delivery window' — a specific weekday afternoon slot that is officially theirs — and send them a stamped card saying 'Your next delivery is Tuesday 2–3pm,' making the empty shop feel like a private browsing appointment rather than a quiet building."
+      },
+      {
+       "title": "The Hive Has One New Frame This Week",
+       "text": "Sparked by a beekeeper's inspection ritual: each Monday, place exactly one book face-down on a dedicated 'new frame' stand in the window with a small sign saying 'Revealed Thursday 3pm' — the slow build of a timed reveal gives the primary-school pickup crowd and WFH neighbours a specific, recurring reason to show up at a precise weekday moment."
+      }
+     ]
+    },
+    "scamper": {
+     "obvious": [
+      "Run a weekday afternoon event or author talk to draw a crowd",
+      "Offer a weekday discount or happy-hour deal on books",
+      "Promote the quiet hours on social media to attract remote workers"
+     ],
+     "seeds": [
+      {
+       "title": "The Back Room Charges Time, Not Money",
+       "text": "Substitute cash for labour: any WFH neighbour can use the back room as a quiet desk for free on a weekday afternoon, but their 'rent' is one small useful task — writing a shelf-talker, photographing a display, updating your Google listing. They're inside, surrounded by books, for an hour or more."
+      },
+      {
+       "title": "The Homework Drop: Parents Owe a Browse",
+       "text": "Combine the back room, the nearby school, and the WFH crowd in one move: offer a paid after-school homework-sitting slot (two or three kids, one afternoon a week, supervised by your part-timer) so parents get a free working hour — but drop-off and pick-up both happen inside the shop, and pick-up is timed so parents arrive just as you're done tidying and ready to chat."
+      },
+      {
+       "title": "The Clock in the Window Counts Down to Nothing Fixed",
+       "text": "Magnify the story-time idea you already like by making it unpredictable: put a large handwritten countdown in the window each morning ('Next reading: 47 minutes') set to whenever you feel like it that afternoon, so WFH neighbours on a walk check it habitually and occasionally time their coffee break around it — the uncertainty is what makes it habit-forming."
+      }
+     ]
+    },
+    "challenging_assumptions": {
+     "obvious": [
+      "Run ticketed events or author talks to draw a crowd",
+      "Advertise on local Facebook groups and community noticeboards",
+      "Offer coffee or tea so people linger longer"
+     ],
+     "seeds": [
+      {
+       "title": "Weekday Afternoons Are Closed to Strangers",
+       "text": "Challenge the assumption that a shop must always be open to anyone walking past. Put a small sign up: 'Weekday afternoons: regulars and members only — join the list in 30 seconds.' Anyone can join instantly, but the friction of a closed door turns idle curiosity into deliberate action, and makes entering feel like belonging rather than browsing."
+      },
+      {
+       "title": "Their Clients Come to Them, Not to You",
+       "text": "Challenge the assumption that you need to invent new reasons for people to visit. Invite one WFH neighbour per week to hold their own professional office hours in your back room — their clients, colleagues, or students come to them, and walk through a bookshop to get there. You provide the space; they bring the foot traffic without you spending a penny."
+      },
+      {
+       "title": "The Children Are the Sales Team",
+       "text": "Challenge the assumption that the nearby school is a source of child customers. Flip it: ask one teacher if kids can each write a handwritten book recommendation for their parent, sealed in an envelope marked 'for your grown-up.' The note names a specific book and says it can be collected from the shop on any weekday afternoon — turning a class exercise into a personal errand only a parent can run."
+      }
+     ]
+    }
+   },
+   "round2": {
+    "challenging_assumptions": {
+     "ideas": [
+      {
+       "title": "The Clue Was Left by the Last Person Who Loved It",
+       "text": "The assumption everyone follows is that the shop provides the recommendations and visitors receive them. What if that's optional? Ask each WFH neighbour who comes in to write one anonymous card describing a book they love in purely emotional or sensory terms — no title, no author — and hide it somewhere in the shop: tucked inside a related book, left under a shelf, pinned to the back room wall. Future visitors browse not just for books but for these hidden notes, and must ask you to help match card to book. The back room becomes a living map of found clues, and every visitor who finds one has a reason to come back and leave one of their own. Start this week by asking the two people already using the back room to write the first two cards.",
+       "built_on": [
+        "reverse_thinking-2",
+        "random_associations-1",
+        "analogies-1"
+       ],
+       "how": "applies reverse_thinking-2's direction-flip to random_associations-1's emotional-description mechanic, then uses analogies-1's 'left debris attracts new life' as the reason it compounds over time"
+      },
+      {
+       "title": "The School Never Needed to Say Yes",
+       "text": "The hidden assumption in every 'partner with the school' idea is that the school has to approve it first — that a formal institution must grant permission before anything happens. That's optional. Post a short handwritten note through the doors of ten families you can see live near the school, addressed to parents, saying: 'Our back room has two chairs and quiet at 1:30 on Tuesdays. If your child needs somewhere to read aloud this week, knock.' No curriculum, no teacher, no forms — just a standing invitation that treats the back room the way an understudy treats an empty stage. Parents who drop a child off must wait in the shop, and pick-up is whenever you're ready — which is whenever you've had a chance to talk. First step: write and deliver the notes before next Tuesday.",
+       "built_on": [
+        "analogies-3",
+        "scamper-2",
+        "reverse_thinking-1"
+       ],
+       "how": "borrows analogies-3's 'use the empty stage without institutional permission' logic, fuses it with scamper-2's drop-off/browse mechanic, then applies reverse_thinking-1's mild-barrier framing to make the invitation feel exclusive rather than desperate"
+      }
+     ]
+    },
+    "reverse_thinking": {
+     "ideas": [
+      {
+       "title": "The Children Come to Read. Adults Book a Slot.",
+       "text": "Reverse the usual direction: instead of you or a teacher reading to children, arrange for two or three children from the nearby school to come to the back room on a Thursday afternoon and read aloud to a willing WFH neighbour who has booked a 20-minute slot. The child gets a real audience for a school reading exercise; the adult gets a genuine reason to leave their desk and walk to the shop. The swap in roles — child as performer, adult as recipient — is odd enough to be memorable, and the back room earns its keep through a labour exchange rather than a transaction. First step: ask one teacher this week if one child would read aloud to a neighbour as a 'reading ambassador' trial.",
+       "built_on": [
+        "analogies-3",
+        "scamper-1",
+        "challenging_assumptions-3"
+       ],
+       "how": "applies analogies-3's school-uses-back-room setup and scamper-1's labour-exchange logic, then reverses challenging_assumptions-3's direction so the child serves the adult rather than the other way around"
+      },
+      {
+       "title": "The Shop Waits. You Set the Hours.",
+       "text": "Reverse who controls the schedule entirely: instead of you announcing opening times and hoping people show up, put a blank five-slot weekly card in the window each Monday — 'This week's private afternoon sessions: claim one by knocking' — and let WFH neighbours write their own name and preferred time in pencil. The shop then holds that slot for them alone, making the visit feel like an appointment you are keeping for them rather than a service you are selling. This inverts the 'closed to strangers' friction of a members-only sign into something warmer: you are already waiting, because they asked. First step: tape a simple hand-drawn grid to your window this Monday with five blank rows and a pencil on a string.",
+       "built_on": [
+        "random_associations-2",
+        "challenging_assumptions-1"
+       ],
+       "how": "takes random_associations-2's idea of named delivery windows and reverses the direction of challenging_assumptions-1's closed-door friction — instead of the shop restricting entry, the neighbour claims the slot and the shop commits to being ready for them"
+      }
+     ]
+    },
+    "analogies": {
+     "ideas": [
+      {
+       "title": "The Specialist's Pop-Up Clinic Is Here Today",
+       "text": "Each Monday morning, chalk a countdown on your window: 'Today 2–4pm: [Name], [job], taking questions in the back room.' One WFH neighbour per week holds genuinely irregular drop-in office hours in your back room — their clients and colleagues walk through a bookshop to reach them. Borrowed from the pop-up specialist clinic model used in GP surgeries and community health vans: the specialist travels to an unexpected space on an unpredictable schedule, so people follow the person rather than the venue, but end up habituating to the venue. First step: ask the WFH neighbour who responded to your 'Back Room Vacancy' notice whether they'd hold one afternoon of client calls there next week, in exchange for the quiet desk.",
+       "built_on": [
+        "challenging_assumptions-2",
+        "scamper-3"
+       ],
+       "how": "applies the pop-up specialist clinic analogy to challenging_assumptions-2's foot-traffic idea, using scamper-3's unpredictable timing to make the window appointment habit-forming"
+      },
+      {
+       "title": "The Cache Is a Book. Your Child Hid the Clue.",
+       "text": "Ask one teacher if the class can each write a single emotional clue about a book they love — not the title, just a feeling ('a story about someone who keeps a secret so long it grows into a lie') — sealed in an envelope for their parent. The envelope says: 'Your clue matches one book on a shelf two streets away. Find it by Friday.' Parents come in, browse the shelves until the clue clicks, and collect the book at a small reserved price. Borrowed from geocaching, where a planted clue pulls someone to a precise physical location they'd never visit otherwise, and the act of finding is the reward. First step: write three sample clue cards yourself this week to show a teacher what the format looks like, and ask if one class would try it as a five-minute writing exercise.",
+       "built_on": [
+        "challenging_assumptions-3",
+        "random_associations-1"
+       ],
+       "how": "applies geocaching's clue-to-physical-location mechanic to challenging_assumptions-3's children-as-messengers idea, replacing a title recommendation with random_associations-1's emotional, title-free description format"
+      }
+     ]
+    },
+    "scamper": {
+     "ideas": [
+      {
+       "title": "The School Run Ends Here, Not at the Gate",
+       "text": "Approach one teacher this week about a standing Tuesday arrangement: five children come to your back room at 1:30pm for a 45-minute read-aloud session — borrowing the 'understudy rehearsal' idea that an empty stage is an asset, not a gap. The twist: each child's parent is given a specific named collection time (say, 2:15pm), framed as their child's 'reading slot,' not a school event. Parents arrive at a precise weekday moment with a personal reason to walk through the shop, not just to browse — and you never had to invent the foot traffic yourself. First step: draft a one-paragraph note to the nearest primary school this week offering the back room as a free weekly reading space, no cost to them.",
+       "built_on": [
+        "analogies-3",
+        "random_associations-2",
+        "challenging_assumptions-3"
+       ],
+       "how": "Substitutes the school as the pickup location with the bookshop, then assigns parents a named time-window (random_associations-2) as the mechanism that makes the trip feel specific rather than optional"
+      },
+      {
+       "title": "Your Break Writes the Card; Their Curiosity Solves It",
+       "text": "Conventional approach: you write the marketing copy yourself. Instead, combine the 'shop pays you to come in' idea with the emotional lost-property card display: each week, invite one WFH neighbour to spend 20 minutes in the back room during their afternoon break writing a single anonymous card describing a book they've loved — in purely emotional terms, no title or author — earning £3 store credit for their time. Those cards go into a box in your window, and passers-by must come inside and match the card to the real book to claim a small discount. Two separate groups are now drawn in at different moments: writers in the quiet afternoon, solvers whenever they walk past. First step: this Monday, knock on three nearby WFH doors and ask if someone would trade 20 minutes and one good book memory for £3 to spend in the shop.",
+       "built_on": [
+        "reverse_thinking-3",
+        "random_associations-1",
+        "analogies-2"
+       ],
+       "how": "Puts WFH neighbours' existing knowledge of books to an unintended use (producing the shop's display content) and pre-structures the drop-in as a frictionless pit-stop task so the barrier to saying yes stays near zero"
+      }
+     ]
+    },
+    "random_associations": {
+     "ideas": [
+      {
+       "title": "The Found Recommendations Box: Strangers Writing to Strangers",
+       "text": "Ask one teacher this week if their class can each write a short book recommendation on a card — not to send home, but to drop anonymously into a wooden 'found recommendations' box in your window, addressed to 'whoever needs this book today.' WFH neighbours passing by take a card; if it speaks to them, the named book is waiting inside. Because the authors are children writing without any sales intent, the cards are disarming in a way no shop-written copy could be — and the box itself becomes a reason to stop at the window every few days to see what's new. First step: phone the school on Monday and ask one teacher if a class can fill 25 cards as a writing exercise this week.",
+       "built_on": [
+        "challenging_assumptions-3",
+        "reverse_thinking-2",
+        "analogies-1"
+       ],
+       "how": "applies challenging_assumptions-3's school-written cards to reverse_thinking-2's idea of handing curation to outsiders, then uses analogies-1's 'objects left behind attract passers-by' as the physical mechanism"
+      },
+      {
+       "title": "The Back-Room Log: Each Guest Authors the Next Guest's Welcome",
+       "text": "Put a hardback logbook on the desk in the back room — every WFH neighbour who uses the space writes one line: what they were working on that afternoon and one book they'd press into the hands of the next person who sits there. The book they name gets a small handwritten 'logged by [first name]' sticker on its shelf. Over time the log becomes a cumulative neighbourhood bulletin board, and WFH regulars start dropping in just to read back through it and see whose recommendation sold — a pull that costs you nothing and grows by itself. First step: seed the log with two entries yourself on Monday and leave it open on the desk, then mention it casually to the first person who uses the room.",
+       "built_on": [
+        "scamper-1",
+        "challenging_assumptions-2",
+        "reverse_thinking-2"
+       ],
+       "how": "takes scamper-1's back-room-as-free-workspace and challenging_assumptions-2's idea of WFH neighbours bringing their own social gravity, then uses reverse_thinking-2's 'visitors write the recommendations' as the cumulative ritual that keeps people returning"
+      }
+     ]
+    }
+   },
+   "round3": {
+    "scamper": {
+     "pushed": [
+      {
+       "id": "reverse_thinking-d2",
+       "title": "The Slot Arrives Through Their Letterbox First",
+       "text": "The most conventional part of the original idea is still passive — someone has to walk past the window and notice the card. Eliminate the window entirely and reverse the direction: each Sunday evening, hand-deliver a small card through the doors of ten nearby WFH households. On it, five specific time slots for the week are printed; they circle one and drop it back through your letterbox before Monday morning. You then hold that exact slot for them alone, with the back room laid out as if you knew they were coming — because you do. The card travelling to them first makes the commitment mutual before they ever step inside. This week's first step: write ten cards by hand this Sunday, each with five afternoon slots, and post them through the closest WFH doors you already know.",
+       "how": "eliminated the window display; reversed delivery so the slot travels to them before they come to you"
+      },
+      {
+       "id": "challenging_assumptions-d1",
+       "title": "The Child Carries the Clue Home",
+       "text": "The most conventional part of the hidden-note hunt is that it only works on people already inside the shop — you still need foot traffic before the system builds. Combine it with the Wednesday story-time idea you already like: at the end of each 3:15pm session, give every child a single card written by a previous adult visitor — an emotional description of a grown-up book, no title, no author. The child takes it home to their WFH parent, who has to come into the shop and describe what they felt reading it, so you can match it to the book. When they find it, they write the next card. The back room becomes the place where the matched pairs are pinned up, a growing map that rewards returning. First step: ask the person already using the back room this week to write the very first card, ready to hand to a child next Wednesday.",
+       "how": "combined the hidden-note hunt with the school-pickup crowd so children carry clues outward into WFH homes, reversing the direction of discovery"
+      }
+     ]
+    },
+    "random_associations": {
+     "pushed": [
+      {
+       "id": "analogies-d1",
+       "title": "The Docket Is Posted. Your Case Is On It.",
+       "text": "The conventional part of the original is the chalk countdown — it's informal and easily ignored. Instead, borrow from a courthouse docket: each Monday you pin a typed, official-looking 'Weekly Docket' in the window — formal paper, bordered, naming the person, their profession, and the single question they're accepting that afternoon ('Tuesday 2–4pm: Marta, structural engineer, taking questions about home extensions'). A docket implies your matter is already scheduled, which pulls people who have that question far more powerfully than a vague 'drop-in.' The WFH neighbour who responded to your Back Room Vacancy notice is your first subject — ask them this week what one question from neighbours they'd actually enjoy answering, then write the docket around that specific question and post it by Monday.",
+       "how": "replaced the chalk countdown with a formal courthouse-docket notice built around one precise question, not a job title"
+      },
+      {
+       "id": "scamper-d2",
+       "title": "The Description Is Torn. You Need All Three Pieces.",
+       "text": "The conventional part is the box in the window — a passive display that can be read and dismissed without stepping inside. Instead, borrow from a ransom note: each emotional book description is torn into three fragments and placed at three fixed spots inside the shop (window ledge, halfway shelf, back wall), so you must walk the full length of the store collecting pieces before you can reconstruct it and name the book to claim the discount. The journey through the shop is now the mechanic, not the reward at the end. First step: write one description this week, tear it into three, number the fragments, and station them — then when the first WFH neighbour comes in to write next week's card, show them how their words will eventually make a stranger cross the whole shop.",
+       "how": "replaced the static window box with a three-fragment trail that forces a physical walk through the entire shop"
+      }
+     ]
+    },
+    "reverse_thinking": {
+     "pushed": [
+      {
+       "id": "random_associations-d1",
+       "title": "The Children Already Judged It. Come Disagree.",
+       "text": "Flip the direction entirely: instead of children recommending books to adults, the box in your window holds children's rejections — harsh, honest, handwritten verdicts on books they gave up on ('too slow', 'the ending made no sense', 'I don't get why people like this'). Each card names the book and the child's reason for quitting it. A small sign reads: 'One of these children was wrong. The books are inside.' WFH neighbours passing by are pulled in not to find something they'll love, but to argue with a nine-year-old's opinion — which is a far more irresistible reason to pick up a book than a polite recommendation. First step: ask one teacher this week if a class can each write a one-sentence 'why I gave up on this book' card as a five-minute exercise, and fill the box by Friday.",
+       "how": "reversed the direction — from children recommending to adults, to children rejecting books that adults are dared to defend"
+      },
+      {
+       "id": "analogies-d2",
+       "title": "Your Child Is the Salesperson. You're the Customer.",
+       "text": "Reverse who holds the power in the envelope: instead of a clue sent home for the parent to solve, give each child a single index card with only the first line of a book printed on it and a brief instruction — 'Your job this week: read this line to a grown-up at home and convince them to come and hear what happens next. The rest of the story is two streets away.' The child becomes the sales agent; the parent is the one being pitched to. Because the pitch comes from their own kid with genuine enthusiasm (or bribery), it lands in a way no marketing copy can. First step: write three sample cards with three opening lines from books already on your shelves, show them to one teacher on Monday, and ask if a class can take them home on Wednesday.",
+       "how": "reversed the role — child goes from passive clue-writer to active salesperson pitching the parent, who becomes the one being persuaded"
+      }
+     ]
+    },
+    "analogies": {
+     "pushed": [
+      {
+       "id": "scamper-d1",
+       "title": "The Bakery Board: Your Child's Exact Minute Is in the Window",
+       "text": "Artisan bakeries post the precise minute each loaf comes out of the oven — not a range, not a rough time — and locals time their whole walk around it. Borrow that mechanism: every Tuesday morning, put a small card in your window listing each child by first name with their individual finish time staggered three minutes apart ('Mia: 2:04 · Sam: 2:07 · Leo: 2:10'). A parent arriving for a 2:07 finish has to be in the shop by 2:07 — not 'around 2,' not 'when it's done' — and the person before them has just left. You get a quiet, staggered stream of five parents through the shop on a weekday afternoon, each with a personal, time-critical reason to be there. First step: run one session with three children this Tuesday and put the hand-lettered time card in the window by 9am.",
+       "how": "replaced the admin 'collection time notice' with a public staggered-minute board borrowed from artisan bakery bread timing"
+      },
+      {
+       "id": "challenging_assumptions-d2",
+       "title": "The Speakeasy Rule: One Family Tells One Family, No More",
+       "text": "Speakeasies never advertised — you only got the address if someone already inside trusted you enough to pass it on, which made every new guest feel chosen rather than marketed to. Apply that mechanism here: don't post notes to ten strangers. Instead, tell a single regular customer who has a school-age child, face to face this week: 'The back room is free at 1:30 on Tuesdays. Bring your child. If it works for you, you can tell exactly one other family — that's the rule.' Each family who uses the room can pass it to one more, but only one. The chain spreads at walking-pace through people who already trust each other, and every parent who arrives feels let in on something private rather than invited by a flyer — which is precisely why they'll mention the shop to others. First step: identify your one regular parent customer and say it to them in person before Tuesday.",
+       "how": "replaced cold-outreach notes to strangers with a one-to-one referral chain borrowed from the speakeasy access model"
+      }
+     ]
+    },
+    "challenging_assumptions": {
+     "pushed": [
+      {
+       "id": "reverse_thinking-d1",
+       "title": "The Child Reads One Page. You Must Come for the Rest.",
+       "text": "The conventional part of the original idea is that the adult opts in by booking a slot — it's still a polite, scheduled arrangement that most people won't bother with. Challenge the assumption that the audience has to agree in advance. Instead, this Wednesday at 3:15 — when you're already doing pickup-crowd story time — let one willing child read just the first page of a picture book aloud to whoever happens to be working in the back room that day, without warning them it's coming. The adult didn't sign up; they just got an audience thrust upon them, and now they need to know how it ends. The book goes on the counter with a Post-it: 'You heard page one. Ask us for the rest.' First step: pick one short picture book with a cliff-hanger opening, and tell the first back-room worker Monday that a small thing will happen Wednesday — no details.",
+       "how": "replaced opt-in scheduling with an unannounced live interruption that creates unfinished business"
+      },
+      {
+       "id": "random_associations-d2",
+       "title": "The Log Leaves the Shop. It Arrives Through Letterboxes.",
+       "text": "The conventional part of the log idea is that it stays in the shop and only rewards people who already come in — it never reaches the WFH neighbours who haven't walked through the door yet. Challenge the assumption that a recommendation record has to live where it was made. Each Friday, photograph one handwritten log entry — just the words, no name unless they agree — print 20 copies, and post them through the letterboxes of WFH households nearby: no shop logo, no offer, just 'A neighbour who used the back room on Tuesday wrote this.' The entry is the whole message. People start coming in not to write in the log but to find out whose voice that was. First step: seed the log with two genuine entries yourself on Monday, then on Friday post the better one to 20 doors as a plain slip of paper.",
+       "how": "replaced a static in-shop record with a physical dispatch that carries the log into the neighbourhood each week"
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "reworks": {
+  "The Public Debt Board: Your Name Is on the Window": {
+   "title": "One Name. One Book. One Piece of Paper.",
+   "text": "Instead of building a chalkboard and dropping five books, reverse the order entirely: start with the ledger and work backwards. This week, tape a single handwritten sheet to your window that reads something like \"No. 14 [your street] — holds one of ours.\" — then hand just one book to one nearby WFH person you already know, so the entry is real and honest. The sign costs nothing, takes five minutes, and lets you test whether passersby notice or ask about it before you invest in more books, more deliveries, or a proper chalkboard. If someone walks in and asks what the sign means, the idea is working.",
+   "how": "stripped to one book, one neighbor, one piece of paper — board comes first to test curiosity before any delivery effort"
+  },
+  "Don't Sell the Shelf — Make Them Compete For It": {
+   "title": "One Rope. One Sign. One Shelf Up for Grabs.",
+   "text": "Borrow from the velvet rope outside a members' club: it signals \"not everyone gets in\" without a word of explanation. This week, stretch a piece of ribbon or rope across your back-room doorway, hang a single handwritten card on it — \"One resident shelf. 50 words. Ask inside.\" — and let foot traffic and your shop window do the recruiting instead of you walking twenty streets. The scarcity and mystery are still there, but you've spent nothing and done nothing until someone walks in and asks. First step: tie up the rope before you open tomorrow morning.",
+   "how": "moved the competition from your doorstep to theirs — no posting, no walking, just a rope and a card inside your own shop"
+  },
+  "The Slot Leaderboard: Rank Earned by Showing Up": {
+   "title": "Five Names. One Chalkboard Strip. This Week.",
+   "text": "Borrowed from parkrun, where a single posted results sheet — just names and numbers, nothing else — reliably pulls people back the following Saturday to see where they stand. Cut the system to its bare minimum: a narrow chalkboard strip in your window showing five names (or aliases) and a tally of visits, visible from the street. Knock on five doors on one nearby WFH street this week, offer each person a named slot and a first tally mark just for saying yes — the public display does the social work from there. If even two of them drift in during a quiet afternoon to check their standing, you've proved the mechanism cheaply enough to widen it.",
+   "how": "Shrunk from 15 slots, hand-delivered cards, and a full leaderboard to five names and a chalkboard strip you can put up in an afternoon"
+  },
+  "The Spy Dead-Drop: Solve the Cipher, Claim Your Book": {
+   "title": "One Card in the Window. One Password. This Week.",
+   "text": "Write a single three-symbol cipher on an index card and tape it inside your front window today — no delivery, no printing, just that card. Anyone who walks or drives past can photograph or jot it down, solve it at home, and walk in any weekday afternoon this week to say the password and collect a mystery parcel from behind the counter. The window does the distributing for you, and the small puzzle still makes the trip feel earned rather than routine. First step: write the cipher now, tape it up before lunch, and prepare five wrapped parcels — one for each of the first five people who get it right.",
+   "how": "eliminated the door-delivery step entirely, using the shop window as the distribution point instead"
+  },
+  "The Significant Find Report: Your Unread Book Has a Secret": {
+   "title": "One Book. One Card. Already on the Counter.",
+   "text": "Forget knocking on doors — eliminate that step entirely and use a book already on your shelf. Each weekday at 1pm, pick one title, write a single handwritten index card: the edition's one odd detail, what kind of reader tends to love it, and the one book you'd pair it with (sitting right next to it). Prop the card against the book on the counter with a small sign: \"Today's Significant Find — ask us.\" Anyone who comes in — whether it's a back-room worker, a story-time parent, or someone browsing — sees it, gets curious, and has a reason to start a conversation. First step: tonight, find one interesting book on your shelf and write the card; it costs nothing and takes ten minutes.",
+   "how": "Eliminated the door-knocking and collection entirely, so the whole thing runs from inside the shop with one card and one book you already own"
+  },
+  "Their Letter Is Hidden Inside One of Their Books": {
+   "title": "One Letter. One Book. Tell One Person.",
+   "text": "The original idea assumes you need a shelf-owner already in place before the hunt can start — but you don't. This week, you write the letter yourself: a short, genuine note about one book you love, why it matters, or what week you've had. Tuck it inside that book somewhere on the shelf, then tell just one person (your regular who bought the mystery book on Friday) that a handwritten letter is hidden somewhere in the shop, no other clues. If she comes in to find it, you've proved the pull works — and the next step is simply asking her to hide the next one for her own friends.",
+   "how": "removed the need for any shelf-owner setup — you're the first hider, this week, at zero cost"
+  },
+  "Story time for the school pickup crowd": {
+   "title": "One Child Reads. You All Listen.",
+   "text": "Instead of you performing a storytime, reverse the role entirely: this Wednesday at 3:15, stand at your door with a picture book and ask the first child who passes if they'd like to read one page out loud while their grown-up waits inside. You become the audience, the child becomes the draw, and a small crowd forms around them naturally — no stage, no prep, no cost. If it works, the parents who drifted in to watch are already browsing.",
+   "how": "flipped performer and audience so you need no preparation — just one book and an open door"
+  },
+  "The Last Guest Sets Next Week's Lock": {
+   "title": "One Card. You Don't Write It. They Do.",
+   "text": "Before the person currently using your back room leaves today, hand them a blank index card and ask them to write one question — anything — that someone would have to answer to earn the next slot. Tape it to the back-room door unopened, so you genuinely don't know what it says, and the next person who asks about the room has to answer a question set by a neighbour rather than a shopkeeper. That tiny shift — you're no longer the gatekeeper, a regular is — makes it feel like a community lock rather than a promotion. First step: grab a card and a pen right now, and ask whoever is in the back room before they leave today.",
+   "how": "Stripped it to a single card handed to one person today — no envelope ritual, no Monday system, just one handoff this week"
+  },
+  "The Card Arrives Home in a Child's Hands": {
+   "title": "You Stay Put. One Parent Carries Two Cards.",
+   "text": "Instead of you going to the school gate, reverse the direction entirely: you stay in the shop, and the delivery agent comes to you first. This week, when one parent you already know visits the shop, hand them two cards — one for themselves, one to let their child deliver to a classmate's parent at pickup. The card still arrives through a child's hands with a little story attached, but you've spent nothing and gone nowhere. First step: write two cards tonight, each holding a real book at the counter until Friday, and hand them to the next parent who walks in.",
+   "how": "removed the school-gate trip entirely — you stay in the shop and a current customer becomes the delivery agent"
+  },
+  "The Judge Picks the Next Judge, Not You": {
+   "title": "The Slip Travels. You Don't.",
+   "text": "Sparked by a library date-due slip — that little card tucked inside old library books that showed every previous borrower's name, creating a quiet chain of strangers connected by one object. This week, write a single handwritten verdict card (two lines: what the book made them feel, and a line at the bottom saying \"pass this to whoever you'd trust with it next — the shop is holding a copy for them\"). Hand it to one regular along with the book, and your job is done. Each person who receives a slip carries the next name back to you, so the chain grows without you ever making another choice or spending another penny.",
+   "how": "stripped it to one card, one book, and one trusted regular this week — you do nothing after day one"
+  },
+  "You Own the Section. We Don't Touch It.": {
+   "title": "One Card. Their Name. Three Books. This Week.",
+   "text": "Sparked by a restaurant's \"Reserved\" sign — a tiny folded card that costs nothing but makes a table feel claimed and special before anyone even sits down. This week, write one small tent card by hand that says \"[Name]'s picks\" and prop it in front of three books your most regular WFH customer already loves; then ask them to swap in new titles whenever they feel like it. They have real ownership — their name is physically in the shop — with no shelf-building, no label maker, and no fortnightly commitment required yet. First step: fold a piece of card stock in half, write one name on it today, and put it in front of three books before the afternoon is out.",
+   "how": "Shrunk a full shelf takeover into a single handwritten tent card and three existing books — no equipment, no setup, testable today"
+  },
+  "The Live Scoreboard in the Window Beats the Clock": {
+   "title": "One Question. One Tally. One Window.",
+   "text": "Borrowed from pub quiz night: a single question on a card in the window, with a tally of wrong guesses below it — the answer is inside the shop. Like a pub quiz, the visible count of people who've tried and failed makes the question feel worth attempting; passers-by see social proof without needing to be on any list. This week, write one oddly specific question about a book you already have (\"How many islands does the main character visit?\"), tape the card to the inside of the window at 1pm on Monday, and keep a tally mark for every person who comes in to guess — right or wrong.",
+   "how": "Reduced the full scoreboard to a single question and a tally — one card, one pen, zero cost"
+  },
+  "The Shop Looks Closed. Knock Twice.": {
+   "title": "One Light in the Window. You Know What It Means.",
+   "text": "Borrowed from the Underground Railroad and old harbour safe-houses, where a single candle or lamp in a window was a signal that meant everything to the right person and nothing to anyone else — no sign, no explanation, no awkwardness. Place a small lamp or tea-light on your left windowsill on weekday afternoons when you're happy to let someone in quietly; insiders know it means knock, everyone else just sees a dark shop. This week, text or tell two regulars: \"If you see the light on, we're open — just knock.\" That's the whole test, and it costs nothing you don't already have.",
+   "how": "replaced the \"pull the blinds\" system with a single passive signal borrowed from safe-house tradition — no setup, no printing, testable with two people this week"
+  },
+  "The Relay: Each Runner Hands the Baton On": {
+   "title": "She Drops the Box. That's the Whole Test.",
+   "text": "When your regular comes in this week to buy that book, hand her one pre-wrapped mystery book — not a box of three — and ask her to pass it to one WFH neighbour she already knows, with a small card inside that says \"return this to [your shop name] to find out what you've got and swap it for something else.\" You've eliminated the wrapping session, the delivery walk, and the full loan-box prep — the only thing you're doing is handing one parcel to someone already standing in your shop. If the neighbour walks in to return it, you've proved the relay leg works; if they don't, you've spent five minutes and one paperback.",
+   "how": "Eliminated the multi-book box, your delivery leg, and the chain — stripped it to one book, one hand-off, one return visit to test"
+  },
+  "The Back Room Has a Tide Table, Not a Sign": {
+   "title": "One Line on the Window. Today Only.",
+   "text": "Each weekday morning, write a single line on a piece of card and tape it inside the window: \"Today 2–4pm — desk taken by Jamie — one desk still free.\" That's the whole thing — no grid, no photography, no printing. One real name (ask the first WFH person who comes in that week if you can use theirs) next to one gap makes the back room feel occupied and coveted without any setup cost. First step: tomorrow morning, write that one line about this week's back-room regular from the vacancy notice experiment, and tape it up before noon.",
+   "how": "eliminated the weekly grid and photography — stripped it down to a single handwritten line per day"
+  },
+  "The Questions Were Left by the Last Reader, Not You": {
+   "title": "One Card. One Question. Already in the Book.",
+   "text": "The assumption is that a conversation needs two people to start it — but a single open question can sit waiting without you doing anything else. Today, write one genuine question on a notecard (\"What made you pick this up?\"), tuck it into whichever book is already on the counter, and tell the buyer it's there. If they want to answer, they bring the card back in person — that's the only thing that gets them through the door on a weekday afternoon. One book, one card, one question: the whole test costs you five minutes and a notecard.",
+   "how": "stripped it to one card in one book this week, no list, no system"
+  },
+  "The Allotment Rule: You Must Inspect Before You're Listed": {
+   "title": "One Condition. Write It on a Sticky Note.",
+   "text": "The assumption baked into the original idea is that you need a batch of printed cards before you can test whether a small condition changes how a visit feels — but you don't. This week, when either of the two people who already asked about the back room comes back in, hand them a sticky note with one handwritten line on it: \"Write the title of the last book that surprised you and leave it on the counter.\" That's the whole test — one note, one person, one visit, costs nothing. If they do it and it feels good to both of you, you'll know the condition is worth building on.",
+   "how": "Stripped out the cards, the batch, and the display — replaced the whole system with a single sticky note this week"
+  },
+  "The Child Reads One Page. You Must Come for the Rest.": {
+   "title": "Page One Is on the Counter. The Rest Costs Nothing.",
+   "text": "This Wednesday, tear out — or photocopy — just the first page of one picture book with a punchy ending, and leave it on the counter with a Post-it that says: \"That's all you get out here. The last page is in the back room. Go look.\" The book sits open in the back room, last page face-up. No booking, no adult opting in — the child drags the grown-up through on their own. First step: Monday, pick the book, photocopy page one, write the Post-it. That's it.",
+   "how": "Removed the back-room worker and the scheduling entirely — the book does the work, and the child becomes the one who pulls the adult in"
+  },
+  "The Slot Arrives Through Their Letterbox First": {
+   "title": "One Card Goes Out. One Slot Comes Back.",
+   "text": "Instead of printing ten cards for ten households, flip the scale entirely: write just one card by hand today and give it to the regular who already came back and bought a book from the box drop. On it, write three specific afternoon slots for next week and ask her to circle one and drop it back through your door. She's already proven she'll return — so let her be the test of whether a named, reserved slot feels different from a walk-in. If she circles a time and shows up, you have your answer, and you've spent nothing but one card and a few minutes.",
+   "how": "shrunk from ten hand-delivered cards to one card given to a person who already said yes once"
+  },
+  "The Children Already Judged It. Come Disagree.": {
+   "title": "One Child's Verdict. One Book. On the Counter Now.",
+   "text": "Write one handwritten \"rejection card\" yourself today — channel a child's voice and pick a well-known book: something like \"too long, nothing happens for ages, gave up on page 40.\" Prop it against that book on your counter with a small sign: \"One of us is wrong. You decide.\" That single confrontational card is the whole test — no teacher, no class, no box yet. If a customer picks up the book to argue with it, you'll know the idea has legs and can ask a teacher next week to scale it up.",
+   "how": "Cut the teacher coordination entirely — you write the first card yourself today, making it a ten-minute test with no cost"
+  },
+  "The Log Leaves the Shop. It Arrives Through Letterboxes.": {
+   "title": "One Slip. One Door. That's the Whole Test.",
+   "text": "Sparked by a message in a bottle — one copy, sent to one unknown recipient, who feels oddly chosen by the mystery of it. Instead of printing 20 slips, write a single handwritten copy of the log entry on a plain piece of paper and drop it through just one nearby letterbox on Friday with no branding, no ask, just \"a neighbour who used the back room this week wrote this.\" One door tells you whether the idea has any pull at all before you scale it up. First step: seed the log with two genuine entries yourself on Monday, then on Friday copy the better one by hand and walk it to the nearest WFH household — the whole thing costs one sheet of paper and five minutes.",
+   "how": "cut from 20 printed copies to one handwritten slip through one door"
+  },
+  "The Docket Is Posted. Your Case Is On It.": {
+   "title": "One Index Card. One Name. One Question. In the Window.",
+   "text": "Courthouses post dockets because a named slot feels like an appointment — it pulls people who have that exact need. Do the same thing with a single index card in your window this week: handwrite one line, something like \"Thursday 2–4pm — Marcus, the architect from the terrace, is in the back room and happy to answer one question about planning permission.\" No printing, no border, just a name, a time, and a specific question he'll take. Ask the WFH neighbour who's already been using your back room what one thing neighbours often ask him — then write the card around that, tape it up Monday morning, and see if anyone knocks by Thursday.",
+   "how": "stripped the formal printed docket down to a single handwritten index card — zero cost, testable in one morning"
+  },
+  "Your Child Is the Salesperson. You're the Customer.": {
+   "title": "One Card. One Kid. At the Gate.",
+   "text": "Music promoters building word-of-mouth before social media didn't print thousands of flyers — they handed one mixtape to one person already heading into the right crowd, and let enthusiasm do the rest. You can do the same thing this Wednesday at 3:15: bring one index card to the school gate with a single opening line from a book on it, hand it to one child you already know, and ask them to read it out loud to a grown-up at home tonight. No teacher coordination, no printing run, no ask — just one card, one kid, one line. If the parent turns up later in the week curious about what happens next, you know the mechanism works and can try two cards the following week.",
+   "how": "removed the teacher coordination and the print run — shrunk it to one card handed directly to one child you already know at pickup"
+  },
+  "The Bakery Board: Your Child's Exact Minute Is in the Window": {
+   "title": "One Name. One Time. In the Window.",
+   "text": "Pick one parent you already know — the regular who came back from the book box drop is perfect — and write a single hand-lettered card for your window: their child's first name and one specific finish time, say \"Fri: 3:18.\" Text that parent directly to say the slot's theirs and the card's up. That's the whole test: one person, one minute, one card, no coordination. If they show up, you know the named-time mechanic works, and you can add two more names next week.",
+   "how": "eliminated all the multi-child coordination — reduced to one known parent, one card, one text"
+  },
+  "The Description Is Torn. You Need All Three Pieces.": {
+   "title": "Two Halves. One Counter. One Shelf.",
+   "text": "Write one short book description, tear it in half, and tape one half in the window and the other half on a shelf at the back of the shop — that's the whole setup. Anyone curious enough to read the window half has to walk inside and find the back shelf to get the rest, and whoever tells you the book title gets 10% off it that day. This works because the journey through the shop is still the mechanic, but you've cut it from three pieces and three stations down to two, which you can set up in five minutes with a pen and a page. First step: write one description tonight for a book you already want to shift, tear it, tape it up tomorrow morning.",
+   "how": "Eliminated one fragment and one station, reducing setup to two pieces and two minutes"
+  },
+  "The Child Carries the Clue Home": {
+   "title": "One Card Goes Home. One Parent Comes Back.",
+   "text": "The assumption here is that the loop — child carries clue, parent visits — needs a whole system in place before it works. It doesn't. This Wednesday at 3:15, hand one child one handwritten card: a short emotional description of a grown-up book, no title. Tell them it's a secret mission for their parent. That's the entire test — one card, one family, zero setup cost. If the parent walks in this week to find the book, you'll know the loop works and it's worth doing again next Wednesday with five cards.",
+   "how": "cut the whole system to a single card and a single child this Wednesday"
+  },
+  "The Speakeasy Rule: One Family Tells One Family, No More": {
+   "title": "One Word. One Parent. Today.",
+   "text": "The original idea assumes you need to explain the rule, set up the chain, and wait for Tuesday — but all of that is overhead you don't need yet. The only thing worth testing this week is whether the \"you can tell one person\" framing makes a parent feel chosen rather than advertised to. So today, when a regular parent comes in, say just this: \"The back room is free Tuesday at 1:30 — bring your child, and if you like it, you can pass it to one other family.\" That's the entire test: one sentence, one person, no materials, no waiting. If they light up, the idea works; if they shrug, you've lost nothing.",
+   "how": "stripped out the chain mechanic and made the test a single spoken sentence this week"
+  }
+ }
+}

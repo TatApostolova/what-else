@@ -1,0 +1,15 @@
+# Hosted sample for judges: demo mode only (recorded agent answers, no Claude Code, no API key).
+# The free plan sleeps when idle and has no lasting disk; the app reseeds the sample on every start.
+services:
+  - type: web
+    name: what-else-demo
+    runtime: python
+    plan: free
+    buildCommand: pip install .
+    startCommand: python -m whatelse --no-browser --host 0.0.0.0 --port $PORT
+    healthCheckPath: /_version
+    envVars:
+      - key: WHATELSE_MODE
+        value: demo
+      - key: PYTHON_VERSION
+        value: "3.13"

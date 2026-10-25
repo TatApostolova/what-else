@@ -15,6 +15,16 @@
     <a class="brand" href="/">What Else<span class="q">?</span></a>
     {% if settings.is_demo %}<span class="badge badge-demo">Demo</span>{% endif %}
   </header>
+  {% if settings.is_demo %}
+  <div class="demo-banner">
+    <p><strong>Sample mode.</strong> You're looking at a made-up challenge. The agents generated these ideas earlier,
+      and Generate and Rework replay their answers. To run live agents on your own challenge, run What Else? on your computer.</p>
+    <form method="post" action="/demo/reset"
+          onsubmit="return confirm('Reset the demo? This clears all changes, including other visitors, and starts the sample fresh.')">
+      <button class="btn btn-outline" type="submit">Reset demo</button>
+    </form>
+  </div>
+  {% endif %}
   <main class="page">
     {% block content %}{% endblock %}
   </main>

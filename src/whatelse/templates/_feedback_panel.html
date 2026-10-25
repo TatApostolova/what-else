@@ -10,7 +10,7 @@
                  "feedback": "Add feedback", "progress": "Log progress", "complete": "Finish experiment"} %}
 <form class="feedback-panel"
       hx-post="/ideas/{{ idea.id }}/{{ action }}" hx-target="#tabs" hx-swap="outerHTML"
-      hx-disabled-elt="find button[type=submit]" hx-indicator="find .working">
+      hx-disabled-elt="find button[type=submit]"{% if action == "rework" %} hx-indicator="find .working"{% endif %}>
   <p class="panel-question">
     {{ questions[action] }}
     {% if action in ("save", "discard") %}<span class="muted">Optional.</span>{% endif %}
@@ -36,13 +36,17 @@
   <textarea name="note" rows="2" required placeholder="{{
     'For example: make it something I can test in one evening' if action == 'rework'
     else 'For example: emailed two people, one replied' if action == 'progress'
-    else 'Write a note' }}"></textarea>
+    else 'Write a note' }}">{{ rework_note if action == 'rework' and settings.is_demo else '' }}</textarea>
+  {% if action == "rework" and settings.is_demo %}
+  <p class="muted small">In sample mode, Rework replays a version an agent made earlier for this note.</p>
+  {% endif %}
   {% endif %}
 
   <input type="hidden" name="tab" value="{{ tab }}">
   <div class="panel-actions">
     <button class="btn {{ 'btn-outline' if action == 'discard' else 'btn-primary' }}" type="submit">{{ submit[action] }}</button>
     <button class="btn btn-text" type="button" onclick="this.closest('.feedback-panel').remove()">Cancel</button>
-    {% if action == "rework" %}<span class="working">An agent is reworking it… about half a minute.</span>{% endif %}
+    {% if action == "rework" %}<span class="working">{{ "Replaying the agent's earlier answer…" if settings.is_demo
+      else "An agent is reworking it… about half a minute." }}</span>{% endif %}
   </div>
 </form>

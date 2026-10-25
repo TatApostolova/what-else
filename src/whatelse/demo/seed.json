@@ -1,0 +1,32 @@
+{
+ "challenge": {
+  "statement": "How can our small neighbourhood bookshop get more people through the door on weekday afternoons?",
+  "context": "Two of us run it, with one part-time helper. Weekends are busy, but between 1pm and 5pm on weekdays the shop is often empty. There's a primary school two streets away and a lot of people working from home nearby. We have a small back room we barely use and almost no marketing budget. We've tried a loyalty card and a few Instagram posts."
+ },
+ "reactions": [
+  {"idea": 1, "steps": [
+   ["save", {"tags": ["original", "quick_to_try"], "note": "Funny, costs nothing, and finally uses the back room."}],
+   ["action", {}],
+   ["progress", {"note": "Put the notice up on Tuesday. Two people asked about it by Thursday, and one came back on Friday with a laptop."}]
+  ]},
+  {"idea": 5, "steps": [
+   ["save", {"tags": ["practical", "fits_me"]}],
+   ["action", {}],
+   ["progress", {"note": "Dropped the first box with a regular on Monday."}],
+   ["complete", {"verdict": "partly", "note": "She came back on Friday and bought one of the books, but wrapping and delivering took longer than we expected."}]
+  ]},
+  {"idea": 2, "steps": [
+   ["save", {"tags": ["sparks_ideas"], "note": "Could the winning shelves live in the back room?"}]
+  ]},
+  {"idea": 3, "steps": [
+   ["discard", {"tags": ["not_me"], "note": "Quoting people's posts back to them feels creepy."}]
+  ]},
+  {"idea": 9, "steps": [
+   ["discard", {"tags": ["too_much_work", "not_practical"]}]
+  ]}
+ ],
+ "own_idea": {
+  "title": "Story time for the school pickup crowd",
+  "text": "Read one picture book at 3:15 on Wednesdays, right after school pickup, so parents can browse while the kids listen."
+ }
+}

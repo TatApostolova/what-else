@@ -5,7 +5,8 @@
             hx-post="/challenges/{{ challenge.id }}/generate"
             hx-target="#tabs" hx-swap="outerHTML"
             hx-indicator="#working" hx-disabled-elt="this">Generate</button>
-    <span id="working" class="working">The agents are working… this takes about two minutes.</span>
+    <span id="working" class="working">{{ "Replaying the agents' earlier answers…" if settings.is_demo
+      else "The agents are working… this takes about two minutes." }}</span>
   </div>
   {% endif %}
   {% if error %}{% include "_error.html" %}{% endif %}

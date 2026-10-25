@@ -64,6 +64,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(prog="python -m whatelse", description="What Else? — local creative studio")
     parser.add_argument("--no-browser", action="store_true", help="don't open the browser")
     parser.add_argument("--port", type=int, default=PORT, help=f"port to listen on (default {PORT})")
+    parser.add_argument("--host", default=HOST, help=f"address to listen on (default {HOST}; 0.0.0.0 when hosted)")
     args = parser.parse_args()
 
     url = f"http://{HOST}:{args.port}"
@@ -81,7 +82,7 @@ def main() -> None:
     print(f"What Else? is running at {url} (data: {settings.db_path}). Press Ctrl+C to stop.")
     if not args.no_browser:
         threading.Thread(target=open_browser_when_ready, args=(url, args.port), daemon=True).start()
-    server = uvicorn.Server(uvicorn.Config(app, host=HOST, port=args.port, log_level="warning"))
+    server = uvicorn.Server(uvicorn.Config(app, host=args.host, port=args.port, log_level="warning"))
     app.state.server = server
     server.run()
 

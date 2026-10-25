@@ -10,6 +10,7 @@ from sqlmodel import Session, func, select
 
 from whatelse.config import PACKAGE_DIR, Settings, code_fingerprint, load_settings
 from whatelse.db import make_engine
+from whatelse.demo import REWORK_NOTE, ReplayLLM, seed_demo
 from whatelse.llm import LLM, ClaudeCLI, LLMError, purge_log
 from whatelse.models import Challenge, Event, GenerationRun, Idea
 from whatelse.orchestrator import GenerateRefused, load_techniques, run_generate, run_rework, technique_label
@@ -33,10 +34,14 @@ VERDICT_LABELS = {"worked": "Worked", "partly": "Partly worked", "didnt_work": "
 def create_app(settings: Settings | None = None, llm: LLM | None = None) -> FastAPI:
     settings = settings or load_settings()
     engine = make_engine(settings)
+    techniques = load_techniques(settings.techniques)
+    if llm is None and settings.is_demo:
+        llm = ReplayLLM.load({t.key: t.label for t in techniques})
     llm = llm or ClaudeCLI(
         model=settings.model, timeout=settings.timeout_seconds, log_path=settings.log_path, effort=settings.effort
     )
-    techniques = load_techniques(settings.techniques)
+    if settings.is_demo:
+        seed_demo(engine, settings, llm)  # every start is a fresh sample
 
     app = FastAPI(title="What Else?", docs_url=None, redoc_url=None)
     app.state.fingerprint = code_fingerprint()
@@ -50,6 +55,7 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
         tag_label=lambda key: tag_labels.get(key, key.replace("_", " ")),
         event_label=lambda type_: EVENT_LABELS.get(type_, type_.replace("_", " ").capitalize()),
         verdicts=VERDICT_LABELS,
+        rework_note=REWORK_NOTE,
     )
     templates.env.filters["when"] = lambda dt: dt.astimezone().strftime("%d %b %Y, %H:%M") if dt else ""
 
@@ -101,13 +107,21 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
     @app.post("/_shutdown", response_class=PlainTextResponse)
     def shutdown(token: str = Form("")):
         """Lets a newer launch replace this copy. Needs this copy's fingerprint as the token."""
-        if token != app.state.fingerprint or app.state.server is None:
+        if settings.is_demo or token != app.state.fingerprint or app.state.server is None:
             raise HTTPException(403)
         with Session(engine) as session:
             if session.exec(select(GenerationRun).where(GenerationRun.status == "running")).first():
                 raise HTTPException(409, "The agents are working; try again when they finish.")
         app.state.server.should_exit = True
         return "stopping"
+
+    @app.post("/demo/reset")
+    def demo_reset():
+        """Demo only: throw away everyone's changes and rebuild the sample challenge."""
+        if not settings.is_demo:
+            raise HTTPException(404)
+        challenge_id = seed_demo(engine, settings, llm)
+        return RedirectResponse(f"/challenges/{challenge_id}", status_code=303)
 
     @app.get("/", response_class=HTMLResponse)
     def home(request: Request):
@@ -128,10 +142,14 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
 
     @app.get("/challenges/new", response_class=HTMLResponse)
     def new_challenge(request: Request):
+        if settings.is_demo:
+            return render(request, "demo_new.html")
         return render(request, "challenge_form.html", statement="", context="", error=None)
 
     @app.post("/challenges")
     def create(request: Request, statement: str = Form(""), context: str = Form("")):
+        if settings.is_demo:
+            return RedirectResponse("/challenges/new", status_code=303)
         with Session(engine) as session:
             try:
                 challenge = create_challenge(session, statement, context)
