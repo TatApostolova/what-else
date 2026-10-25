@@ -26,7 +26,7 @@
   {% set s = stats.get(c.id, {"ideas": 0, "saved": 0, "experiments": 0}) %}
   <li class="card challenge-row {{ 'is-closed' if c.status in ('achieved', 'abandoned') }}">
     <div>
-      <a href="/challenges/{{ c.id }}">{{ c.title }}</a>
+      <a href="/challenges/{{ c.id }}">{{ c.statement if settings.is_demo else c.title }}</a>
       <p class="muted small">{{ s.ideas }} ideas · {{ s.saved }} saved · {{ s.experiments }} experiments · last activity {{ c.updated_at | when }}</p>
     </div>
     <span class="badge badge-{{ c.status }}">{{ c.status|capitalize }}</span>

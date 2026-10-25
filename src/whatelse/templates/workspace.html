@@ -4,7 +4,7 @@
 <a class="back" href="/">← All challenges</a>
 <section class="challenge-head">
   <div class="challenge-title">
-    <h1>{{ challenge.title }}</h1>
+    <h1>{{ challenge.statement if settings.is_demo else challenge.title }}</h1>
     <span class="badge badge-{{ challenge.status }}">{{ challenge.status|capitalize }}</span>
   </div>
 
@@ -38,6 +38,12 @@
     </form>
   </div>
 
+  {% if settings.is_demo %}
+  <div class="card challenge-panel">
+    <h3>Context</h3>
+    <p class="prewrap">{{ challenge.context or "None." }}</p>
+  </div>
+  {% else %}
   <details class="card challenge-panel">
     <summary>Challenge and context</summary>
     {% if challenge.status == "active" %}
@@ -56,6 +62,7 @@
     <p class="prewrap">{{ challenge.context or "None." }}</p>
     {% endif %}
   </details>
+  {% endif %}
 </section>
 {% include "_tabs.html" %}
 {% endblock %}

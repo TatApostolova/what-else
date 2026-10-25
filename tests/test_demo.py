@@ -37,6 +37,8 @@ def test_starts_with_the_sample_challenge(client, demo_settings):
     assert "Sample mode" in page and "Reset demo" in page
     assert "five AI agents" in page and "Open the sample challenge" in page
     assert "bookshop" in page
+    workspace, challenge = client.get("/challenges/1").text, load_seed()["challenge"]
+    assert escape(challenge["statement"]) in workspace and escape(challenge["context"]) in workspace
     seed = load_seed()
     statuses = [i.status for i in ideas(demo_settings)]
     assert statuses.count("saved") == 2  # one saved idea plus the person's own
